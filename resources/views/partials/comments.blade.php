@@ -1,4 +1,4 @@
-<?php $subject instanceof \App\Models\Task ? $instance = 'task' : $instance = 'lead' ?>
+<?php $subject instanceof \App\Models\Task ? $instance = 'task' : $instance = 'recruit' ?>
 
 <div class="panel panel-primary shadow">
     <div class="panel-heading"><p>{{$subject->title}}</p></div>
@@ -41,7 +41,7 @@
     </div>
     {!! Form::close() !!}
 @else
-    {!! Form::open(array('url' => array('/comments/lead',$lead->id, ))) !!}
+    {!! Form::open(array('url' => array('/comments/recruit',$recruit->id, ))) !!}
     <div class="form-group">
         {!! Form::textarea('description', null, ['class' => 'form-control', 'id' => 'comment-field']) !!}
 

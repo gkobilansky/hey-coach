@@ -5,32 +5,32 @@ use DB;
 use Carbon;
 use App\Http\Requests;
 use App\Repositories\Task\TaskRepositoryContract;
-use App\Repositories\Lead\LeadRepositoryContract;
+use App\Repositories\Recruit\RecruitRepositoryContract;
 use App\Repositories\User\UserRepositoryContract;
-use App\Repositories\Client\ClientRepositoryContract;
+use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 
 class PagesController extends Controller
 {
 
     protected $users;
-    protected $clients;
+    protected $athletes;
     protected $settings;
     protected $tasks;
-    protected $leads;
+    protected $recruits;
 
     public function __construct(
         UserRepositoryContract $users,
-        ClientRepositoryContract $clients,
+        AthleteRepositoryContract $athletes,
         SettingRepositoryContract $settings,
         TaskRepositoryContract $tasks,
-        LeadRepositoryContract $leads
+        RecruitRepositoryContract $recruits
     ) {
         $this->users = $users;
-        $this->clients = $clients;
+        $this->athletes = $athletes;
         $this->settings = $settings;
         $this->tasks = $tasks;
-        $this->leads = $leads;
+        $this->recruits = $recruits;
     }
 
     /**
@@ -46,7 +46,7 @@ class PagesController extends Controller
          */
         $companyname = $this->settings->getCompanyName();
         $users = $this->users->getAllUsers();
-        $totalClients = $this->clients->getAllClientsCount();
+        $totalAthletes = $this->athletes->getAllAthletesCount();
         $totalTimeSpent = $this->tasks->totalTimeSpent();
 
      /**
@@ -79,54 +79,54 @@ class PagesController extends Controller
         $completedTasksMonthly = $this->tasks->completedTasksMothly();
 
      /**
-      * Statistics for all-time Leads.
+      * Statistics for all-time Recruits.
       *
       */
      
-        $allleads = $this->leads->leads();
-        $allCompletedLeads = $this->leads->allCompletedLeads();
-        $totalPercentageLeads = $this->leads->percantageCompleted();
+        $allrecruits = $this->recruits->recruits();
+        $allCompletedRecruits = $this->recruits->allCompletedRecruits();
+        $totalPercentageRecruits = $this->recruits->percantageCompleted();
      /**
-      * Statistics for today leads.
+      * Statistics for today recruits.
       *
       */
-        $completedLeadsToday = $this->leads->completedLeadsToday();
-        $createdLeadsToday = $this->leads->completedLeadsToday();
+        $completedRecruitsToday = $this->recruits->completedRecruitsToday();
+        $createdRecruitsToday = $this->recruits->completedRecruitsToday();
 
      /**
-      * Statistics for leads this month.
+      * Statistics for recruits this month.
       *
       */
-        $leadCompletedThisMonth = $this->leads->completedLeadsThisMonth();
+        $recruitCompletedThisMonth = $this->recruits->completedRecruitsThisMonth();
 
      /**
-      * Statistics for leads each month(For Charts).
+      * Statistics for recruits each month(For Charts).
       *
       */
-        $completedLeadsMonthly = $this->leads->createdLeadsMonthly();
-        $createdLeadsMonthly = $this->leads->completedLeadsMonthly();
+        $completedRecruitsMonthly = $this->recruits->createdRecruitsMonthly();
+        $createdRecruitsMonthly = $this->recruits->completedRecruitsMonthly();
        
         return view('pages.dashboard', compact(
             'completedTasksToday',
-            'completedLeadsToday',
+            'completedRecruitsToday',
             'createdTasksToday',
-            'createdLeadsToday',
+            'createdRecruitsToday',
             'createdTasksMonthly',
             'completedTasksMonthly',
-            'completedLeadsMonthly',
-            'createdLeadsMonthly',
+            'completedRecruitsMonthly',
+            'createdRecruitsMonthly',
             'taskCompletedThisMonth',
-            'leadCompletedThisMonth',
+            'recruitCompletedThisMonth',
             'totalTimeSpent',
-            'totalClients',
+            'totalAthletes',
             'users',
             'companyname',
             'alltasks',
             'allCompletedTasks',
             'totalPercentageTasks',
-            'allleads',
-            'allCompletedLeads',
-            'totalPercentageLeads'
+            'allrecruits',
+            'allCompletedRecruits',
+            'totalPercentageRecruits'
         ));
     }
 }

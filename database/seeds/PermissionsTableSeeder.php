@@ -36,26 +36,26 @@ class PermissionsTableSeeder extends Seeder
 
 
          /**
-         * Client Permissions
+         * Athlete Permissions
          */
         
-        $createClient = new Permissions;
-        $createClient->display_name = 'Create client';
-        $createClient->name = 'client-create';
-        $createClient->description = 'Permission to create client';
-        $createClient->save();
+        $createAthlete = new Permissions;
+        $createAthlete->display_name = 'Create athlete';
+        $createAthlete->name = 'athlete-create';
+        $createAthlete->description = 'Permission to create athlete';
+        $createAthlete->save();
 
-        $updateClient = new Permissions;
-        $updateClient->display_name = 'Update client';
-        $updateClient->name = 'client-update';
-        $updateClient->description = 'Permission to update client';
-        $updateClient->save();
+        $updateAthlete = new Permissions;
+        $updateAthlete->display_name = 'Update athlete';
+        $updateAthlete->name = 'athlete-update';
+        $updateAthlete->description = 'Permission to update athlete';
+        $updateAthlete->save();
 
-        $deleteClient = new Permissions;
-        $deleteClient->display_name = 'Delete client';
-        $deleteClient->name = 'client-delete';
-        $deleteClient->description = 'Permission to delete client';
-        $deleteClient->save();
+        $deleteAthlete = new Permissions;
+        $deleteAthlete->display_name = 'Delete athlete';
+        $deleteAthlete->name = 'athlete-delete';
+        $deleteAthlete->description = 'Permission to delete athlete';
+        $deleteAthlete->save();
 
          /**
          * Tasks Permissions
@@ -74,19 +74,19 @@ class PermissionsTableSeeder extends Seeder
         $updateTask->save();
 
          /**
-         * Leads Permissions
+         * Recruits Permissions
          */
         
-        $createLead = new Permissions;
-        $createLead->display_name = 'Create lead';
-        $createLead->name = 'lead-create';
-        $createLead->description = 'Permission to create lead';
-        $createLead->save();
+        $createRecruit = new Permissions;
+        $createRecruit->display_name = 'Create recruit';
+        $createRecruit->name = 'recruit-create';
+        $createRecruit->description = 'Permission to create recruit';
+        $createRecruit->save();
 
-        $updateLead = new Permissions;
-        $updateLead->display_name = 'Update lead';
-        $updateLead->name = 'lead-update';
-        $updateLead->description = 'Permission to update lead';
-        $updateLead->save();
+        $updateRecruit = new Permissions;
+        $updateRecruit->display_name = 'Update recruit';
+        $updateRecruit->name = 'recruit-update';
+        $updateRecruit->description = 'Permission to update recruit';
+        $updateRecruit->save();
     }
 }

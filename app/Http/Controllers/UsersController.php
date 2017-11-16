@@ -7,8 +7,8 @@ use Datatables;
 use App\Models\User;
 use App\Models\Task;
 use App\Http\Requests;
-use App\Models\Client;
-use App\Models\Lead;
+use App\Models\Athlete;
+use App\Models\Recruit;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\StoreUserRequest;
@@ -17,7 +17,7 @@ use App\Repositories\Role\RoleRepositoryContract;
 use App\Repositories\Department\DepartmentRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 use App\Repositories\Task\TaskRepositoryContract;
-use App\Repositories\Lead\LeadRepositoryContract;
+use App\Repositories\Recruit\RecruitRepositoryContract;
 
 class UsersController extends Controller
 {
@@ -32,7 +32,7 @@ class UsersController extends Controller
         DepartmentRepositoryContract $departments,
         SettingRepositoryContract $settings,
         TaskRepositoryContract $tasks,
-        LeadRepositoryContract $leads
+        RecruitRepositoryContract $recruits
     )
     {
         $this->users = $users;
@@ -40,7 +40,7 @@ class UsersController extends Controller
         $this->departments = $departments;
         $this->settings = $settings;
         $this->tasks = $tasks;
-        $this->leads = $leads;
+        $this->recruits = $recruits;
         $this->middleware('user.create', ['only' => ['create']]);
     }
 
@@ -69,7 +69,7 @@ class UsersController extends Controller
                 return '<a href="' . route("users.edit", $user->id) . '" class="btn btn-success"> Edit</a>';
             })
             ->add_column('delete', function ($user) { 
-                return '<button type="button" class="btn btn-danger delete_client" data-client_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
+                return '<button type="button" class="btn btn-danger delete_athlete" data-athlete_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
             })->make(true);
     }
 
@@ -81,7 +81,7 @@ class UsersController extends Controller
     public function taskData($id)
     {
         $tasks = Task::select(
-            ['id', 'title', 'created_at', 'deadline', 'user_assigned_id', 'client_id', 'status']
+            ['id', 'title', 'created_at', 'deadline', 'user_assigned_id', 'athlete_id', 'status']
         )
             ->where('user_assigned_id', $id);
         return Datatables::of($tasks)
@@ -99,8 +99,8 @@ class UsersController extends Controller
             ->editColumn('status', function ($tasks) {
                 return $tasks->status == 1 ? '<span class="label label-success">Open</span>' : '<span class="label label-danger">Closed</span>';
             })
-            ->editColumn('client_id', function ($tasks) {
-                return $tasks->client->name;
+            ->editColumn('athlete_id', function ($tasks) {
+                return $tasks->athlete->name;
             })
             ->make(true);
     }
@@ -110,29 +110,29 @@ class UsersController extends Controller
      * @param $id
      * @return mixed
      */
-    public function leadData($id)
+    public function recruitData($id)
     {
-        $leads = Lead::select(
-            ['id', 'title', 'created_at', 'contact_date', 'user_assigned_id', 'client_id', 'status']
+        $recruits = Recruit::select(
+            ['id', 'title', 'created_at', 'contact_date', 'user_assigned_id', 'athlete_id', 'status_id']
         )
             ->where('user_assigned_id', $id);
-        return Datatables::of($leads)
-            ->addColumn('titlelink', function ($leads) {
-                return '<a href="' . route('leads.show', $leads->id) . '">' . $leads->title . '</a>';
+        return Datatables::of($recruits)
+            ->addColumn('titlelink', function ($recruits) {
+                return '<a href="' . route('recruits.show', $recruits->id) . '">' . $recruits->title . '</a>';
             })
-            ->editColumn('created_at', function ($leads) {
-                return $leads->created_at ? with(new Carbon($leads->created_at))
+            ->editColumn('created_at', function ($recruits) {
+                return $recruits->created_at ? with(new Carbon($recruits->created_at))
                     ->format('d/m/Y') : '';
             })
-            ->editColumn('contact_date', function ($leads) {
-                return $leads->contact_date ? with(new Carbon($leads->contact_date))
+            ->editColumn('contact_date', function ($recruits) {
+                return $recruits->contact_date ? with(new Carbon($recruits->contact_date))
                     ->format('d/m/Y') : '';
             })
-            ->editColumn('status', function ($leads) {
-                return $leads->status == 1 ? '<span class="label label-success">Open</span>' : '<span class="label label-danger">Closed</span>';
+            ->editColumn('status_id', function ($recruits) {
+                return $recruits->status_id < 3 ? '<span class="label label-success">' . $recruits->status->name . '</span>' : '<span class="label label-danger">' . $recruits->status->name . '</span>';
             })
-            ->editColumn('client_id', function ($tasks) {
-                return $tasks->client->name;
+            ->editColumn('athlete_id', function ($tasks) {
+                return $tasks->athlete->name;
             })
             ->make(true);
     }
@@ -142,15 +142,15 @@ class UsersController extends Controller
      * @param $id
      * @return mixed
      */
-    public function clientData($id)
+    public function athleteData($id)
     {
-        $clients = Client::select(['id', 'name', 'company_name', 'primary_number', 'email'])->where('user_id', $id);
-        return Datatables::of($clients)
-            ->addColumn('clientlink', function ($clients) {
-                return '<a href="' . route('clients.show', $clients->id) . '">' . $clients->name . '</a>';
+        $athletes = Athlete::select(['id', 'name', 'company_name', 'primary_number', 'email'])->where('user_id', $id);
+        return Datatables::of($athletes)
+            ->addColumn('athletelink', function ($athletes) {
+                return '<a href="' . route('athletes.show', $athletes->id) . '">' . $athletes->name . '</a>';
             })
-            ->editColumn('created_at', function ($clients) {
-                return $clients->created_at ? with(new Carbon($clients->created_at))
+            ->editColumn('created_at', function ($athletes) {
+                return $athletes->created_at ? with(new Carbon($athletes->created_at))
                     ->format('d/m/Y') : '';
             })
             ->make(true);
@@ -190,7 +190,7 @@ class UsersController extends Controller
             ->withUser($this->users->find($id))
             ->withCompanyname($this->settings->getCompanyName())
             ->withTaskStatistics($this->tasks->totalOpenAndClosedTasks($id))
-            ->withLeadStatistics($this->leads->totalOpenAndClosedLeads($id));
+            ->withrecruitStatistics($this->recruits->totalOpenAndClosedrecruits($id));
     }
 
     /**

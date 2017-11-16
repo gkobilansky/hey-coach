@@ -11,12 +11,12 @@ class Invoice extends Model
         'status',
         'sent_at',
         'due_at',
-        'client_id',
+        'athlete_id',
     ];
 
-    public function client()
+    public function athlete()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Athlete::class);
     }
 
     public function invoiceLines()

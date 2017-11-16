@@ -48,7 +48,7 @@ class YouWereMentionedNotification extends Notification
             'creator' => $notifiable->name,
             ]);
         
-        $url_prefix = get_class($topic) == 'App\Models\Task' ? 'tasks/' : 'leads/';
+        $url_prefix = get_class($topic) == 'App\Models\Task' ? 'tasks/' : 'recruits/';
             
            return [
             'assigned_user' => $notifiable->id, 

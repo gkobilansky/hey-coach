@@ -16,8 +16,8 @@ class Settings extends Migration
             $table->increments('id');
             $table->integer('task_complete_allowed');
             $table->integer('task_assign_allowed');
-            $table->integer('lead_complete_allowed');
-            $table->integer('lead_assign_allowed');
+            $table->integer('recruit_complete_allowed');
+            $table->integer('recruit_assign_allowed');
             $table->integer('time_change_allowed');
             $table->integer('comment_allowed');
             $table->string('country')->nullable();

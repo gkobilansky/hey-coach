@@ -42,9 +42,9 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'user_assigned_id', 'id');
     }
 
-    public function leads()
+    public function recruits()
     {
-        return $this->hasMany(Lead::class, 'user_id', 'id');
+        return $this->hasMany(Recruit::class, 'user_id', 'id');
     }
     
     public function department()
@@ -76,21 +76,21 @@ class User extends Authenticatable
         }
     }
 
-    public function moveLeads($user_id)
+    public function moveRecruits($user_id)
     {
-        $leads = $this->leads()->get();
-        foreach ($leads as $lead) {
-            $lead->user_assigned_id = $user_id;
-            $lead->save();
+        $recruits = $this->recruits()->get();
+        foreach ($recruits as $recruit) {
+            $recruit->user_assigned_id = $user_id;
+            $recruit->save();
         }
     }
 
-    public function moveClients($user_id)
+    public function moveAthletes($user_id)
     {
-        $clients = $this->clients()->get();
-        foreach ($clients as $client) {
-            $client->user_id = $user_id;
-            $client->save();
+        $athletes = $this->athletes()->get();
+        foreach ($athletes as $athlete) {
+            $athlete->user_id = $user_id;
+            $athlete->save();
         }
     }
 

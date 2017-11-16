@@ -36,11 +36,11 @@
     <div class="form-group form-inline">
         {!! Form::label('user_assigned_id', __('Assign user'), ['class' => 'control-label']) !!}
         {!! Form::select('user_assigned_id', $users, null, ['class' => 'form-control']) !!}
-        @if(Request::get('client') != "")
-            {!! Form::hidden('client_id', Request::get('client')) !!}
+        @if(Request::get('athlete') != "")
+            {!! Form::hidden('athlete', Request::get('athlete')) !!}
         @else
-            {!! Form::label('client_id', __('Assign client'), ['class' => 'control-label']) !!}
-            {!! Form::select('client_id', $clients, null, ['class' => 'form-control']) !!}
+            {!! Form::label('athlete', __('Assign athlete'), ['class' => 'control-label']) !!}
+            {!! Form::select('athlete', $athletes, null, ['class' => 'form-control']) !!}
         @endif
     </div>
 

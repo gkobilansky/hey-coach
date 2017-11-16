@@ -14,7 +14,7 @@
 @endpush
 
     <div class="row">
-        @include('partials.clientheader')
+        @include('partials.athleteheader')
         @include('partials.userheader')
     </div>
 

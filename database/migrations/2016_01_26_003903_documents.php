@@ -18,8 +18,8 @@ class Documents extends Migration
                  $table->string('size');
                  $table->string('path');
                  $table->string('file_display');
-                 $table->integer('client_id')->unsigned();
-                 $table->foreign('client_id')->references('id')->on('clients');
+                 $table->integer('athlete_id')->unsigned();
+                 $table->foreign('athlete_id')->references('id')->on('athletes');
                $table->timestamps();
         });
     }

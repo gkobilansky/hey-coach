@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flarepoint CRM</title>
+    <title>Hey Coach</title>
     <link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">
@@ -86,22 +86,22 @@ $('body').click(function(e) {
 
     <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
         <div class="list-group panel">
-            <p class=" list-group-item siderbar-top" title=""><img src="{{url('images/flarepoint_logo.png')}}" alt=""></p>
+            <p class=" list-group-item siderbar-top" title=""><img src="{{url('images/hey-coach-logo.png')}}" width="250" alt=""></p>
             <a href="{{route('dashboard', \Auth::id())}}" class=" list-group-item" data-parent="#MainMenu"><i
                         class="glyphicon sidebar-icon glyphicon-dashboard"></i><span id="menu-txt">{{ __('Dashboard') }}</span> </a>
             <a href="{{route('users.show', \Auth::id())}}" class=" list-group-item" data-parent="#MainMenu"><i
                         class="glyphicon sidebar-icon glyphicon-user"></i><span id="menu-txt">{{ __('Profile') }}</span> </a>
 
 
-            <a href="#clients" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
-                        class="glyphicon sidebar-icon glyphicon-tag"></i><span id="menu-txt">{{ __('Clients') }}</span>
+            <a href="#athletes" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
+                        class="glyphicon sidebar-icon glyphicon-tag"></i><span id="menu-txt">{{ __('Athletes') }}</span>
             <i class="ion-chevron-up  arrow-up sidebar-arrow"></i></a>
-            <div class="collapse" id="clients">
+            <div class="collapse" id="athletes">
 
-                <a href="{{ route('clients.index')}}" class="list-group-item childlist">{{ __('All Clients') }}</a>
-                @if(Entrust::can('client-create'))
-                    <a href="{{ route('clients.create')}}"
-                       class="list-group-item childlist">{{ __('New Client') }}</a>
+                <a href="{{ route('athletes.index')}}" class="list-group-item childlist">{{ __('All Athletes') }}</a>
+                @if(Entrust::can('athlete-create'))
+                    <a href="{{ route('athletes.create')}}"
+                       class="list-group-item childlist">{{ __('New Athlete') }}</a>
                 @endif
             </div>
 
@@ -126,14 +126,14 @@ $('body').click(function(e) {
                 @endif
             </div>
 
-            <a href="#leads" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
-                        class="glyphicon sidebar-icon glyphicon-hourglass"></i><span id="menu-txt">{{ __('Leads') }}</span>
+            <a href="#recruits" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
+                        class="glyphicon sidebar-icon glyphicon-hourglass"></i><span id="menu-txt">{{ __('Recruits') }}</span>
             <i class="ion-chevron-up  arrow-up sidebar-arrow"></i></a>
-            <div class="collapse" id="leads">
-                <a href="{{ route('leads.index')}}" class="list-group-item childlist">{{ __('All Leads') }}</a>
-                @if(Entrust::can('lead-create'))
-                    <a href="{{ route('leads.create')}}"
-                       class="list-group-item childlist">{{ __('New Lead') }}</a>
+            <div class="collapse" id="recruits">
+                <a href="{{ route('recruits.index')}}" class="list-group-item childlist">{{ __('All Recruits') }}</a>
+                @if(Entrust::can('recruit-create'))
+                    <a href="{{ route('recruits.create')}}"
+                       class="list-group-item childlist">{{ __('New Recruit') }}</a>
                 @endif
             </div>
             <a href="#departments" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i

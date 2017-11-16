@@ -104,39 +104,39 @@
             ],
             $settings->task_assign_allowed, ['class' => 'form-control']) !!}
                     <!-- *********************************************************************
-     *                     Lead complete       
+     *                     Recruit complete
      *********************************************************************-->
 
             <div class="panel panel-default movedown">
-                <div class="panel-heading">{{ __('Lead completion') }}</div>
+                <div class="panel-heading">{{ __('Recruit completion') }}</div>
                 <div class="panel-body">
 
-                    {{ __('If Allowed only user who are assigned the lead & the admin can complete the lead.') }} <br/>
-                    {{ __('If Not allowed anyone, can complete all leads.')}}
+                    {{ __('If Allowed only user who are assigned the recruit & the admin can complete the recruit.') }} <br/>
+                    {{ __('If Not allowed anyone, can complete all recruits.')}}
                 </div>
             </div>
-            {!! Form::select('lead_complete_allowed', [
+            {!! Form::select('recruit_complete_allowed', [
                 1 => __('Allowed'), 
                 2 => __('Not allowed')
             ], 
-            $settings->lead_complete_allowed, ['class' => 'form-control']) !!}
+            $settings->recruit_complete_allowed, ['class' => 'form-control']) !!}
                     <!-- *********************************************************************
-     *                     Lead assign       
+     *                     Recruit assign
      *********************************************************************-->
             <div class="panel panel-default movedown">
-                <div class="panel-heading">{{ __('Lead assigning') }}</div>
+                <div class="panel-heading">{{ __('Recruit assigning') }}</div>
                 <div class="panel-body">
 
-                    {{ __('If Allowed only user who are assigned the lead & the admin can complete the lead.') }} <br/>
-                    {{ __('If Not allowed anyone, can complete all leads.')}}
+                    {{ __('If Allowed only user who are assigned the recruit & the admin can complete the recruit.') }} <br/>
+                    {{ __('If Not allowed anyone, can complete all recruits.')}}
                 </div>
             </div>
-            {!! Form::select('lead_assign_allowed', 
+            {!! Form::select('recruit_assign_allowed',
             [
                 1 => __('Allowed'), 
                 2 => __('Not allowed')
             ], 
-            $settings->lead_assign_allowed, ['class' => 'form-control']) !!}
+            $settings->recruit_assign_allowed, ['class' => 'form-control']) !!}
             <br/>
             {!! Form::submit( __('Save overall settings'), ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!}

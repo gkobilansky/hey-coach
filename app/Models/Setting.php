@@ -8,8 +8,8 @@ class Setting extends Model
     protected $fillable = [
         'task_complete_allowed',
         'task_assign_allowed',
-        'lead_complete_allowed',
-        'lead_assign_allowed'
+        'recruit_complete_allowed',
+        'recruit_assign_allowed'
     ];
 
     public function user()

@@ -39,9 +39,9 @@ class TaskHeaderComposer
          */
        
         $contact = $tasks->user;
-        $client = $tasks->client;
+        $athlete = $tasks->athlete;
         
         $view->with('contact', $contact);
-        $view->with('client', $client);
+        $view->with('athlete', $athlete);
     }
 }

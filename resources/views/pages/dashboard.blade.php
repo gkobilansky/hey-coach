@@ -48,17 +48,17 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3>
-                            @foreach($leadCompletedThisMonth as $thisMonth)
+                            @foreach($recruitCompletedThisMonth as $thisMonth)
                                 {{$thisMonth->total}}
                             @endforeach
                         </h3>
 
-                        <p>{{ __('Leads completed this month') }}</p>
+                        <p>{{ __('Recruits completed this month') }}</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{{route('leads.index')}}" class="small-box-footer">{{ __('All Leads') }} <i
+                    <a href="{{route('recruits.index')}}" class="small-box-footer">{{ __('All Recruits') }} <i
                                 class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -67,14 +67,14 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>{{$totalClients}}</h3>
+                        <h3>{{$totalAthletes}}</h3>
 
-                        <p>{{ __('All Clients') }}</p>
+                        <p>{{ __('All Athletes') }}</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="{{route('clients.index')}}" class="small-box-footer">{{ __('All clients') }} <i
+                    <a href="{{route('athletes.index')}}" class="small-box-footer">{{ __('All athletes') }} <i
                                 class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -118,16 +118,16 @@
             <?php $taskCompleted[] = $tasks->month;?>
         @endforeach
 
-        <?php $completedLeadEachMonths = array(); $leadsCompleted = array();?>
-        @foreach($completedLeadsMonthly as $leads)
-            <?php $completedLeadEachMonths[] = date('F', strTotime($leads->updated_at)) ?>
-            <?php $leadsCompleted[] = $leads->month;?>
+        <?php $completedRecruitEachMonths = array(); $recruitsCompleted = array();?>
+        @foreach($completedRecruitsMonthly as $recruits)
+            <?php $completedRecruitEachMonths[] = date('F', strTotime($recruits->updated_at)) ?>
+            <?php $recruitsCompleted[] = $recruits->month;?>
         @endforeach
 
-        <?php $createdLeadEachMonths = array(); $leadCreated = array();?>
-        @foreach($createdLeadsMonthly as $lead)
-            <?php $createdLeadEachMonths[] = date('F', strTotime($lead->created_at)) ?>
-            <?php $leadCreated[] = $lead->month;?>
+        <?php $createdRecruitEachMonths = array(); $recruitCreated = array();?>
+        @foreach($createdRecruitsMonthly as $recruit)
+            <?php $createdRecruitEachMonths[] = date('F', strTotime($recruit->created_at)) ?>
+            <?php $recruitCreated[] = $recruit->month;?>
         @endforeach
         <div class="row">
 

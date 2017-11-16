@@ -13,17 +13,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\ClientAction' => [
-            'App\Listeners\ClientActionNotify',
-            'App\Listeners\ClientActionLog',
+        'App\Events\AthleteAction' => [
+            'App\Listeners\athleteActionNotify',
+            'App\Listeners\athleteActionLog',
         ],
          'App\Events\TaskAction' => [
             'App\Listeners\TaskActionNotify',
             'App\Listeners\TaskActionLog',
          ],
-        'App\Events\LeadAction' => [
-            'App\Listeners\LeadActionNotify',
-            'App\Listeners\LeadActionLog',
+        'App\Events\RecruitAction' => [
+            'App\Listeners\RecruitActionNotify',
+            'App\Listeners\RecruitActionLog',
         ],
         'App\Events\NewComment' => [
             'App\Listeners\NotiftyMentionedUsers'

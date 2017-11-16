@@ -47,17 +47,17 @@
         </select>   
             </div>
 
-             <!--HANDLE LEADS-->
+             <!--HANDLE RECRUITS-->
             <div class="form-group">
-          <label for="handle_leads"><span class=""></span> {{ __('How to handle the user leads?') }}</label>
-        <select name="leads" id="handle_leads" class="form-control">
-            <option value="delete_all_leads">{{ __('Delete all leads') }}</option>
-            <option value="move_all_leads"> {{ __('Move all leads') }}</option>
+          <label for="handle_recruits"><span class=""></span> {{ __('How to handle the user recruits?') }}</label>
+        <select name="recruits" id="handle_recruits" class="form-control">
+            <option value="delete_all_recruits">{{ __('Delete all recruits') }}</option>
+            <option value="move_all_recruits"> {{ __('Move all recruits') }}</option>
         </select>   
         </div>
-            <div class="form-group" id="assign_leads" style="display:none">
-          <label for="user_leads"><span class="glyphicon glyphicon-user"></span> {{ __('Choose a new user to assign the leads') }}</label>
-        <select name="user_leads" id="user_leads" class="form-control">
+            <div class="form-group" id="assign_recruits" style="display:none">
+          <label for="user_recruits"><span class="glyphicon glyphicon-user"></span> {{ __('Choose a new user to assign the recruits') }}</label>
+        <select name="user_recruits" id="user_recruits" class="form-control">
             <option value="null" disabled selected> {{ __('Select a user') }} </option>
             @foreach ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -65,17 +65,17 @@
         </select>   
             </div>
 
-            <!--HANDLE CLIENTS-->
+            <!--HANDLE ATHLETES-->
         <div class="form-group">
-          <label for="handle_clients"><span class=""></span> {{ __('How to handle the user clients?') }}</label>
-        <select name="clients" id="handle_clients" class="form-control">
-            <option value="delete_all_clients">{{ __('Delete all clients') }}</option>
-            <option value="move_all_clients"> {{ __('Move all clients') }}</option>
+          <label for="handle_athletes"><span class=""></span> {{ __('How to handle the user athletes?') }}</label>
+        <select name="athletes" id="handle_athletes" class="form-control">
+            <option value="delete_all_athletes">{{ __('athletes') }}</option>
+            <option value="move_all_athletes"> {{ __('Move all athletes') }}</option>
         </select>   
         </div>
-            <div class="form-group" id="assign_clients" style="display:none">
-          <label for="user_clients"><span class="glyphicon glyphicon-user"></span> {{ __('Choose a new user to assign the clients') }}</label>
-        <select name="user_clients" id="user_clients" class="form-control">
+            <div class="form-group" id="assign_athletes" style="display:none">
+          <label for="user_athletes"><span class="glyphicon glyphicon-user"></span> {{ __('Choose a new user to assign the athletes') }}</label>
+        <select name="user_athletes" id="user_athletes" class="form-control">
             <option value="null" disabled selected> {{ __('Select a user') }} </option>
             @foreach ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -121,8 +121,8 @@
         });
     });
 
-     function openModal(client_id) {
-        $("#confirm_delete").attr('delete-id', client_id);
+     function openModal(athlete_id) {
+        $("#confirm_delete").attr('delete-id', athlete_id);
         $("#myModal").modal();
     }
     
@@ -138,32 +138,32 @@
     });
 
 
-    $("#handle_clients").click(function () {
+    $("#handle_athletes").click(function () {
 
-   if($("#handle_clients").val() == "move_all_clients") {
-            $("#assign_clients").css('display', 'block');
+   if($("#handle_athletes").val() == "move_all_athletes") {
+            $("#assign_athletes").css('display', 'block');
     } else {
-        $("#assign_clients").css('display', 'none');
+        $("#assign_athletes").css('display', 'none');
     }
     });
     
-    $("#handle_leads").click(function () {
+    $("#handle_recruits").click(function () {
 
-   if($("#handle_leads").val() == "move_all_leads") {
-            $("#assign_leads").css('display', 'block');
+   if($("#handle_recruits").val() == "move_all_recruits") {
+            $("#assign_recruits").css('display', 'block');
     } else {
-        $("#assign_leads").css('display', 'none');
+        $("#assign_recruits").css('display', 'none');
     }
     });
 
     $("#confirm_delete").click(function () {
         id = $(this).attr("delete-id"); 
-       handle_leads = $("#handle_leads").val();
+       handle_recruits = $("#handle_recruits").val();
        handle_tasks =  $("#handle_tasks").val();
-       handle_clients =  $("#handle_clients").val()
-       leads_user = $("#user_leads").val();
+       handle_athletes =  $("#handle_athletes").val()
+       recruits_user = $("#user_recruits").val();
        tasks_user = $("#user_tasks").val();
-       clients_user = $("#user_clients").val();
+       athletes_user = $("#user_athletes").val();
         $.ajax({
             url: "/users/" + id,
             type: 'DELETE',
@@ -172,11 +172,11 @@
                 },
         data: {
         tasks: handle_tasks,
-        leads: handle_leads,
-        clients: handle_clients,
+        recruits: handle_recruits,
+        athletes: handle_athletes,
         task_user: tasks_user,
-        lead_user: leads_user,
-        client_user: clients_user,
+        recruit_user: recruits_user,
+        athlete_user: athletes_user,
        },   
         complete: function (jqXHR, textStatus) {
                 // callback

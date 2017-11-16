@@ -34,23 +34,23 @@ class RolePermissionTableSeeder extends Seeder
         $deleteUser->timestamps = false;
         $deleteUser->save();
 
-        $createClient = new PermissionRole;
-        $createClient->role_id = '1';
-        $createClient->permission_id = '4';
-        $createClient->timestamps = false;
-        $createClient->save();
+        $createAthlete = new PermissionRole;
+        $createAthlete->role_id = '1';
+        $createAthlete->permission_id = '4';
+        $createAthlete->timestamps = false;
+        $createAthlete->save();
 
-        $updateClient = new PermissionRole;
-        $updateClient->role_id = '1';
-        $updateClient->permission_id = '5';
-        $updateClient->timestamps = false;
-        $updateClient->save();
+        $updateAthlete = new PermissionRole;
+        $updateAthlete->role_id = '1';
+        $updateAthlete->permission_id = '5';
+        $updateAthlete->timestamps = false;
+        $updateAthlete->save();
 
-        $deleteClient = new PermissionRole;
-        $deleteClient->role_id = '1';
-        $deleteClient->permission_id = '6';
-        $deleteClient->timestamps = false;
-        $deleteClient->save();
+        $deleteAthlete = new PermissionRole;
+        $deleteAthlete->role_id = '1';
+        $deleteAthlete->permission_id = '6';
+        $deleteAthlete->timestamps = false;
+        $deleteAthlete->save();
 
         $createTask = new PermissionRole;
         $createTask->role_id = '1';
@@ -64,16 +64,16 @@ class RolePermissionTableSeeder extends Seeder
         $updateTask->timestamps = false;
         $updateTask->save();
 
-        $createLead = new PermissionRole;
-        $createLead->role_id = '1';
-        $createLead->permission_id = '9';
-        $createLead->timestamps = false;
-        $createLead->save();
+        $createRecruit = new PermissionRole;
+        $createRecruit->role_id = '1';
+        $createRecruit->permission_id = '9';
+        $createRecruit->timestamps = false;
+        $createRecruit->save();
 
-        $updateLead = new PermissionRole;
-        $updateLead->role_id = '1';
-        $updateLead->permission_id = '10';
-        $updateLead->timestamps = false;
-        $updateLead->save();
+        $updateRecruit = new PermissionRole;
+        $updateRecruit->role_id = '1';
+        $updateRecruit->permission_id = '10';
+        $updateRecruit->timestamps = false;
+        $updateRecruit->save();
     }
 }

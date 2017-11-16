@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        @include('partials.clientheader')
+        @include('partials.athleteheader')
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading panel-header">

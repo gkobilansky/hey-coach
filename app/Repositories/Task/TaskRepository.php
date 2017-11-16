@@ -32,10 +32,10 @@ class TaskRepository implements TaskRepositoryContract
      * @param $id
      * @return mixed
      */
-    public function getAssignedClient($id)
+    public function getAssignedathlete($id)
     {
         $task = Task::findOrFail($id);
-        $task->client;
+        $task->athlete;
         return $task;
     }
 
@@ -59,7 +59,7 @@ class TaskRepository implements TaskRepositoryContract
      */
     public function create($requestData)
     {
-        $client_id = $requestData->get('client_id');
+        $athlete_id = $requestData->get('athlete_id');
 
         $input = $requestData = array_merge(
             $requestData->all(),
@@ -100,7 +100,7 @@ class TaskRepository implements TaskRepositoryContract
         if(!$invoice) {
             $invoice = Invoice::create([
                 'status' => 'draft',
-                'client_id' => $task->client->id
+                'athlete_id' => $task->athlete->id
             ]);
             $task->invoice_id = $invoice->id;
             $task->save();

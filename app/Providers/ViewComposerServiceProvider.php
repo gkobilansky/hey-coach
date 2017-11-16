@@ -18,16 +18,16 @@ class ViewComposerServiceProvider extends ServiceProvider
             'App\Http\ViewComposers\UserHeaderComposer'
         );
         view()->composer(
-            ['clients.show'],
-            'App\Http\ViewComposers\ClientHeaderComposer'
+            ['athletes.show'],
+            'App\Http\ViewComposers\AthleteHeaderComposer'
         );
         view()->composer(
             ['tasks.show'],
             'App\Http\ViewComposers\TaskHeaderComposer'
         );
         view()->composer(
-            ['leads.show'],
-            'App\Http\ViewComposers\LeadHeaderComposer'
+            ['recruits.show'],
+            'App\Http\ViewComposers\RecruitHeaderComposer'
         );
         view()->composer(
             ['invoices.show'],

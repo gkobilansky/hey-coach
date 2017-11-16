@@ -24,14 +24,14 @@
             <span class="info-box-icon"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">All Leads</span>
-                <span class="info-box-number">{{$allCompletedLeads}} / {{$allleads}}</span>
+                <span class="info-box-text">All Recruits</span>
+                <span class="info-box-number">{{$allCompletedRecruits}} / {{$allrecruits}}</span>
 
                 <div class="progress">
-                    <div class="progress-bar" style="width: {{$totalPercentageLeads}}%"></div>
+                    <div class="progress-bar" style="width: {{$totalPercentageRecruits}}%"></div>
                 </div>
                   <span class="progress-description">
-                    {{number_format($totalPercentageLeads, 0)}}% Completed
+                    {{number_format($totalPercentageRecruits, 0)}}% Completed
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -100,7 +100,7 @@
             <div class="box-header with-border">
                 <h4 class="box-title"
                 >
-                    Created leads each month
+                    Created recruits each month
                 </h4>
                 <div class="box-tools pull-right">
                     <button type="button" id="collapse2" class="btn btn-box-tool" data-toggle="collapse"
@@ -111,8 +111,8 @@
             <div id="collapseTwo" class="panel-collapse">
                 <div class="box-body">
                     <div>
-                        <graphline class="chart" :labels="{{json_encode($createdLeadEachMonths)}}"
-                                   :values="{{json_encode($leadCreated)}}"></graphline>
+                        <graphline class="chart" :labels="{{json_encode($createdRecruitEachMonths)}}"
+                                   :values="{{json_encode($recruitCreated)}}"></graphline>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
             <div class="box-header with-border">
                 <h4 class="box-title"
                 >
-                    Leads completed each month
+                    Recruits completed each month
                 </h4>
                 <div class="box-tools pull-right">
                     <button type="button" id="collapse4" class="btn btn-box-tool" data-toggle="collapse"
@@ -157,8 +157,8 @@
             <div id="collapseFour" class="panel-collapse">
                 <div class="box-body">
                     <div>
-                        <graphline class="chart" :labels="{{json_encode($completedLeadEachMonths)}}"
-                                   :values="{{json_encode($leadsCompleted)}}"></graphline>
+                        <graphline class="chart" :labels="{{json_encode($completedRecruitEachMonths)}}"
+                                   :values="{{json_encode($recruitsCompleted)}}"></graphline>
                     </div>
                 </div>
             </div>
@@ -206,8 +206,8 @@
             <span class="info-box-icon bg-green"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Leads Completed today</span>
-                <span class="info-box-number">{{$completedLeadsToday}}</span>
+                <span class="info-box-text">Recruits Completed today</span>
+                <span class="info-box-number">{{$completedRecruitsToday}}</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -219,8 +219,8 @@
             <span class="info-box-icon bg-yellow"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Leads created today</span>
-                <span class="info-box-number">{{$createdLeadsToday}}</span>
+                <span class="info-box-text">Recruits created today</span>
+                <span class="info-box-number">{{$createdRecruitsToday}}</span>
             </div>
             <!-- /.info-box-content -->
         </div>

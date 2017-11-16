@@ -8,7 +8,7 @@
         <h3>{{ __('Tasks assigned') }}</h3>
             <thead>
                     <th>{{ __('Title') }}</th>
-                    <th>{{ __('Client') }}</th>
+                    <th>{{ __('Athlete') }}</th>
                     <th>{{ __('Created at') }}</th>
                     <th>{{ __('Deadline') }}</th>
                     <th>
@@ -23,18 +23,18 @@
             </thead>
         </table>
     </el-tab-pane>
-    <el-tab-pane label="Leads" name="leads">
+    <el-tab-pane label="Recruits" name="recruits">
       <table class="table table-hover">
-        <table class="table table-hover" id="leads-table">
-                <h3>{{ __('Leads assigned') }}</h3>
+        <table class="table table-hover" id="recruits-table">
+                <h3>{{ __('Recruits assigned') }}</h3>
                 <thead>
                 <tr>
                     <th>{{ __('Title') }}</th>
-                    <th>{{ __('Client') }}</th>
+                    <th>{{ __('Athlete') }}</th>
                     <th>{{ __('Created at') }}</th>
                     <th>{{ __('Deadline') }}</th>
                     <th>
-                        <select name="status" id="status-lead">
+                        <select name="status_id" id="status-recruit">
                         <option value="" disabled selected>{{ __('Status') }}</option>
                             <option value="open">Open</option>
                             <option value="closed">Closed</option>
@@ -45,9 +45,9 @@
                 </thead>
             </table>
     </el-tab-pane>
-    <el-tab-pane label="Clients" name="clients">
-         <table class="table table-hover" id="clients-table">
-                <h3>{{ __('Clients assigned') }}</h3>
+    <el-tab-pane label="Athletes" name="athletes">
+         <table class="table table-hover" id="athletes-table">
+                <h3>{{ __('Athletes assigned') }}</h3>
                 <thead>
                 <tr>
                     <th>{{ __('Name') }}</th>
@@ -62,8 +62,8 @@
   <div class="col-sm-4">
   <h4>{{ __('Tasks') }}</h4>
 <doughnut :statistics="{{$task_statistics}}"></doughnut>
-<h4>{{ __('Leads') }}</h4>
-<doughnut :statistics="{{$lead_statistics}}"></doughnut>
+<h4>{{ __('Recruits') }}</h4>
+<doughnut :statistics="{{$recruit_statistics}}"></doughnut>
   </div>
 
    @stop 
@@ -85,7 +85,7 @@
                     columns: [
 
                         {data: 'titlelink', name: 'title'},
-                        {data: 'client_id', name: 'Client', orderable: false, searchable: false},
+                        {data: 'athlete_id', name: 'Athlete', orderable: false, searchable: false},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'deadline', name: 'deadline'},
                         {data: 'status', name: 'status', orderable: false},
@@ -105,13 +105,13 @@
 
           });
             $(function () {
-                $('#clients-table').DataTable({
+                $('#athletes-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('users.clientdata', ['id' => $user->id]) !!}',
+                    ajax: '{!! route('users.athletedata', ['id' => $user->id]) !!}',
                     columns: [
 
-                        {data: 'clientlink', name: 'name'},
+                        {data: 'athletelink', name: 'name'},
                         {data: 'company_name', name: 'company_name'},
                         {data: 'primary_number', name: 'primary_number'},
 
@@ -120,22 +120,22 @@
             });
 
             $(function () {
-              var table = $('#leads-table').DataTable({
+              var table = $('#recruits-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('users.leaddata', ['id' => $user->id]) !!}',
+                    ajax: '{!! route('users.recruitdata', ['id' => $user->id]) !!}',
                     columns: [
 
                         {data: 'titlelink', name: 'title'},
-                        {data: 'client_id', name: 'Client', orderable: false, searchable: false},
+                        {data: 'athlete_id', name: 'Athlete', orderable: false, searchable: false},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'contact_date', name: 'contact_date'},
-                        {data: 'status', name: 'status', orderable: false},
+                        {data: 'status_id', name: 'status_id', orderable: false},
                     ]
                 });
 
-              $('#status-lead').change(function() {
-                selected = $("#status-lead option:selected").val();
+              $('#status-recruit').change(function() {
+                selected = $("#status-recruit option:selected").val();
                     if(selected == 'open') {
                         table.columns(4).search(1).draw();
                     } else if(selected == 'closed') {

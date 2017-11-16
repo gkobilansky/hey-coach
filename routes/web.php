@@ -25,8 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('/data', 'UsersController@anyData')->name('users.data');
         Route::get('/taskdata/{id}', 'UsersController@taskData')->name('users.taskdata');
-        Route::get('/leaddata/{id}', 'UsersController@leadData')->name('users.leaddata');
-        Route::get('/clientdata/{id}', 'UsersController@clientData')->name('users.clientdata');
+        Route::get('/recruitdata/{id}', 'UsersController@recruitData')->name('users.recruitdata');
+        Route::get('/athletedata/{id}', 'UsersController@athleteData')->name('users.athletedata');
         Route::get('/users', 'UsersController@users')->name('users.users');
     });
         Route::resource('users', 'UsersController');
@@ -36,15 +36,15 @@ Route::group(['middleware' => ['auth']], function () {
      */
         Route::resource('roles', 'RolesController');
     /**
-     * Clients
+     * Athletes
      */
-    Route::group(['prefix' => 'clients'], function () {
-        Route::get('/data', 'ClientsController@anyData')->name('clients.data');
-        Route::post('/create/cvrapi', 'ClientsController@cvrapiStart');
+    Route::group(['prefix' => 'athletes'], function () {
+        Route::get('/data', 'AthletesController@anyData')->name('athletes.data');
+        Route::post('/create/cvrapi', 'AthletesController@cvrapiStart');
         Route::post('/upload/{id}', 'DocumentsController@upload');
-        Route::patch('/updateassign/{id}', 'ClientsController@updateAssign');
+        Route::patch('/updateassign/{id}', 'AthletesController@updateAssign');
     });
-        Route::resource('clients', 'ClientsController');
+        Route::resource('athletes', 'AthletesController');
 	    Route::resource('documents', 'DocumentsController');
 	
       
@@ -60,15 +60,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('tasks', 'TasksController');
 
     /**
-     * Leads
+     * Recruits
      */
-    Route::group(['prefix' => 'leads'], function () {
-        Route::get('/data', 'LeadsController@anyData')->name('leads.data');
-        Route::patch('/updateassign/{id}', 'LeadsController@updateAssign');
-        Route::patch('/updatestatus/{id}', 'LeadsController@updateStatus');
-        Route::patch('/updatefollowup/{id}', 'LeadsController@updateFollowup')->name('leads.followup');
+    Route::group(['prefix' => 'recruits'], function () {
+        Route::get('/data', 'RecruitsController@anyData')->name('recruits.data');
+        Route::patch('/updateassign/{id}', 'RecruitsController@updateAssign');
+        Route::patch('/updatestatus/{id}', 'RecruitsController@updateStatus');
+        Route::patch('/updatefollowup/{id}', 'RecruitsController@updateFollowup')->name('recruits.followup');
     });
-        Route::resource('leads', 'LeadsController');
+        Route::resource('recruits', 'RecruitsController');
         Route::post('/comments/{type}/{id}', 'CommentController@store');
     /**
      * Settings

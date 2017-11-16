@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Task\StoreTaskRequest;
 use App\Repositories\Task\TaskRepositoryContract;
 use App\Repositories\User\UserRepositoryContract;
-use App\Repositories\Client\ClientRepositoryContract;
+use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 use App\Repositories\Invoice\InvoiceRepositoryContract;
 
@@ -20,7 +20,7 @@ class TasksController extends Controller
 
     protected $request;
     protected $tasks;
-    protected $clients;
+    protected $athletes;
     protected $settings;
     protected $users;
     protected $invoices;
@@ -28,14 +28,14 @@ class TasksController extends Controller
     public function __construct(
         TaskRepositoryContract $tasks,
         UserRepositoryContract $users,
-        ClientRepositoryContract $clients,
+        AthleteRepositoryContract $athletes,
         InvoiceRepositoryContract $invoices,
         SettingRepositoryContract $settings
     )
     {
         $this->tasks = $tasks;
         $this->users = $users;
-        $this->clients = $clients;
+        $this->athletes = $athletes;
         $this->invoices = $invoices;
         $this->settings = $settings;
 
@@ -87,7 +87,7 @@ class TasksController extends Controller
     {
         return view('tasks.create')
             ->withUsers($this->users->getAllUsersWithDepartments())
-            ->withClients($this->clients->listAllClients());
+            ->withathletes($this->athletes->listAllathletes());
     }
 
     /**
@@ -142,7 +142,7 @@ class TasksController extends Controller
      */
     public function updateAssign($id, Request $request)
     {
-        $clientId = $this->tasks->getAssignedClient($id)->id;
+        $athleteId = $this->tasks->getAssignedathlete($id)->id;
 
 
         $this->tasks->updateAssign($id, $request);
@@ -170,14 +170,14 @@ class TasksController extends Controller
     public function invoice($id, Request $request)
     {
         $task = Task::findOrFail($id);
-        $clientId = $task->client()->first()->id;
+        $athleteId = $task->athlete()->first()->id;
         $timeTaskId = $task->time()->get();
         $integrationCheck = Integration::first();
 
         if ($integrationCheck) {
             $this->tasks->invoice($id, $request);
         }
-        $this->invoices->create($clientId, $timeTaskId, $request->all());
+        $this->invoices->create($athleteId, $timeTaskId, $request->all());
         Session()->flash('flash_message', 'Invoice created');
         return redirect()->back();
     }

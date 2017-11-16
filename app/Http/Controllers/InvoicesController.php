@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Repositories\Invoice\InvoiceRepositoryContract;
-use App\Repositories\Client\ClientRepositoryContract;
+use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Models\Integration;
 
 class InvoicesController extends Controller
 {
 
-    protected $clients;
+    protected $athletes;
     protected $invoices;
 
     public function __construct(
         InvoiceRepositoryContract $invoices,
-        ClientRepositoryContract $clients
+        AthleteRepositoryContract $athletes
     )
     {
         $this->invoices = $invoices;
-        $this->clients = $clients;
+        $this->athletes = $athletes;
     }
 
     /**
@@ -56,8 +56,8 @@ class InvoicesController extends Controller
         if ($integrationCheck) {
             $api = Integration::getApi('billing');
             $apiConnected = true;
-            $invoiceContacts = $api->getContacts($invoice->client->email);
-            // If we can't find a client in the integration, show all
+            $invoiceContacts = $api->getContacts($invoice->athlete->email);
+            // If we can't find a athlete in the integration, show all
             if (!$invoiceContacts) {
                 $invoiceContacts = $api->getContacts();
             }

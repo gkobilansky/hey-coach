@@ -13,7 +13,7 @@ class Task extends Model
         'status',
         'user_assigned_id',
         'user_created_id',
-        'client_id',
+        'athlete_id',
         'deadline'
     ];
     protected $dates = ['deadline'];
@@ -30,9 +30,9 @@ class Task extends Model
         return $this->belongsTo(Invoice::class);
     }
 
-    public function client()
+    public function athlete()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Athlete::class, 'athlete_id');
     }
 
     public function creator()

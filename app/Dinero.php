@@ -3,7 +3,7 @@ namespace App;
 
 class Dinero
 {
-    public static $client;
+    public static $athlete;
     public static $instance;
     protected static $organizationId;
     protected static $accessToken;
@@ -56,7 +56,7 @@ class Dinero
     public static function initialize($dbRow)
     {
         self::$organizationId = $dbRow['org_id'];
-        self::$clientId = config('services.dinero.client');
+        self::$clientId = config('services.dinero.athlete');
         self::$clientSecret = config('services.dinero.secret');
         self::$apiKey = $dbRow['api_key'];
     }

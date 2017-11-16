@@ -58,7 +58,7 @@ class UserRepository implements UserRepositoryContract
             $file =  $requestData->file('image_path');
 
             $destinationPath = public_path(). '/images/'. $companyname;
-            $filename = str_random(8) . '_' . $file->getClientOriginalName() ;
+            $filename = str_random(8) . '_' . $file->getathleteOriginalName() ;
             $file->move($destinationPath, $filename);
         }
 
@@ -99,7 +99,7 @@ class UserRepository implements UserRepositoryContract
             $file =  $requestData->file('image_path');
 
             $destinationPath =  public_path(). '/images/'. $companyname;
-            $filename = str_random(8) . '_' . $file->getClientOriginalName() ;
+            $filename = str_random(8) . '_' . $file->getathleteOriginalName() ;
 
             $file->move($destinationPath, $filename);
             if ($requestData->password == "") {
@@ -138,11 +138,11 @@ class UserRepository implements UserRepositoryContract
         if ($request->tasks == "move_all_tasks" && $request->task_user != "" ) {
             $user->moveTasks($request->task_user);
         }
-        if($request->leads == "move_all_leads" && $request->lead_user != "") {
-            $user->moveLeads($request->lead_user);
+        if($request->recruits == "move_all_recruits" && $request->recruit_user != "") {
+            $user->moveRecruits($request->recruit_user);
         }
-        if($request->clients == "move_all_clients" && $request->client_user != "") {
-            $user->moveClients($request->client_user);
+        if($request->athletes == "move_all_athletes" && $request->athlete_user != "") {
+            $user->moveathletes($request->athlete_user);
         }
 
         try {
@@ -150,7 +150,7 @@ class UserRepository implements UserRepositoryContract
             Session()->flash('flash_message', 'User successfully deleted');
         } catch (\Illuminate\Database\QueryException $e) {
             dd($e);
-            Session()->flash('flash_message_warning', 'User can NOT have, leads, clients, or tasks assigned when deleted');
+            Session()->flash('flash_message_warning', 'User can NOT have recruits, athletes, or tasks assigned when deleted');
         }
     }
 }

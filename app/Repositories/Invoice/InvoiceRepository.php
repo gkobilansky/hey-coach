@@ -2,7 +2,7 @@
 namespace App\Repositories\Invoice;
 
 use App\Models\Invoice;
-use App\Models\Client;
+use App\Models\Athlete;
 use Carbon\Carbon;
 use App\Models\Integration;
 use App\Models\Task;

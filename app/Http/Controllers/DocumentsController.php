@@ -33,10 +33,10 @@ class DocumentsController extends Controller
         }
         $file = $request->file('file');
         $destinationPath = public_path() . '/files/' . $companyname;
-        $filename = str_random(8) . '_' . $file->getClientOriginalName();
-        $fileOrginal = $file->getClientOriginalName();
+        $filename = str_random(8) . '_' . $file->getathleteOriginalName();
+        $fileOrginal = $file->getathleteOriginalName();
         $file->move($destinationPath, $filename);
-        $size = $file->getClientSize();
+        $size = $file->getathleteSize();
         $mbsize = $size / 1048576;
         $totaltsize = substr($mbsize, 0, 4);
         if ($totaltsize > 15) {
@@ -45,7 +45,7 @@ class DocumentsController extends Controller
         }
         $input = array_replace(
             $request->all(),
-            ['path' => "$filename", 'size' => "$totaltsize", 'file_display' => "$fileOrginal", 'client_id' => $id]
+            ['path' => "$filename", 'size' => "$totaltsize", 'file_display' => "$fileOrginal", 'athlete_id' => $id]
         );
         $document = Document::create($input);
         Session::flash('flash_message', 'File successfully uploaded');
@@ -63,7 +63,7 @@ class DocumentsController extends Controller
         $validator = Validator::make($request->all(), $rules);
         // process the form
         if (!$validator->fails()) {
-            return Redirect(route('clients.create'))->withErrors($validator);
+            return Redirect(route('athletes.create'))->withErrors($validator);
         } else {
             try {
                 Excel::load('public\imports\contacts.xlsx', function ($reader) {
@@ -74,10 +74,10 @@ class DocumentsController extends Controller
                     }
                 });
                 Session::flash('flash_message', 'Users uploaded successfully.');
-                // return redirect(route('clients.index'));
+                // return redirect(route('athletes.index'));
             } catch (\Exception $e) {
                 Session::flash('flash_message_warning', $e->getMessage());
-                //return redirect(route('clients.index'));
+                //return redirect(route('athletes.index'));
             }
         }
     }
