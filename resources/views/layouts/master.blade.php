@@ -21,45 +21,46 @@
 
     <div class="navbar navbar-default navbar-top">
         <!--NOTIFICATIONS START-->
-<div class="menu">
-   
-    <div class="notifications-header"><p>Notifications</p> </div>
-  <!-- Menu -->
- <ul>
- <?php $notifications = auth()->user()->unreadNotifications; ?>
+    <div class="menu">
+    
+        <div class="notifications-header"><p>Notifications</p> </div>
+    <!-- Menu -->
+    <ul>
+    <?php $notifications = auth()->user()->unreadNotifications; ?>
 
-    @foreach($notifications as $notification)
-   
-    <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
-    <li> 
- <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
-    <p>{{ $notification->data['message']}}</p></li>
-    </a>
-    @endforeach 
-  </ul>
-</div>
+        @foreach($notifications as $notification)
+    
+        <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
+        <li> 
+    <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
+        <p>{{ $notification->data['message']}}</p></li>
+        </a>
+        @endforeach 
+    </ul>
+    </div>
 
-       <div class="dropdown" id="nav-toggle">
+    <div class="dropdown" id="nav-toggle">
             <a id="notification-clock" role="button" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-bell"><span id="notifycount">{{ $notifications->count() }}</span></i>
             </a>
                 </div>
                     @push('scripts')
                     <script>
-$('#notification-clock').click(function(e) {
-  e.stopPropagation();
-  $(".menu").toggleClass('bar')
-});
-$('body').click(function(e) {
-  if ($('.menu').hasClass('bar')) {
-    $(".menu").toggleClass('bar')
-  }
-})      
-                  id = {};
+                        $('#notification-clock').click(function (e) {
+                            e.stopPropagation();
+                            $(".menu").toggleClass('bar')
+                        });
+                        $('body').click(function (e) {
+                            if ($('.menu').hasClass('bar')) {
+                                $(".menu").toggleClass('bar')
+                            }
+                        })
+                        id = {};
+
                         function postRead(id) {
                             $.ajax({
                                 type: 'post',
-                                url: '{{url('/notifications/markread')}}',
+                                url: '{{url(' / notifications / markread ')}}',
                                 data: {
                                     id: id,
                                 },
@@ -69,7 +70,6 @@ $('body').click(function(e) {
                             });
 
                         }
-
                     </script>
                 @endpush
         <!--NOTIFICATIONS END-->
@@ -203,7 +203,7 @@ $('body').click(function(e) {
     <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/jquery.caret.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('js/jquery.atwho.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/jquery.atwho.min.js') }}"></script>
 @stack('scripts')
 </body>
 

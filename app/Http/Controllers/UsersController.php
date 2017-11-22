@@ -189,8 +189,8 @@ class UsersController extends Controller
         return view('users.show')
             ->withUser($this->users->find($id))
             ->withCompanyname($this->settings->getCompanyName())
-            ->withTaskStatistics($this->tasks->totalOpenAndClosedTasks($id))
-            ->withrecruitStatistics($this->recruits->totalOpenAndClosedrecruits($id));
+            ->with('task_statistics', $this->tasks->totalOpenAndClosedTasks($id))
+            ->with('recruit_statistics', $this->recruits->totalOpenAndClosedrecruits($id));
     }
 
     /**

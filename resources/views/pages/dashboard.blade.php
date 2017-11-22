@@ -19,10 +19,8 @@
         });
     </script>
 @endpush
-    <div class="div">
-
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
+    <!-- Small boxes (Stat box) -->
+      <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -104,35 +102,7 @@
             <!-- ./col -->
         </div>
         <!-- /.row -->
-
-        <?php $createdTaskEachMonths = array(); $taskCreated = array();?>
-        @foreach($createdTasksMonthly as $task)
-            <?php $createdTaskEachMonths[] = date('F', strTotime($task->created_at)) ?>
-            <?php $taskCreated[] = $task->month;?>
-        @endforeach
-
-        <?php $completedTaskEachMonths = array(); $taskCompleted = array();?>
-
-        @foreach($completedTasksMonthly as $tasks)
-            <?php $completedTaskEachMonths[] = date('F', strTotime($tasks->updated_at)) ?>
-            <?php $taskCompleted[] = $tasks->month;?>
-        @endforeach
-
-        <?php $completedRecruitEachMonths = array(); $recruitsCompleted = array();?>
-        @foreach($completedRecruitsMonthly as $recruits)
-            <?php $completedRecruitEachMonths[] = date('F', strTotime($recruits->updated_at)) ?>
-            <?php $recruitsCompleted[] = $recruits->month;?>
-        @endforeach
-
-        <?php $createdRecruitEachMonths = array(); $recruitCreated = array();?>
-        @foreach($createdRecruitsMonthly as $recruit)
-            <?php $createdRecruitEachMonths[] = date('F', strTotime($recruit->created_at)) ?>
-            <?php $recruitCreated[] = $recruit->month;?>
-        @endforeach
         <div class="row">
-
-            @include('partials.dashboardone')
-
-
+          <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}"></pipeline>
         </div>
 @endsection

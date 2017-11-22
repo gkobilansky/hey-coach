@@ -32,7 +32,7 @@ class Athlete extends Model
             ->orderBy('created_at', 'desc');
     }
 
-    public function leads()
+    public function recruits()
     {
         return $this->hasMany(Recruit::class, 'athlete_id', 'id')
             ->orderBy('status_id', 'asc')

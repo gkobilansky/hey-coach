@@ -40,6 +40,10 @@ class AccessServiceProvider extends ServiceProvider
             \App\Repositories\Setting\SettingRepository::class
         );
         $this->app->bind(
+            \App\Repositories\Status\StatusRepositoryContract::class,
+            \App\Repositories\Status\StatusRepository::class
+        );
+        $this->app->bind(
             \App\Repositories\Task\TaskRepositoryContract::class,
             \App\Repositories\Task\TaskRepository::class
         );

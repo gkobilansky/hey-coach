@@ -113,12 +113,22 @@ class RecruitRepository implements RecruitRepositoryContract
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function allCompletedRecruits()
     {
         return Recruit::where('status_id', 2)->count();
     }
+
+     /**
+     * @return mixed
+     */
+    public function getAllRecruits()
+    {
+        return Recruit::select('id','status_id', 'title')->get()->toJson();
+    }
+
+
 
     /**
      * @return float|int

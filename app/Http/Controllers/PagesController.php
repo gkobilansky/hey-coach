@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Repositories\Task\TaskRepositoryContract;
 use App\Repositories\Recruit\RecruitRepositoryContract;
 use App\Repositories\User\UserRepositoryContract;
+use App\Repositories\Status\StatusRepositoryContract;
 use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 
@@ -18,17 +19,20 @@ class PagesController extends Controller
     protected $settings;
     protected $tasks;
     protected $recruits;
+    protected $statuses;
 
     public function __construct(
         UserRepositoryContract $users,
         AthleteRepositoryContract $athletes,
         SettingRepositoryContract $settings,
+        StatusRepositoryContract $statuses,
         TaskRepositoryContract $tasks,
         RecruitRepositoryContract $recruits
     ) {
         $this->users = $users;
         $this->athletes = $athletes;
         $this->settings = $settings;
+        $this->statuses = $statuses;
         $this->tasks = $tasks;
         $this->recruits = $recruits;
     }
@@ -44,10 +48,19 @@ class PagesController extends Controller
          * Other Statistics
          *
          */
+        $allStatuses = $this->statuses->getAllStatuses();
+        $statusNames = $this->statuses->getStatusNames();
         $companyname = $this->settings->getCompanyName();
         $users = $this->users->getAllUsers();
         $totalAthletes = $this->athletes->getAllAthletesCount();
         $totalTimeSpent = $this->tasks->totalTimeSpent();
+
+    /**
+      * Data for pipelines.
+      *
+      */
+
+        $recruitRecords = $this->recruits->getAllRecruits();
 
      /**
       * Statistics for all-time tasks.
@@ -83,7 +96,7 @@ class PagesController extends Controller
       *
       */
      
-        $allrecruits = $this->recruits->recruits();
+        $allRecruits = $this->recruits->recruits();
         $allCompletedRecruits = $this->recruits->allCompletedRecruits();
         $totalPercentageRecruits = $this->recruits->percantageCompleted();
      /**
@@ -122,9 +135,12 @@ class PagesController extends Controller
             'users',
             'companyname',
             'alltasks',
+            'allStatuses',
+            'statusNames',
             'allCompletedTasks',
             'totalPercentageTasks',
-            'allrecruits',
+            'allRecruits',
+            'recruitRecords',
             'allCompletedRecruits',
             'totalPercentageRecruits'
         ));

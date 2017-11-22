@@ -75,7 +75,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">{{ __('All Recruits') }}</span>
-                <span class="info-box-number">{{$allCompletedRecruits}} / {{$allrecruits}}</span>
+                <span class="info-box-number">{{$allCompletedRecruits}} / {{$allRecruits}}</span>
 
                 <div class="progress">
                     <div class="progress-bar" style="width: {{$totalPercentageRecruits}}%"></div>
@@ -92,8 +92,7 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h4 class="box-title"
-                >
+                <h4 class="box-title">
                     {{ __('Users') }}
                 </h4>
                 <div class="box-tools pull-right">
