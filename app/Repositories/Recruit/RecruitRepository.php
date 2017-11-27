@@ -125,7 +125,12 @@ class RecruitRepository implements RecruitRepositoryContract
      */
     public function getAllRecruits()
     {
-        return Recruit::select('id','status_id', 'title')->get()->toJson();
+        $recruits = DB::table('recruits')
+        ->join('athletes', 'recruits.athlete_id', '=', 'athletes.id')
+        ->select('recruits.*', 'athletes.name')
+        ->get();
+        
+        return $recruits;
     }
 
 

@@ -9,8 +9,9 @@
     			<ul class="drag-inner-list" ref="list" :data-status="stage.name">
                     <li class="drag-item" v-for="block in getBlocks(stage.id)" :data-block-id="block.id" :key="block.id">
                         <slot :name="block.id">
+                            <div>{{ block.name }}</div>
                             <div><strong>Note: </strong>{{ block.title }}</div>
-                            <div>{{ block.id }}</div>
+                            <div>{{ stage.id }}</div>
                         </slot>
                     </li>
     			</ul>
@@ -46,6 +47,9 @@
         getBlocks(status) {
           return this.localBlocks.filter(block => block.status_id === status);
         },
+         updateBlock(id, status_id) {
+          this.blocks.find(b => b.id === Number(id)).status = status;
+         },
       },
 
       mounted() {
@@ -58,7 +62,7 @@
               for (index = 0; index < list.children.length; index += 1) {
                 if (list.children[index].classList.contains('is-moving')) break;
               }
-              this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
+              this.$emit('update-block', block.dataset.blockId, list.dataset.status_id, index);
             })
             .on('dragend', (el) => {
               el.classList.remove('is-moving');

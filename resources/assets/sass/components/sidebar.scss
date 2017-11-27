@@ -212,28 +212,10 @@ a.list-group-item
   text-align: center;
 }
 
-#page-content-wrapper {
-  padding: 20px 20px 20px 20px;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .big-menu #page-content-wrapper {
-    padding-left: 270px;
-    padding-left: 270px;
-  }
-  .myNavmenu-icons.big-menu #page-content-wrapper {
-    padding-left: 60px;
-  }
-}
-
 @media (min-width: 992px) {
   .menu-txt-toggle {
     display: block;
     left: 280px;
-  }
-  .myNavmenu-icons .navmenu {
-    /*width: 125px;*/
   }
   .navmenu {
     width: 270px;
@@ -241,10 +223,6 @@ a.list-group-item
   }
   #myNavmenu p.list-group-item.siderbar-top {
     text-align: left;
-  }
-  #page-content-wrapper {
-    padding: 20px 20px 20px 270px;
-    position: relative;
   }
   .myNavmenu-icons #page-content-wrapper {
     padding-left: 60px;

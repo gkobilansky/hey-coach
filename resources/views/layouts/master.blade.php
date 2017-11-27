@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 <head>
     <meta charset="UTF-8">
     <title>Hey Coach</title>
@@ -9,7 +9,7 @@
     <link href="{{ URL::asset('css/dropzone.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/jquery.atwho.min.css') }}" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 </head>
@@ -17,76 +17,46 @@
 
 <div id="wrapper">
 
-    <button type="button" class="navbar-toggle menu-txt-toggle" style=""><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+    {{--  <button type="button" class="navbar-toggle menu-txt-toggle" style=""><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>  --}}
 
-    <div class="navbar navbar-default navbar-top">
         <!--NOTIFICATIONS START-->
-    <div class="menu">
-    
-        <div class="notifications-header"><p>Notifications</p> </div>
-    <!-- Menu -->
-    <ul>
-    <?php $notifications = auth()->user()->unreadNotifications; ?>
-
-        @foreach($notifications as $notification)
-    
-        <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
-        <li> 
-    <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
-        <p>{{ $notification->data['message']}}</p></li>
-        </a>
-        @endforeach 
-    </ul>
-    </div>
-
-    <div class="dropdown" id="nav-toggle">
-            <a id="notification-clock" role="button" data-toggle="dropdown">
-                <i class="glyphicon glyphicon-bell"><span id="notifycount">{{ $notifications->count() }}</span></i>
-            </a>
-                </div>
-                    @push('scripts')
-                    <script>
-                        $('#notification-clock').click(function (e) {
-                            e.stopPropagation();
-                            $(".menu").toggleClass('bar')
-                        });
-                        $('body').click(function (e) {
-                            if ($('.menu').hasClass('bar')) {
-                                $(".menu").toggleClass('bar')
-                            }
-                        })
-                        id = {};
-
-                        function postRead(id) {
-                            $.ajax({
-                                type: 'post',
-                                url: '{{url(' / notifications / markread ')}}',
-                                data: {
-                                    id: id,
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-
-                        }
-                    </script>
-                @endpush
-        <!--NOTIFICATIONS END-->
+        <div class="menu">
+            <div class="notifications-header"><p>Notifications</p></div>
+            <!-- Menu -->
+            <ul>
+                <?php $notifications = auth()->user()->unreadNotifications; ?>
+                @foreach($notifications as $notification)
+                    <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
+                        <li> 
+                            <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
+                            <p>{{ $notification->data['message']}}</p>
+                        </li>
+                    </a>
+                @endforeach 
+            </ul>
+        </div>
+        
         <button type="button" id="mobile-toggle" class="navbar-toggle mobile-toggle" data-toggle="offcanvas" data-target="#myNavmenu">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-    </div>
-
 
     <!-- /#sidebar-wrapper -->
     <!-- Sidebar menu -->
-
-    <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
+<el-menu theme="dark" mode="horizontal">
+    <el-menu-item index="1" class="logo-container"><a href="{{route('dashboard', \Auth::id())}}"><img src="{{url('images/hey-coach-logo.png')}}" width="75" alt="Hey Coach Logo"></a></el-menu-item>
+    <el-menu-item index="2"><a href="{{route('dashboard', \Auth::id())}}"><i class="glyphicon glyphicon-signal"></i> Recruiting</a></el-menu-item>
+    <el-menu-item index="3"><a href="{{ route('tasks.index')}}"><i class="glyphicon glyphicon-hourglass"></i> Tasks</a></el-menu-item>    
+    <el-menu-item index="4"><a href="{{ route('athletes.index')}}"><i class="glyphicon glyphicon-user"></i> Contacts</a></el-menu-item>
+  <div class="dropdown" id="nav-toggle">
+                <a id="notification-clock" role="button" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-bell"><span id="notifycount">{{ $notifications->count() }}</span></i>
+                </a>
+  </div>      
+</el-menu>
+    {{--  <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
         <div class="list-group panel">
-            <p class=" list-group-item siderbar-top" title=""><img src="{{url('images/hey-coach-logo.png')}}" width="250" alt=""></p>
             <a href="{{route('dashboard', \Auth::id())}}" class=" list-group-item" data-parent="#MainMenu"><i
                         class="glyphicon sidebar-icon glyphicon-dashboard"></i><span id="menu-txt">{{ __('Dashboard') }}</span> </a>
             <a href="{{route('users.show', \Auth::id())}}" class=" list-group-item" data-parent="#MainMenu"><i
@@ -168,7 +138,7 @@
                         class="glyphicon sidebar-icon glyphicon-log-out"></i><span id="menu-txt">{{ __('Sign Out') }}</span> </a>
 
         </div>
-    </nav>
+    </nav>  --}}
 
 
     <!-- Page Content -->
@@ -198,7 +168,7 @@
     </div>
     <!-- /#page-content-wrapper -->
 </div>
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/dropzone.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>

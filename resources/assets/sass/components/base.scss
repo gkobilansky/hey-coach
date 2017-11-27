@@ -4,8 +4,11 @@ $secondary-color: #008ae6;
 $link-color:#337ab7;
 $top-bar-color:#2196F3;
 a{
-    color: $link-color;
+    // color: $link-color;
     text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 }
 p{
     margin: 0 0 10px;
@@ -67,22 +70,7 @@ body {
 }
 #page-content-wrapper {
     width: 100%;
-    position: absolute;
-    padding: 15px 15px 15px 270px;
-  @media(min-width:768px)
-	{
-        padding: 0px 0px 0px 0px;
-	position: relative;
-	}
-	@media(min-width:992px) {
-	padding:0px 0px 0px 270px;
-	position:relative;
-	}
-    @media(max-width:768px)
-    {
-       padding: 0px 0px 0px 0px;
-       position: relative;
-    }
+    position: absolute; 
 }
 
 .boxspace

@@ -8351,7 +8351,10 @@ button.close {
 }
 
 a {
-  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover {
   text-decoration: none;
 }
 
@@ -8414,28 +8417,6 @@ body {
 #page-content-wrapper {
   width: 100%;
   position: absolute;
-  padding: 15px 15px 15px 270px;
-}
-
-@media (min-width: 768px) {
-  #page-content-wrapper {
-    padding: 0px 0px 0px 0px;
-    position: relative;
-  }
-}
-
-@media (min-width: 992px) {
-  #page-content-wrapper {
-    padding: 0px 0px 0px 270px;
-    position: relative;
-  }
-}
-
-@media (max-width: 768px) {
-  #page-content-wrapper {
-    padding: 0px 0px 0px 0px;
-    position: relative;
-  }
 }
 
 .boxspace {
@@ -8519,15 +8500,10 @@ body {
 }
 
 .dropdown {
-  display: inline-block;
+  display: block;
   padding: 20px 120px 0px 0px;
   float: right;
   z-index: 10;
-}
-
-.glyphicon-bell {
-  font-size: 1.4rem;
-  color: #eee;
 }
 
 .menu {
@@ -8843,30 +8819,10 @@ a.list-group-item:hover {
   text-align: center;
 }
 
-#page-content-wrapper {
-  padding: 20px 20px 20px 20px;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .big-menu #page-content-wrapper {
-    padding-left: 270px;
-    padding-left: 270px;
-  }
-
-  .myNavmenu-icons.big-menu #page-content-wrapper {
-    padding-left: 60px;
-  }
-}
-
 @media (min-width: 992px) {
   .menu-txt-toggle {
     display: block;
     left: 280px;
-  }
-
-  .myNavmenu-icons .navmenu {
-    /*width: 125px;*/
   }
 
   .navmenu {
@@ -8877,11 +8833,6 @@ a.list-group-item:hover {
 
   #myNavmenu p.list-group-item.siderbar-top {
     text-align: left;
-  }
-
-  #page-content-wrapper {
-    padding: 20px 20px 20px 270px;
-    position: relative;
   }
 
   .myNavmenu-icons #page-content-wrapper {
