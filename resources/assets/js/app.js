@@ -5,11 +5,12 @@
  */
 
 require('./bootstrap');
+import VueRouter from 'vue-router'
 import ElementUI from 'element-ui';
 import graphline from './components/Graphline.vue';
 import doughnut from './components/Doughnut.vue';
 import message from './components/Message.vue';
-import pipeline from './components/Pipeline.vue';
+import Pipeline from './components/Pipeline.vue';
 import 'element-ui/lib/theme-default/index.css';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,6 +19,15 @@ import 'element-ui/lib/theme-default/index.css';
  */
 
 Vue.use(ElementUI);
+Vue.use(VueRouter);
+
+const routes = [
+    { path: '/pipeline', component: Pipeline }
+  ]
+
+const router = new VueRouter({
+    routes // short for `routes: routes`
+  })
 
 //Vue.component('graphline', require('./components/Graphline.vue'));
 $('.dropdown.keep-open').on({
@@ -80,24 +90,19 @@ $(document).ready(function() {
         }
     });
 });
-$(window).on('resize', function(){
-      var win = $(this); //this = window
-      if (win.width() >= 991) { $("body #wrapper").removeClass("big-menu");
-      //$("body .navbar-default .navbar-toggle").trigger("click");
-      }
-});
+
 
 $('.search-select')
   .dropdown({
     direction: 'upward'
-  })
-;
-var app = new Vue({
+});
+const app = new Vue({
     el: '#wrapper',
+    router,
     components: {
       graphline,
       doughnut,
       message,
-      pipeline
+      Pipeline
     }
-});
+}).$mount('#wrapper')

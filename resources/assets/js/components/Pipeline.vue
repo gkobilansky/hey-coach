@@ -1,16 +1,24 @@
 <template>
-    <div class="drag-container">
+    <div class="pipline">
     	<ul class="drag-list">
     		<li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage.name]: true}" :key="stage.id">
     			<span class="drag-column-header">
-    				<h2>{{ stage.name }}</h2>
+    				<h3 class="stage-name">{{ stage.name }}</h3>
     			</span>
     			<div class="drag-options"></div>
     			<ul class="drag-inner-list" ref="list" :data-status="stage.name">
                     <li class="drag-item" v-for="block in getBlocks(stage.id)" :data-block-id="block.id" :key="block.id">
                         <slot :name="block.id">
-                            <div>{{ block.name }}</div>
-                            <div><strong>Note: </strong>{{ block.title }}</div>
+                          <a :href="'/recruits/' + block.id">
+                            <div class="block">
+                                <strong>
+                                  <img src="/images/profile_120x120.svg" :title="block.name" class="mini-profile">
+                                <span class="name">{{ block.name }}</span>
+                                </strong>
+                            
+                            </div>
+                          </a>
+                            <!-- <div><strong>Note: </strong>{{ block.title }}</div> -->
                             <div>{{ stage.id }}</div>
                         </slot>
                     </li>
@@ -30,6 +38,7 @@
       props: {
         stages: {},
         blocks: {},
+        contact: {}
       },
       data() {
         return {

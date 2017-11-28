@@ -146,7 +146,7 @@ class RecruitsController extends Controller
     public function updateStatus($id, Request $request)
     {
         $this->recruits->updateStatus($id, $request);
-        Session()->flash('flash_message', 'Recruit is completed');
+        Session()->flash('flash_message', 'Recruiting status updated');
         return redirect()->back();
     }
 }

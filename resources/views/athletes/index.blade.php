@@ -9,9 +9,9 @@
         <thead>
         <tr>
             <th>{{ __('Name') }}</th>
-            <th>{{ __('Company') }}</th>
-            <th>{{ __('Mail') }}</th>
-            <th>{{ __('Number') }}</th>
+            <th>{{ __('Organization') }}</th>
+            <th>{{ __('Email') }}</th>
+            <th>{{ __('Phone Number') }}</th>
             <th></th>
             <th></th>
         </tr>

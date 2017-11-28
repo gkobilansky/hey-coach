@@ -8588,8 +8588,8 @@ body {
 }
 
 .profilepicsize {
-  width: 135px;
-  height: 160px;
+  width: 120px;
+  border-radius: 50%;
 }
 
 .popovertext {
@@ -9049,9 +9049,12 @@ ul.drag-inner-list {
   padding: 0;
 }
 
-.drag-container {
-  max-width: 1000px;
-  margin: 20px auto;
+.mini-profile {
+  height: 16px;
+  margin: 2px 8px 0 0;
+  border-radius: 50%;
+  border: none;
+  vertical-align: top;
 }
 
 .drag-list {
@@ -9075,7 +9078,7 @@ ul.drag-inner-list {
           flex: 1;
   margin: 0 10px;
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: #f7f7f7;
   overflow: hidden;
 }
 
@@ -9085,11 +9088,14 @@ ul.drag-inner-list {
   }
 }
 
-.drag-column h2 {
-  font-size: 1rem;
-  margin: 0;
-  text-transform: uppercase;
+.drag-column .stage-name {
   font-weight: 600;
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .drag-column-header {
@@ -9102,19 +9108,25 @@ ul.drag-inner-list {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 10px;
+  padding: 6px 25px 6px 12px;
+  background-color: #f7f7f7;
+  background: url("/images/stage-arrow.png") no-repeat 100% 0, -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f7f7));
+  background: url("/images/stage-arrow.png") no-repeat 100% 0, linear-gradient(#fff, #f7f7f7);
+  background-size: 20px 100%, 100% 100%;
+  overflow: visible;
+  vertical-align: middle;
 }
 
 .drag-inner-list {
   min-height: 50px;
-  color: white;
+  color: #333;
 }
 
 .drag-item {
-  padding: 10px;
-  margin: 10px;
-  height: 100px;
-  background: rgba(0, 0, 0, 0.4);
+  padding: 1em;
+  min-height: 50px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #fff;
   -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }

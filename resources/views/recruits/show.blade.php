@@ -14,7 +14,35 @@
 @endpush
     <div class="row">
         @include('partials.athleteheader')
+         <div class="col-lg-2">
+         @if($recruit->status_id == 1)
+            {!! Form::model($recruit, [
+           'method' => 'PATCH',
+            'url' => ['recruits/updateassign', $recruit->id],
+            ]) !!}
+            {!! Form::select('user_assigned_id', $users, null, ['class' => 'form-control ui search selection top right pointing search-select', 'id' => 'search-select']) !!}
+            {!! Form::submit(__('Assign new owner'), ['class' => 'btn btn-primary form-control closebtn']) !!}
+            {!! Form::close() !!}
+            <div class="recruit-status movedown"><strong>
+                {{ __('Status') }}: {{$recruit->status->name }}
+            </strong></div>
+            {!! Form::model($recruit, [
+           'method' => 'PATCH',
+           'url' => ['recruits/updatestatus', $recruit->id],
+           ]) !!}
+            {!! Form::submit('Accepted', ['class' => 'btn btn-success form-control closebtn']) !!}
+            {!! Form::close() !!}
+            {!! Form::model($recruit, [
+           'method' => 'PATCH',
+           'url' => ['recruits/updatestatus', $recruit->id],
+           ]) !!}
+
+            {!! Form::submit('Rejected', ['class' => 'btn btn-danger form-control closebtn']) !!}
+            {!! Form::close() !!}
+        @endif
+        </div>
         @include('partials.userheader')
+       
     </div>
 
     <div class="row">
@@ -45,26 +73,7 @@
                                     data-target="#ModalFollowUp"></i>@endif</span></p>
                     <!--Remove days left if recruit is completed-->
                 @endif
-
-                    {{ __('Status') }}: {{$recruit->status->name }}
         </div>
-        @if($recruit->status_id == 1)
-            {!! Form::model($recruit, [
-           'method' => 'PATCH',
-            'url' => ['recruits/updateassign', $recruit->id],
-            ]) !!}
-            {!! Form::select('user_assigned_id', $users, null, ['class' => 'form-control ui search selection top right pointing search-select', 'id' => 'search-select']) !!}
-            {!! Form::submit(__('Assign new user'), ['class' => 'btn btn-primary form-control closebtn']) !!}
-            {!! Form::close() !!}
-            {!! Form::model($recruit, [
-           'method' => 'PATCH',
-           'url' => ['recruits/updatestatus', $recruit->id],
-           ]) !!}
-
-            {!! Form::submit(__('Recruit completion'), ['class' => 'btn btn-success form-control closebtn movedown']) !!}
-            {!! Form::close() !!}
-        @endif
-
         <div class="activity-feed movedown">
             @foreach($recruit->activity as $activity)
 

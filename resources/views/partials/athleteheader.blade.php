@@ -1,6 +1,7 @@
 <div class="col-md-6">
+    <div class="profilepic"><img class="profilepicsize" src="../{{ $contact->avatar }}" /></div>
 
-    <h1 class="moveup">{{$athlete->name}} ({{$athlete->company_name}})</h1>
+    <h1 class="moveup">{{$athlete->name}}</h1>
 
     <!--Athlete info leftside-->
     <div class="contactleft">
@@ -12,13 +13,13 @@
         @endif
         @if($athlete->primary_number != "")
                 <!--Work Phone-->
-        <p><span class="glyphicon glyphicon-headphones" aria-hidden="true" data-toggle="tooltip"
+        <p><span class="glyphicon glyphicon-phone" aria-hidden="true" data-toggle="tooltip"
                  title=" {{ __('Primary number') }} " data-placement="left"> </span>
             <a href="tel:{{$athlete->work_number}}">{{$athlete->primary_number}}</a></p>
         @endif
         @if($athlete->secondary_number != "")
                 <!--Secondary Phone-->
-        <p><span class="glyphicon glyphicon-phone" aria-hidden="true" data-toggle="tooltip"
+        <p><span class="glyphicon glyphicon-phone-alt" aria-hidden="true" data-toggle="tooltip"
                  title="{{ __('Secondary number') }}" data-placement="left"> </span>
             <a href="tel:{{$athlete->secondary_number}}">{{$athlete->secondary_number}}</a></p>
         @endif
@@ -29,32 +30,23 @@
             <br/>{{$athlete->zipcode}} {{$athlete->city}}
         </p>
         @endif
+        @if($athlete->company_name != "")
+                <!--School or Club -->
+        <p><span class="glyphicon glyphicon-education" aria-hidden="true" data-toggle="tooltip"
+                 title="{{ __('Organization') }}" data-placement="left"> </span> {{$athlete->company_name}}</p>
+        @endif
     </div>
 
     <!--Athlete info leftside END-->
     <!--Athlete info rightside-->
     <div class="contactright">
-        @if($athlete->company_name != "")
-                <!--Company-->
-        <p><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip"
-                 title="{{ __('Company') }}" data-placement="left"> </span> {{$athlete->company_name}}</p>
-        @endif
-        @if($athlete->vat != "")
-                <!--Company-->
-        <p><span class="glyphicon glyphicon-cloud" aria-hidden="true" data-toggle="tooltip"
-                 title="{{ __('vat') }}" data-placement="left"> </span> {{$athlete->vat}}</p>
-        @endif
-        @if($athlete->industry != "")
-                <!--Industry-->
-        <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true" data-toggle="tooltip"
-                 title="{{ __('Industry') }}"data-placement="left"> </span> {{$athlete->industry}}</p>
-        @endif
+{{--         
         @if($athlete->company_type!= "")
                 <!--Company Type-->
         <p><span class="glyphicon glyphicon-globe" aria-hidden="true" data-toggle="tooltip"
                  title="{{ __('Company type') }}" data-placement="left"> </span>
             {{$athlete->company_type}}</p>
-        @endif
+        @endif  --}}
     </div>
 </div>
 

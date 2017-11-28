@@ -6,10 +6,18 @@ ul.drag-list, ul.drag-inner-list {
     padding: 0;
 }
 
-.drag-container {
-    max-width: 1000px;
-    margin: 20px auto;
+
+.mini-profile {
+    height: 16px;
+    margin: 2px 8px 0 0;
+    border-radius: 50%;
+    border: none;
+    vertical-align: top;
 }
+
+
+
+
 
 .drag-list {
     display: flex;
@@ -24,18 +32,21 @@ ul.drag-list, ul.drag-inner-list {
     flex: 1;
     margin: 0 10px;
     position: relative;
-    background: rgba(black, 0.2);
+    background: rgb(247, 247, 247);
     overflow: hidden;
 
     @media (max-width: 690px) {
         margin-bottom: 30px;
     }
 
-    h2 {
-        font-size: 1rem;
-        margin: 0;
-        text-transform: uppercase;
+    .stage-name {
         font-weight: 600;
+        width: 100%;
+        display: inline-block;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
 
@@ -43,19 +54,24 @@ ul.drag-list, ul.drag-inner-list {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 6px 25px 6px 12px;
+    background-color: #f7f7f7;
+    background: url('/images/stage-arrow.png') no-repeat 100% 0,linear-gradient(#fff, #f7f7f7);
+    background-size: 20px 100%, 100% 100%;
+    overflow: visible;
+    vertical-align: middle;
 }
 
 .drag-inner-list {
     min-height: 50px;
-    color: white;
+    color: #333;
 }
 
 .drag-item {
-    padding: 10px;
-    margin: 10px;
-    height: 100px;
-    background: rgba(black, 0.4);
+    padding: 1em;
+    min-height: 50px;
+    border-bottom: 1px solid#e5e5e5;;
+    background-color: #fff;
     transition: $ease-out;
 
     &.is-moving {

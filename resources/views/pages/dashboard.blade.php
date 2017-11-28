@@ -103,6 +103,6 @@
         </div>
         <!-- /.row -->
         <div class="row">
-          <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}" @update-block="updateBlock"></pipeline>
+          <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}"  @update-block="updateBlock"></pipeline>
         </div>
 @endsection

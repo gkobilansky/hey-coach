@@ -2,6 +2,8 @@
 <html lang="en-us">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hey Coach</title>
     <link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -45,7 +47,7 @@
     <!-- /#sidebar-wrapper -->
     <!-- Sidebar menu -->
 <el-menu theme="dark" mode="horizontal">
-    <el-menu-item index="1" class="logo-container"><a href="{{route('dashboard', \Auth::id())}}"><img src="{{url('images/hey-coach-logo.png')}}" width="75" alt="Hey Coach Logo"></a></el-menu-item>
+    <el-menu-item index="1" class="logo-container"><a href="{{route('dashboard', \Auth::id())}}"><img src="{{url('images/heycoach-logo-small.png')}}" alt="Hey Coach Logo"></a></el-menu-item>
     <el-menu-item index="2"><a href="{{route('dashboard', \Auth::id())}}"><i class="glyphicon glyphicon-signal"></i> Recruiting</a></el-menu-item>
     <el-menu-item index="3"><a href="{{ route('tasks.index')}}"><i class="glyphicon glyphicon-hourglass"></i> Tasks</a></el-menu-item>    
     <el-menu-item index="4"><a href="{{ route('athletes.index')}}"><i class="glyphicon glyphicon-user"></i> Contacts</a></el-menu-item>
@@ -131,7 +133,6 @@
                     <a href="{{ route('integrations.index')}}"
                        class="list-group-item childlist">{{ __('Integrations') }}</a>
                 </div>
-
 
             @endif
             <a href="{{ url('/logout') }}" class=" list-group-item impmenu" data-parent="#MainMenu"><i
