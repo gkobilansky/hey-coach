@@ -51,7 +51,7 @@
                             @endforeach
                         </h3>
 
-                        <p>{{ __('Recruits completed this month') }}</p>
+                        <p>{{ __('Recruits accepted this month') }}</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
