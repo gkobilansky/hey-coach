@@ -31915,16 +31915,23 @@ $(document).ready(function () {
 $('.search-select').dropdown({
     direction: 'upward'
 });
+
 var app = new Vue({
     el: '#wrapper',
-    router: router,
     components: {
         graphline: __WEBPACK_IMPORTED_MODULE_2__components_Graphline_vue___default.a,
         doughnut: __WEBPACK_IMPORTED_MODULE_3__components_Doughnut_vue___default.a,
         message: __WEBPACK_IMPORTED_MODULE_4__components_Message_vue___default.a,
         Pipeline: __WEBPACK_IMPORTED_MODULE_5__components_Pipeline_vue___default.a
+    },
+    methods: {
+        updateBlock: function updateBlock(id, status_id) {
+            // this.blocks.find(b => b.id === Number(id)).status = status;
+            // this.$http.patch('/recruits/updateStatus/', {id: block.id}).then(successCallback, errorCallback);
+            console.log('method invoked');
+        }
     }
-}).$mount('#wrapper');
+});
 
 /***/ }),
 /* 194 */
@@ -31959,7 +31966,6 @@ __webpack_require__(200);
 
 Vue.http.interceptors.push(function (request, next) {
   request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
-
   next();
 });
 
@@ -116564,6 +116570,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -116592,10 +116600,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return block.status_id === status;
       });
     },
-    updateBlock: function updateBlock(id, status_id) {
-      this.blocks.find(function (b) {
-        return b.id === Number(id);
-      }).status = status;
+    updateBlock: function updateBlock(block, stage) {
+
+      var resource = this.$resource('recruits/updatestatus{/id}');
+      //  let id = block.dataset.blockId;
+      resource.update({ id: 21 }, {}).then(this.successCallback, this.errorCallback);
+    },
+    successCallback: function successCallback(r) {
+      console.log('success', r);
+    },
+    errorCallback: function errorCallback(e) {
+      console.log(e);
     }
   },
 
@@ -116604,15 +116619,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     __WEBPACK_IMPORTED_MODULE_0_dragula___default()($('.drag-inner-list').toArray()).on('drag', function (el) {
       el.classList.add('is-moving');
-    }).on('drop', function (block, list) {
+    }).on('drop', function (block, stage) {
       var index = 0;
-      for (index = 0; index < list.children.length; index += 1) {
-        if (list.children[index].classList.contains('is-moving')) break;
+      for (index = 0; index < stage.children.length; index += 1) {
+        if (stage.children[index].classList.contains('is-moving')) break;
       }
-      _this.$emit('update-block', block.dataset.blockId, list.dataset.status_id, index);
+      _this.updateBlock(block, stage);
+      var id = block.dataset.blockId;
+      console.log(block, id, stage);
     }).on('dragend', function (el) {
       el.classList.remove('is-moving');
-
       window.setTimeout(function () {
         el.classList.add('is-moved');
         window.setTimeout(function () {
@@ -117600,7 +117616,12 @@ var render = function() {
                 ref: "list",
                 refInFor: true,
                 staticClass: "drag-inner-list",
-                attrs: { "data-status": stage.name }
+                attrs: { "data-status": stage.id },
+                on: {
+                  "update-block": function($event) {
+                    _vm.updateBlock(_vm.id, _vm.status_id)
+                  }
+                }
               },
               _vm._l(_vm.getBlocks(stage.id), function(block) {
                 return _c(
@@ -117623,8 +117644,25 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _c("span", { staticClass: "name" }, [
+                            _c("p", { staticClass: "name" }, [
                               _vm._v(_vm._s(block.name))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "org" }, [
+                            _c("span", {
+                              staticClass: "glyphicon glyphicon-education",
+                              attrs: {
+                                "aria-hidden": "true",
+                                "data-toggle": "tooltip",
+                                title: "School",
+                                "data-placement": "left"
+                              }
+                            }),
+                            _vm._v(" " + _vm._s(block.company_name)),
+                            _c("br"),
+                            _c("span", { staticClass: "state" }, [
+                              _vm._v(_vm._s(block.state))
                             ])
                           ])
                         ])
@@ -118254,4 +118292,4 @@ module.exports = function (css) {
 // removed by extract-text-webpack-plugin
 
 /***/ })
-/******/ ]);
+/******/ ]);;

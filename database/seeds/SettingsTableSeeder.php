@@ -27,7 +27,7 @@ class SettingsTableSeeder extends Seeder
                 'time_change_allowed' => 2,
                 'comment_allowed' => 2,
                 'country' => 'en',
-                'company' => 'Media',
+                'company' => 'NYU',
                 'created_at' => null,
                 'updated_at' => null,
             ),

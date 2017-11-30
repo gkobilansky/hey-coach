@@ -18,7 +18,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'password' => bcrypt(str_random(10)),
         'address' => $faker->secondaryAddress(),
         'work_number' => $faker->randomNumber(8),
-        'personal_number' => $faker->randomNumber(8),
+        'personal_number' => $faker->phoneNumber(),
         'remember_token' => str_random(10),
     ];
 });
@@ -31,9 +31,10 @@ $factory->define(App\Models\Athlete::class, function (Faker\Generator $faker) {
         'company_name' => $faker->company(),
         'address' => $faker->secondaryAddress(),
         'city' => $faker->city(),
+        'state'=> $faker->state(),
         'zipcode' => $faker->postcode(),
-        'primary_number' => $faker->randomNumber(8),
-        'secondary_number' => $faker->randomNumber(8),
+        'primary_number' => $faker->phoneNumber,
+        'secondary_number' => $faker->phoneNumber,
         'industry_id' => $faker->numberBetween($min = 1, $max = 25),
         'user_id' => $faker->numberBetween($min = 1, $max = 3),
         'company_type' => 'ApS',
@@ -44,7 +45,7 @@ $factory->define(App\Models\Athlete::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\Task::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->sentence,
+        'title' => $faker->realText,
         'description' => $faker->paragraph,
         'user_created_id' => $faker->numberBetween($min = 1, $max = 3),
         'user_assigned_id' => $faker->numberBetween($min = 1, $max = 3),
@@ -58,7 +59,7 @@ $factory->define(App\Models\Task::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\Recruit::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->sentence,
+        'title' => $faker->realText,
         'description' => $faker->paragraph,
         'user_created_id' => $faker->numberBetween($min = 1, $max = 3),
         'user_assigned_id' => $faker->numberBetween($min = 1, $max = 3),

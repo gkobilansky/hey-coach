@@ -23,6 +23,7 @@ class CreateAthletesTable extends Migration
             $table->string('address')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('company_name');
             $table->string('vat')->nullable();
             $table->string('industry');

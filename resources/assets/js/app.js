@@ -5,7 +5,7 @@
  */
 
 require('./bootstrap');
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
 import graphline from './components/Graphline.vue';
 import doughnut from './components/Doughnut.vue';
@@ -96,13 +96,20 @@ $('.search-select')
   .dropdown({
     direction: 'upward'
 });
+
 const app = new Vue({
     el: '#wrapper',
-    router,
     components: {
       graphline,
       doughnut,
       message,
       Pipeline
+    },
+    methods:{
+        updateBlock(id, status_id) {
+            // this.blocks.find(b => b.id === Number(id)).status = status;
+            // this.$http.patch('/recruits/updateStatus/', {id: block.id}).then(successCallback, errorCallback);
+            console.log('method invoked')
+        }
     }
-}).$mount('#wrapper')
+});

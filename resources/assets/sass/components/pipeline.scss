@@ -76,9 +76,17 @@ ul.drag-list, ul.drag-inner-list {
 
     &.is-moving {
         transform: scale(1.5);
-        background: rgba(black, 0.8);
+        background: rgba(#e5e5e5, 0.8);
     }
 
+}
+
+.name {
+    color: $primary-color;
+}
+
+.org, .state {
+    color: $lighter-primary-color;
 }
 
 .drag-header-more {

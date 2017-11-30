@@ -127,7 +127,7 @@ class RecruitRepository implements RecruitRepositoryContract
     {
         $recruits = DB::table('recruits')
         ->join('athletes', 'recruits.athlete_id', '=', 'athletes.id')
-        ->select('recruits.*', 'athletes.name')
+        ->select('recruits.*', 'athletes.name', 'athletes.company_name', 'athletes.state')
         ->get();
         
         return $recruits;

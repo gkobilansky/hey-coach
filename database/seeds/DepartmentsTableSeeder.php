@@ -15,7 +15,7 @@ class DepartmentsTableSeeder extends Seeder
     {
         $createDep = new Department;
         $createDep->id = '1';
-        $createDep->name = 'Managment';
+        $createDep->name = 'Athletics';
         $createDep->save();
 
         \DB::table('department_user')->insert([

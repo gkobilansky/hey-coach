@@ -14,6 +14,7 @@ class Athlete extends Model
         'address',
         'zipcode',
         'city',
+        'state',
         'primary_number',
         'secondary_number',
         'industry_id',

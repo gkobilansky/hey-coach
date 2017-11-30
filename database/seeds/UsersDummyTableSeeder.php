@@ -19,11 +19,11 @@ class UsersDummyTableSeeder extends Seeder
 
         $createDep = new Department;
         $createDep->id = '2';
-        $createDep->name = 'Nerds';
+        $createDep->name = 'Athletics';
         $createDep->save();
         $createDep = new Department;
         $createDep->id = '3';
-        $createDep->name = 'Genius';
+        $createDep->name = 'Athletics';
         $createDep->save();
 
 

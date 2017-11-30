@@ -13,7 +13,10 @@
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    {{--  <meta name="csrf-token" content="{{ csrf_token() }}"/>  --}}
+    <script>
+     window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+    </script>
 </head>
 <body>
 

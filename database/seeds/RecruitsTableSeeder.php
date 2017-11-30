@@ -20,7 +20,7 @@ class RecruitsTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'title' => 'Sell Item',
+                'title' => 'Loves NYU',
                 'description' => 'Try and sell this new Item',
                 'status_id' => 1,
                 'user_assign_id' => 1,
@@ -33,7 +33,7 @@ class RecruitsTableSeeder extends Seeder
             1 =>
             array (
                 'id' => 2,
-                'title' => 'Contact Athlete about new offer',
+                'title' => 'Interested in ED1',
                 'description' => 'Give them a call about the new items',
                 'status_id' => 1,
                 'user_assign_id' => 1,
@@ -47,7 +47,7 @@ class RecruitsTableSeeder extends Seeder
             array (
                 'id' => 3,
                 'title' => 'Athlete wants to know more about item',
-                'description' => 'Give the client a call, about the item',
+                'description' => '',
                 'status' => 2,
                 'user_assign_id' => 1,
                 'athlete_id' => 10,
