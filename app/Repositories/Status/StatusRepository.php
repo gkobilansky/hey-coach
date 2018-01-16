@@ -22,8 +22,8 @@ class StatusRepository implements StatusRepositoryContract
 
     public function getStatusNames()
     {
-        $data = Status::select('name')->get();
+        $names = Status::pluck('name','id');
 
-        return $data;
+        return $names;
     }
 }

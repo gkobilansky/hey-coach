@@ -15,8 +15,8 @@ class CanRecruitCreate
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user()->can('lead-create')) {
-            Session()->flash('flash_message_warning', 'Not allowed to create lead');
+        if (!auth()->user()->can('recruit-create')) {
+            Session()->flash('flash_message_warning', 'Not allowed to create recruit');
             return redirect()->route('recruits.index');
         }
         return $next($request);

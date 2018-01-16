@@ -11,6 +11,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recruit\StoreRecruitRequest;
 use App\Repositories\Recruit\RecruitRepositoryContract;
+use App\Repositories\Status\StatusRepositoryContract;
 use App\Repositories\User\UserRepositoryContract;
 use App\Http\Requests\Recruit\UpdateRecruitFollowUpRequest;
 use App\Repositories\Athlete\AthleteRepositoryContract;
@@ -21,19 +22,22 @@ class RecruitsController extends Controller
     protected $recruits;
     protected $athletes;
     protected $settings;
+    protected $statuses;
     protected $users;
 
     public function __construct(
         RecruitRepositoryContract $recruits,
         UserRepositoryContract $users,
         AthleteRepositoryContract $athletes,
-        SettingRepositoryContract $settings
+        SettingRepositoryContract $settings,
+        StatusRepositoryContract $statuses
     )
     {
         $this->users = $users;
         $this->settings = $settings;
         $this->athletes = $athletes;
         $this->recruits = $recruits;
+        $this->statuses = $statuses;
         $this->middleware('recruit.create', ['only' => ['create']]);
         $this->middleware('recruit.assigned', ['only' => ['updateAssign']]);
         $this->middleware('recruit.update.status', ['only' => ['updateStatus']]);
@@ -87,7 +91,8 @@ class RecruitsController extends Controller
     {
         return view('recruits.create')
             ->withUsers($this->users->getAllUsersWithDepartments())
-            ->withathletes($this->athletes->listAllathletes());
+            ->withAthletes($this->athletes->listAllathletes())
+            ->withStatuses($this->statuses->getStatusNames());
     }
 
     /**

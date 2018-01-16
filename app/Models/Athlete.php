@@ -35,7 +35,7 @@ class Athlete extends Model
 
     public function recruits()
     {
-        return $this->hasMany(Recruit::class, 'athlete_id', 'id')
+        return $this->hasOne(Recruit::class, 'athlete_id', 'id')
             ->orderBy('status_id', 'asc')
             ->orderBy('created_at', 'desc');
     }

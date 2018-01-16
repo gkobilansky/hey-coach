@@ -121,8 +121,7 @@
     <div class="col-sm-6">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h4 class="box-title"
-                >
+                <h4 class="box-title">
                     Tasks completed each month
                 </h4>
                 <div class="box-tools pull-right">

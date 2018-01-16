@@ -17,15 +17,15 @@ class IsRecruitAssigned
      */
     public function handle($request, Closure $next)
     {
-        $lead = Recruit::findOrFail($request->id);
+        $recruit = Recruit::findOrFail($request->id);
         $settings = Setting::all();
         $isAdmin = Auth()->user()->hasRole('administrator');
-        $settingscomplete = $settings[0]['lead_assign_allowed'];
+        $settingscomplete = $settings[0]['recruit_assign_allowed'];
         if ($isAdmin) {
             return $next($request);
         }
-        if ($settingscomplete == 1  && Auth()->user()->id == $lead->fk_user_id_assign) {
-            Session()->flash('flash_message_warning', 'Not allowed to create lead');
+        else if ($settingscomplete == 1  && Auth()->user()->id == $recruit->fk_user_id_assign) {
+            Session()->flash('flash_message_warning', 'Not allowed to create recruit');
             return redirect()->back();
         }
         return $next($request);

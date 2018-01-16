@@ -61,7 +61,7 @@
 
           let resource = this.$resource('recruits/updatestatus{/id}')
         //  let id = block.dataset.blockId;
-          resource.update({id: 21}, {}).then(this.successCallback, this.errorCallback);
+          resource.get({id: 21}, {}).then(this.successCallback, this.errorCallback);
 
         },
         successCallback(r) {

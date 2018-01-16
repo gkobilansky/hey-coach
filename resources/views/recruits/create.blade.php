@@ -22,8 +22,7 @@
     <div class="form-inline">
         <div class="form-group col-lg-3 removeleft">
             {!! Form::label('status', __('Status'), ['class' => 'control-label']) !!}
-            {!! Form::select('status', array(
-            '1' => 'Athlete', '2' => 'Completed'), null, ['class' => 'form-control'] )
+            {!! Form::select('names', $statuses, null, ['class' => 'form-control'] )
          !!}
         </div>
         <div class="form-group col-lg-4 removeleft">
