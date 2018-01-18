@@ -1,18 +1,19 @@
 <template>
-    <div class="pipline">
-    	<ul class="drag-list">
-    		<li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage.name]: true}" :key="stage.id">
+    <div class="pipeline">
+    	<div class="drag-list">
+        <div class="column-wrapper">
+    		<div v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage.name]: true}" :key="stage.id">
     			<span class="drag-column-header">
     				<h3 class="stage-name">{{ stage.name }}</h3>
     			</span>
-    			<div class="drag-options"></div>
-    			<ul class="drag-inner-list" ref="list" :data-status="stage.id" v-on:update-block="updateBlock(id, status_id)">
-                    <li class="drag-item" v-for="block in getBlocks(stage.id)" :data-block-id="block.id" :key="block.id">
+    			<!-- <div class="drag-options"></div> -->
+    			<div class="drag-inner-list" ref="list" :data-status="stage.id" v-on:update-block="updateBlock(id, status_id)">
+                    <div class="drag-item" v-for="block in getBlocks(stage.id)" :data-block-id="block.id" :key="block.id">
                         <slot :name="block.id">
                           <a :href="'/recruits/' + block.id">
                             <div class="block">
                                 <strong>
-                                <img src="/images/profile_120x120.svg" :title="block.name" class="mini-profile">
+                                <img src="/images/profile_120x120.svg" :title="block.name" class="mini-avatar">
                                 <p class="name">{{ block.name }}</p>
                                 </strong>
                                 <p class="org"><span class="glyphicon glyphicon-education" aria-hidden="true" data-toggle="tooltip"
@@ -21,12 +22,13 @@
                             </div>
                           </a>
                             <!-- <div><strong>Note: </strong>{{ block.title }}</div> -->
-                            <div>{{ stage.id }}</div>
+                            <!-- <div>{{ stage.id }}</div> -->
                         </slot>
-                    </li>
-    			</ul>
-    		</li>
-    	</ul>
+                    </div>
+    			</div>
+    		</div>
+        </div> 
+    	</div>  <!-- .drag-list -->
     </div>
 </template>
 

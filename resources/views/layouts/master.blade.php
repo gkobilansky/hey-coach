@@ -22,43 +22,25 @@
 
 <div id="wrapper">
 
-    {{--  <button type="button" class="navbar-toggle menu-txt-toggle" style=""><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>  --}}
-
-        <!--NOTIFICATIONS START-->
-        <div class="menu">
-            <div class="notifications-header"><p>Notifications</p></div>
-            <!-- Menu -->
-            <ul>
-                <?php $notifications = auth()->user()->unreadNotifications; ?>
-                @foreach($notifications as $notification)
-                    <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
-                        <li> 
-                            <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
-                            <p>{{ $notification->data['message']}}</p>
-                        </li>
-                    </a>
-                @endforeach 
-            </ul>
-        </div>
         
-        <button type="button" id="mobile-toggle" class="navbar-toggle mobile-toggle" data-toggle="offcanvas" data-target="#myNavmenu">
+        {{--  <button type="button" id="mobile-toggle" class="navbar-toggle mobile-toggle" data-toggle="offcanvas" data-target="#myNavmenu">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </button>
+        </button>  --}}
 
     <!-- /#sidebar-wrapper -->
     <!-- Sidebar menu -->
 <el-menu theme="dark" mode="horizontal">
     <el-menu-item index="1" class="logo-container"><a href="{{route('dashboard', \Auth::id())}}"><img src="{{url('images/heycoach-logo-small.png')}}" alt="Hey Coach Logo"></a></el-menu-item>
-    <el-menu-item index="2"><a href="{{route('dashboard', \Auth::id())}}"><i class="glyphicon glyphicon-signal"></i> Recruiting</a></el-menu-item>
-    <el-menu-item index="3"><a href="{{ route('tasks.index')}}"><i class="glyphicon glyphicon-hourglass"></i> Tasks</a></el-menu-item>    
-    <el-menu-item index="4"><a href="{{ route('athletes.index')}}"><i class="glyphicon glyphicon-user"></i> Contacts</a></el-menu-item>
-  <div class="dropdown" id="nav-toggle">
+    <el-button id="add-recruit" type="primary" @click="dialogFormVisible = true" round>Add New Recruit</el-button>
+    {{--  <el-menu-item index="3"><a href="{{ route('tasks.index')}}"><i class="glyphicon glyphicon-hourglass"></i> Tasks</a></el-menu-item>      --}}
+    {{--  <el-menu-item index="4"><a href="{{ route('athletes.index')}}"><i class="glyphicon glyphicon-user"></i> Contacts</a></el-menu-item>  --}}
+  {{--  <div class="dropdown" id="nav-toggle">
                 <a id="notification-clock" role="button" data-toggle="dropdown">
                     <i class="glyphicon glyphicon-bell"><span id="notifycount">{{ $notifications->count() }}</span></i>
                 </a>
-  </div>      
+  </div>        --}}
 </el-menu>
     {{--  <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
         <div class="list-group panel">
@@ -148,13 +130,12 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>@yield('heading')</h1>
+    
+       
+                    @yield('heading')
                     @yield('content')
-                </div>
-            </div>
-        </div>
+            
+
         @if($errors->any())
             <div class="alert alert-danger">
                 @foreach($errors->all() as $error)
@@ -169,6 +150,7 @@
         @if(Session::has('flash_message'))
             <message message="{{ Session::get('flash_message') }}" type="success"></message>
         @endif
+        </div>
     </div>
     <!-- /#page-content-wrapper -->
 </div>

@@ -5,13 +5,26 @@ $secondary-color: #008ae6;
 $link-color:#337ab7;
 $top-bar-color:#2196F3;
 
-body {
-    background-color: #edf0fd;
+html, body {
+  //  height: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+body, button, html, input, select, textarea {
+    font-family: Lato, Arial,Helvetica,sans-serif;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+body {
+    background-color: #f1f1f1;
+}
+
 h1
 {
 	font-size:28px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Raleway,Helvetica,Arial,sans-serif;
     min-height: 0rem;
     font-weight: 200;
 }
@@ -41,6 +54,10 @@ p{
     }
 }
 
+svg {
+    overflow: inherit;
+}
+
 .logo path {
     fill: $secondary-color;
 }
@@ -60,11 +77,10 @@ p{
     margin-top: 20px;
 }
 
-.topbar
+.el-menu
 {
-     background-color: $lighter-primary-color;
      width: 100%;
-     height: 40px;
+    //  left: 0; top: 0;
 
 }
 .form-control[disabled] {
@@ -74,10 +90,7 @@ p{
 .navbar-toggle {
 	    display: block;
 }
-#page-content-wrapper {
-    width: 100%;
-    position: absolute; 
-}
+
 
 .boxspace
 {

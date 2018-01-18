@@ -1,3 +1,23 @@
+ 
+    {{--  <button type="button" class="navbar-toggle menu-txt-toggle" style=""><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>  --}}
+
+        <!--NOTIFICATIONS START-->
+        <div class="menu">
+                <div class="notifications-header"><p>Notifications</p></div>
+                    <!-- Menu -->
+                    <ul>
+                        <?php $notifications = auth()->user()->unreadNotifications; ?>
+                        @foreach($notifications as $notification)
+                            <a href="{{ route('notification.read', ['id' => $notification->id])  }}" onClick="postRead({{ $notification->id }})">
+                                <li> 
+                                    <img src="/{{ auth()->user()->avatar }}" class="notification-profile-image">
+                                    <p>{{ $notification->data['message']}}</p>
+                                </li>
+                            </a>
+                        @endforeach 
+                    </ul>
+                </div> 
+ 
  @push('scripts')
             <script>
                 $('#notification-clock').click(function (e) {

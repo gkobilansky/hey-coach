@@ -113917,6 +113917,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -114932,99 +114934,97 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "pipline" }, [
-    _c(
-      "ul",
-      { staticClass: "drag-list" },
-      _vm._l(_vm.stages, function(stage) {
-        return _c(
-          "li",
-          {
-            key: stage.id,
-            staticClass: "drag-column",
-            class: ((_obj = {}),
-            (_obj["drag-column-" + stage.name] = true),
-            _obj)
-          },
-          [
-            _c("span", { staticClass: "drag-column-header" }, [
-              _c("h3", { staticClass: "stage-name" }, [
-                _vm._v(_vm._s(stage.name))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "drag-options" }),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                ref: "list",
-                refInFor: true,
-                staticClass: "drag-inner-list",
-                attrs: { "data-status": stage.id },
-                on: {
-                  "update-block": function($event) {
-                    _vm.updateBlock(_vm.id, _vm.status_id)
+  return _c("div", { staticClass: "pipeline" }, [
+    _c("div", { staticClass: "drag-list" }, [
+      _c(
+        "div",
+        { staticClass: "column-wrapper" },
+        _vm._l(_vm.stages, function(stage) {
+          return _c(
+            "div",
+            {
+              key: stage.id,
+              staticClass: "drag-column",
+              class: ((_obj = {}),
+              (_obj["drag-column-" + stage.name] = true),
+              _obj)
+            },
+            [
+              _c("span", { staticClass: "drag-column-header" }, [
+                _c("h3", { staticClass: "stage-name" }, [
+                  _vm._v(_vm._s(stage.name))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  ref: "list",
+                  refInFor: true,
+                  staticClass: "drag-inner-list",
+                  attrs: { "data-status": stage.id },
+                  on: {
+                    "update-block": function($event) {
+                      _vm.updateBlock(_vm.id, _vm.status_id)
+                    }
                   }
-                }
-              },
-              _vm._l(_vm.getBlocks(stage.id), function(block) {
-                return _c(
-                  "li",
-                  {
-                    key: block.id,
-                    staticClass: "drag-item",
-                    attrs: { "data-block-id": block.id }
-                  },
-                  [
-                    _vm._t(block.id, [
-                      _c("a", { attrs: { href: "/recruits/" + block.id } }, [
-                        _c("div", { staticClass: "block" }, [
-                          _c("strong", [
-                            _c("img", {
-                              staticClass: "mini-profile",
-                              attrs: {
-                                src: "/images/profile_120x120.svg",
-                                title: block.name
-                              }
-                            }),
+                },
+                _vm._l(_vm.getBlocks(stage.id), function(block) {
+                  return _c(
+                    "div",
+                    {
+                      key: block.id,
+                      staticClass: "drag-item",
+                      attrs: { "data-block-id": block.id }
+                    },
+                    [
+                      _vm._t(block.id, [
+                        _c("a", { attrs: { href: "/recruits/" + block.id } }, [
+                          _c("div", { staticClass: "block" }, [
+                            _c("strong", [
+                              _c("img", {
+                                staticClass: "mini-avatar",
+                                attrs: {
+                                  src: "/images/profile_120x120.svg",
+                                  title: block.name
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "name" }, [
+                                _vm._v(_vm._s(block.name))
+                              ])
+                            ]),
                             _vm._v(" "),
-                            _c("p", { staticClass: "name" }, [
-                              _vm._v(_vm._s(block.name))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "org" }, [
-                            _c("span", {
-                              staticClass: "glyphicon glyphicon-education",
-                              attrs: {
-                                "aria-hidden": "true",
-                                "data-toggle": "tooltip",
-                                title: "School",
-                                "data-placement": "left"
-                              }
-                            }),
-                            _vm._v(" " + _vm._s(block.company_name)),
-                            _c("br"),
-                            _c("span", { staticClass: "state" }, [
-                              _vm._v(_vm._s(block.state))
+                            _c("p", { staticClass: "org" }, [
+                              _c("span", {
+                                staticClass: "glyphicon glyphicon-education",
+                                attrs: {
+                                  "aria-hidden": "true",
+                                  "data-toggle": "tooltip",
+                                  title: "School",
+                                  "data-placement": "left"
+                                }
+                              }),
+                              _vm._v(" " + _vm._s(block.company_name)),
+                              _c("br"),
+                              _c("span", { staticClass: "state" }, [
+                                _vm._v(_vm._s(block.state))
+                              ])
                             ])
                           ])
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [_vm._v(_vm._s(stage.id))])
-                    ])
-                  ],
-                  2
-                )
-              })
-            )
-          ]
-        )
-        var _obj
-      })
-    )
+                      ])
+                    ],
+                    2
+                  )
+                })
+              )
+            ]
+          )
+          var _obj
+        })
+      )
+    ])
   ])
 }
 var staticRenderFns = []

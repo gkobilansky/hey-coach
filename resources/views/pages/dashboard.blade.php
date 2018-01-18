@@ -19,13 +19,9 @@
         });
     </script>
 @endpush
-        <div class="row">
-            <el-button type="text" @click="dialogFormVisible = true">Add New Recruit</el-button>
-        </div>
-        <div class="row">
+        {{--  <div class="row">
             <create></create>
-        </div>
-        <div class="row">
+        </div>  --}}
           <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}" v-on:update-block="updateBlock"></pipeline>
-        </div>
+    
 @endsection

@@ -8350,13 +8350,30 @@ button.close {
   }
 }
 
+html,
 body {
-  background-color: #edf0fd;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+button,
+html,
+input,
+select,
+textarea {
+  font-family: Lato, Arial,Helvetica,sans-serif;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+body {
+  background-color: #f1f1f1;
 }
 
 h1 {
   font-size: 28px;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: Raleway,Helvetica,Arial,sans-serif;
   min-height: 0rem;
   font-weight: 200;
 }
@@ -8388,6 +8405,10 @@ p:last-child {
   margin-bottom: 10px;
 }
 
+svg {
+  overflow: inherit;
+}
+
 .logo path {
   fill: #008ae6;
 }
@@ -8404,10 +8425,8 @@ p:last-child {
   margin-top: 20px;
 }
 
-.topbar {
-  background-color: #5f5f5f;
+.el-menu {
   width: 100%;
-  height: 40px;
 }
 
 .form-control[disabled] {
@@ -8416,11 +8435,6 @@ p:last-child {
 
 .navbar-toggle {
   display: block;
-}
-
-#page-content-wrapper {
-  width: 100%;
-  position: absolute;
 }
 
 .boxspace {
@@ -9046,53 +9060,40 @@ a.list-group-item:hover {
   height: 150px;
 }
 
-ul.drag-list,
-ul.drag-inner-list {
+#add-recruit {
+  margin-top: 10px;
+}
+
+.pipeline {
+  margin-top: 0.5em;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.pipeline h3 {
+  font-size: 1em;
+}
+
+.pipeline .drag-list,
+.pipeline .drag-inner-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.mini-profile {
-  height: 16px;
-  margin: 2px 8px 0 0;
-  border-radius: 50%;
-  border: none;
-  vertical-align: top;
+.pipeline .drag-list {
+  white-space: nowrap;
 }
 
-.drag-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+.pipeline .drag-column {
+  margin: 0 7px;
+  background: #ccc;
+  display: inline-block;
+  width: 270px;
+  padding-bottom: 1em;
 }
 
-@media (max-width: 690px) {
-  .drag-list {
-    display: block;
-  }
-}
-
-.drag-column {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  margin: 0 10px;
-  position: relative;
-  background: #f7f7f7;
-  overflow: hidden;
-}
-
-@media (max-width: 690px) {
-  .drag-column {
-    margin-bottom: 30px;
-  }
-}
-
-.drag-column .stage-name {
+.pipeline .drag-column .stage-name {
   font-weight: 600;
   width: 100%;
   display: inline-block;
@@ -9102,43 +9103,44 @@ ul.drag-inner-list {
   overflow: hidden;
 }
 
-.drag-column-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+.pipeline .drag-column-header {
   padding: 6px 25px 6px 12px;
-  background-color: #f7f7f7;
-  background: url("/images/stage-arrow.png") no-repeat 100% 0, -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f7f7));
-  background: url("/images/stage-arrow.png") no-repeat 100% 0, linear-gradient(#fff, #f7f7f7);
   background-size: 20px 100%, 100% 100%;
-  overflow: visible;
-  vertical-align: middle;
 }
 
-.drag-inner-list {
+.pipeline .drag-inner-list {
   min-height: 50px;
+  height: 78vh;
   color: #333;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 4px;
+  padding: 0 4px;
 }
 
-.drag-item {
+.pipeline .drag-item {
   padding: 1em;
-  min-height: 50px;
-  border-bottom: 1px solid #e5e5e5;
+  min-height: 30px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
   background-color: #fff;
   -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  display: block;
 }
 
-.drag-item.is-moving {
+.pipeline .drag-item.is-moving {
   -webkit-transform: scale(1.5);
           transform: scale(1.5);
   background: rgba(229, 229, 229, 0.8);
+}
+
+.mini-avatar {
+  height: 16px;
+  margin: 0 2px 0 0;
+  border-radius: 50%;
+  float: left;
 }
 
 .name {
@@ -9152,42 +9154,6 @@ ul.drag-inner-list {
 
 .drag-header-more {
   cursor: pointer;
-}
-
-.drag-options {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  -webkit-transform: translateX(100%);
-          transform: translateX(100%);
-  opacity: 0;
-  -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.drag-options.active {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-  opacity: 1;
-}
-
-.drag-options-label {
-  display: block;
-  margin: 0 0 5px 0;
-}
-
-.drag-options-label input {
-  opacity: 0.6;
-}
-
-.drag-options-label span {
-  display: inline-block;
-  font-size: 0.9rem;
-  font-weight: 400;
-  margin-left: 5px;
 }
 
 /* Dragula CSS  */
