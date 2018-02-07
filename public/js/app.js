@@ -113931,7 +113931,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     contact: {}
   },
   data: function data() {
-    return {};
+    return {
+      //   updateBlock: true
+    };
   },
 
 
@@ -115113,22 +115115,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'create',
-  dialogFormVisible: false,
-  form: {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [],
-    resource: '',
-    desc: ''
+  data: function data() {
+    return {
+      form: {
+        name: '',
+        organization: ''
+      },
+      state: '',
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
+      schools: []
+    };
   },
-  props: {
-    region: {}
+
+  methods: {
+    querySearch: function querySearch(queryString, cb) {
+      var schools = [{ "value": "Blair" }, { "value": "St. Francis" }, { "value": "Xavier" }];
+
+      var results = queryString ? schools.filter(this.createFilter(queryString)) : schools;
+      console.log(results);
+
+      // let resource = this.$resource('athletes/data')
+      // resource.get().then(this.successCallback, this.errorCallback);
+      // call callback function to return suggestions
+
+      cb(results);
+    },
+    createFilter: function createFilter(queryString) {
+      return function (school) {
+        return school.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+      };
+    },
+
+    successCallback: function successCallback(r) {
+      console.log('success', r.body.data);
+
+      //let data = r.body.data;           
+      // for (var i = 0; i < data.length; i++) {
+      //     this.schools.push(data[i].company_name.toLowerCase());
+      //     console.log("school " + i + ": " + data[i].company_name);
+      // }
+    },
+    errorCallback: function errorCallback(e) {
+      console.log(e);
+    },
+    handleSelect: function handleSelect(item) {
+      console.log(item);
+    }
   }
 });
 
@@ -115141,108 +115184,134 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-dialog",
-    {
-      attrs: { title: "Shipping address", visible: _vm.dialogFormVisible },
-      on: {
-        "update:visible": function($event) {
-          _vm.dialogFormVisible = $event
-        }
-      }
-    },
+    "div",
+    { staticClass: "create" },
     [
       _c(
-        "el-form",
-        { attrs: { model: _vm.form } },
+        "el-button",
+        {
+          attrs: { id: "add-recruit", type: "primary", round: "" },
+          on: {
+            click: function($event) {
+              _vm.dialogFormVisible = true
+            }
+          }
+        },
+        [_vm._v("Add New Recruit")]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "Add New Recruit", visible: _vm.dialogFormVisible },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogFormVisible = $event
+            }
+          }
+        },
         [
           _c(
-            "el-form-item",
+            "el-form",
             {
-              attrs: {
-                label: "Promotion name",
-                "label-width": _vm.formLabelWidth
+              model: {
+                value: _vm.form,
+                callback: function($$v) {
+                  _vm.form = $$v
+                },
+                expression: "form"
               }
             },
             [
-              _c("el-input", {
-                attrs: { "auto-complete": "off" },
-                model: {
-                  value: _vm.form.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "name", $$v)
-                  },
-                  expression: "form.name"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "Zones", "label-width": _vm.formLabelWidth } },
-            [
               _c(
-                "el-select",
+                "el-form-item",
                 {
-                  attrs: { placeholder: "Please select a zone" },
-                  model: {
-                    value: _vm.form.region,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "region", $$v)
-                    },
-                    expression: "form.region"
+                  attrs: {
+                    label: "Athlete Name",
+                    "label-width": _vm.formLabelWidth
                   }
                 },
                 [
-                  _c("el-option", {
-                    attrs: { label: "Zone No.1", value: "shanghai" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-option", {
-                    attrs: { label: "Zone No.2", value: "beijing" }
+                  _c("el-input", {
+                    attrs: { "auto-complete": "off" },
+                    model: {
+                      value: _vm.form.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "name", $$v)
+                      },
+                      expression: "form.name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: "School or Club Name",
+                    "label-width": _vm.formLabelWidth
+                  }
+                },
+                [
+                  _c("el-autocomplete", {
+                    staticClass: "inline-input",
+                    attrs: {
+                      "fetch-suggestions": _vm.querySearch,
+                      placeholder: "Please Input",
+                      "trigger-on-focus": true
+                    },
+                    on: { select: _vm.handleSelect },
+                    model: {
+                      value: _vm.state,
+                      callback: function($$v) {
+                        _vm.state = $$v
+                      },
+                      expression: "state"
+                    }
                   })
                 ],
                 1
               )
             ],
             1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "span",
-        {
-          staticClass: "dialog-footer",
-          attrs: { slot: "footer" },
-          slot: "footer"
-        },
-        [
-          _c(
-            "el-button",
-            {
-              on: {
-                click: function($event) {
-                  _vm.dialogFormVisible = false
-                }
-              }
-            },
-            [_vm._v("Cancel")]
           ),
           _vm._v(" "),
           _c(
-            "el-button",
+            "span",
             {
-              attrs: { type: "primary" },
-              on: {
-                click: function($event) {
-                  _vm.dialogFormVisible = false
-                }
-              }
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
             },
-            [_vm._v("Confirm")]
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogFormVisible = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogFormVisible = false
+                    }
+                  }
+                },
+                [_vm._v("Confirm")]
+              )
+            ],
+            1
           )
         ],
         1

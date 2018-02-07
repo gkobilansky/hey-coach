@@ -19,9 +19,7 @@
         });
     </script>
 @endpush
-        {{--  <div class="row">
-            <create></create>
-        </div>  --}}
-          <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}" v-on:update-block="updateBlock"></pipeline>
+        <create></create>
+        <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}"></pipeline>
     
 @endsection

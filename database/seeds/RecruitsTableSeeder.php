@@ -21,7 +21,7 @@ class RecruitsTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'title' => 'Loves NYU',
-                'description' => 'Try and sell this new Item',
+                'description' => 'Tell this new kid about family at NYU',
                 'status_id' => 1,
                 'user_assign_id' => 1,
                 'athlete_id' => 9,
