@@ -82,8 +82,9 @@ class AthletesController extends Controller
      */
     public function store(StoreAthleteRequest $request)
     {
+        
         $this->athletes->create($request->all());
-        return redirect()->route('athletes.index');
+        // return $request;
     }
 
     /**

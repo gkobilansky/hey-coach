@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'athletes'], function () {
         Route::get('/data', 'AthletesController@anyData')->name('athletes.data');
         Route::post('/create/cvrapi', 'AthletesController@cvrapiStart');
+        Route::post('/store', 'AthletesController@store');
         Route::post('/upload/{id}', 'DocumentsController@upload');
         Route::patch('/updateassign/{id}', 'AthletesController@updateAssign');
     });

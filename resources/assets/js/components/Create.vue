@@ -9,7 +9,7 @@
     </el-form-item>
     <el-form-item label="School or Club Name" :label-width="formLabelWidth">
        <el-autocomplete
-        v-model="state"
+        v-model="form.company_name"
         class="inline-input"
         :fetch-suggestions="querySearch"
         placeholder="Please Input"
@@ -17,10 +17,13 @@
         @select="handleSelect"
       ></el-autocomplete>
     </el-form-item>
+    <el-form-item label="Athlete Email" :label-width="formLabelWidth">
+      <el-input v-model="form.email" auto-complete="off"></el-input>
+    </el-form-item>
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+    <el-button type="primary" @click="addAthlete">Confirm</el-button>
   </span>
 </el-dialog>
 </div>
@@ -34,9 +37,9 @@ export default {
       return {
         form: {
           name: '',
-          organization: '',
+          company_name: '',
+          email: ''
         },
-        state: '',
         dialogFormVisible: false,
         formLabelWidth: '120px',
         schools: []
@@ -51,35 +54,41 @@ export default {
          ];
 
         let results  = queryString ? schools.filter(this.createFilter(queryString)) : schools;
-        console.log(results);
-
-        // let resource = this.$resource('athletes/data')
-        // resource.get().then(this.successCallback, this.errorCallback);
-        // call callback function to return suggestions
 
         cb(results);
-
       },
       createFilter(queryString) {
         return (school) => {
           return (school.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
         };
       },
+      addAthlete: function(event) {
+        this.dialogFormVisible = false;
+
+        console.log(this.form);
+
+        let data =  {
+          name: 'Jason Nolf',
+          company_name: 'Blair',
+          state: 'NJ',
+          email: 'jason@blair.edu',
+          user_id: '1',
+          industry_id: '1'
+        }
+
+        console.log(data)
+        
+        this.$http.post('/athletes/store', data).then(this.successCallback, this.errorCallback);
+      },
       successCallback: (r) => {
-          console.log('success', r.body.data)
-           
-          //let data = r.body.data;           
-          // for (var i = 0; i < data.length; i++) {
-          //     this.schools.push(data[i].company_name.toLowerCase());
-          //     console.log("school " + i + ": " + data[i].company_name);
-          // }
+          console.log('success', r)
 
         },
       errorCallback(e) {
           console.log(e)
         },
       handleSelect(item) {
-        console.log(item);
+       // console.log(item);
       }
     }
   };

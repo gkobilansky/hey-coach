@@ -115122,6 +115122,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'create',
@@ -115129,9 +115132,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       form: {
         name: '',
-        organization: ''
+        company_name: '',
+        email: ''
       },
-      state: '',
       dialogFormVisible: false,
       formLabelWidth: '120px',
       schools: []
@@ -115143,11 +115146,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var schools = [{ "value": "Blair" }, { "value": "St. Francis" }, { "value": "Xavier" }];
 
       var results = queryString ? schools.filter(this.createFilter(queryString)) : schools;
-      console.log(results);
-
-      // let resource = this.$resource('athletes/data')
-      // resource.get().then(this.successCallback, this.errorCallback);
-      // call callback function to return suggestions
 
       cb(results);
     },
@@ -115157,20 +115155,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
     },
 
-    successCallback: function successCallback(r) {
-      console.log('success', r.body.data);
+    addAthlete: function addAthlete(event) {
+      this.dialogFormVisible = false;
 
-      //let data = r.body.data;           
-      // for (var i = 0; i < data.length; i++) {
-      //     this.schools.push(data[i].company_name.toLowerCase());
-      //     console.log("school " + i + ": " + data[i].company_name);
-      // }
+      console.log(this.form);
+
+      var data = {
+        name: 'Jason Nolf',
+        company_name: 'Blair',
+        state: 'NJ',
+        email: 'jason@blair.edu',
+        user_id: '1',
+        industry_id: '1'
+      };
+
+      console.log(data);
+
+      this.$http.post('/athletes/store', data).then(this.successCallback, this.errorCallback);
+    },
+    successCallback: function successCallback(r) {
+      console.log('success', r);
     },
     errorCallback: function errorCallback(e) {
       console.log(e);
     },
     handleSelect: function handleSelect(item) {
-      console.log(item);
+      // console.log(item);
     }
   }
 });
@@ -115264,11 +115274,34 @@ var render = function() {
                     },
                     on: { select: _vm.handleSelect },
                     model: {
-                      value: _vm.state,
+                      value: _vm.form.company_name,
                       callback: function($$v) {
-                        _vm.state = $$v
+                        _vm.$set(_vm.form, "company_name", $$v)
                       },
-                      expression: "state"
+                      expression: "form.company_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: "Athlete Email",
+                    "label-width": _vm.formLabelWidth
+                  }
+                },
+                [
+                  _c("el-input", {
+                    attrs: { "auto-complete": "off" },
+                    model: {
+                      value: _vm.form.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "email", $$v)
+                      },
+                      expression: "form.email"
                     }
                   })
                 ],
@@ -115300,14 +115333,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-button",
-                {
-                  attrs: { type: "primary" },
-                  on: {
-                    click: function($event) {
-                      _vm.dialogFormVisible = false
-                    }
-                  }
-                },
+                { attrs: { type: "primary" }, on: { click: _vm.addAthlete } },
                 [_vm._v("Confirm")]
               )
             ],

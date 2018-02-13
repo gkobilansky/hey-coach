@@ -66,7 +66,7 @@ class AthleteRepository implements AthleteRepositoryContract
     {
         $athlete = Athlete::create($requestData);
         Session()->flash('flash_message', 'Athlete successfully added');
-        event(new \App\Events\AthleteAction($athlete, self::CREATED));
+    //    event(new \App\Events\AthleteAction($athlete, self::CREATED));
     }
 
     /**
