@@ -103,9 +103,18 @@ class RecruitsController extends Controller
      */
     public function store(StoreRecruitRequest $request)
     {
-        $getInsertedId = $this->recruits->create($request);
+       // $getInsertedId = $this->recruits->create($request);
+        $data = new Recruit();
+        $data->title = $request['title'];
+        $data->description = $request['description'];
+        $data->status_id = 1;
+        $data->user_assigned_id = $request['user_assigned_id'];
+        $data->athlete_id = $request['athlete_id'];
+        $data->user_created_id = $request['user_created_id'];
+        $data->contact_date = Carbon::now();
+        $data->save();
         Session()->flash('flash_message', 'Recruit is created');
-        return redirect()->route('recruits.show', $getInsertedId);
+        // return redirect()->route('recruits.show', $getInsertedId);
     }
 
     public function updateAssign($id, Request $request)

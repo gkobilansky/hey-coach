@@ -4,21 +4,31 @@
 
 <el-dialog title="Add New Recruit" :visible.sync="dialogFormVisible">
   <el-form v-model="form">
-    <el-form-item label="Athlete Name" :label-width="formLabelWidth">
+    <el-form-item label="Athlete Name">
       <el-input v-model="form.name" auto-complete="off"></el-input>
     </el-form-item>
-    <el-form-item label="School or Club Name" :label-width="formLabelWidth">
+    <el-form-item label="Athlete Email">
+      <el-input v-model="form.email" auto-complete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="School or Club Name">
        <el-autocomplete
         v-model="form.company_name"
         class="inline-input"
-        :fetch-suggestions="querySearch"
-        placeholder="Please Input"
+        :fetch-suggestions="suggestSchools"
+        placeholder="Team X"
         :trigger-on-focus="true"
         @select="handleSelect"
       ></el-autocomplete>
     </el-form-item>
-    <el-form-item label="Athlete Email" :label-width="formLabelWidth">
-      <el-input v-model="form.email" auto-complete="off"></el-input>
+    <el-form-item label="Recruiting Status">
+       <el-autocomplete
+        v-model="form.status_id"
+        class="inline-input"
+        :fetch-suggestions="suggestStatuses"
+        placeholder="Interested"
+        :trigger-on-focus="true"
+        @select="handleSelect"
+      ></el-autocomplete>
     </el-form-item>
   </el-form>
   <span slot="footer" class="dialog-footer">
@@ -38,52 +48,93 @@ export default {
         form: {
           name: '',
           company_name: '',
-          email: ''
+          email: '',
+          state: 'NY',
+          status_id: '2',
+          user_id: '1',
+          industry_id: '1'
         },
         dialogFormVisible: false,
-        formLabelWidth: '120px',
-        schools: []
+        schools: [],
+        statuses: []
       };
     },
     methods: {
-      querySearch(queryString, cb) {
-        let schools = [
-         {"value": "Blair"},
-         {"value": "St. Francis"}, 
-         {"value": "Xavier"}
-         ];
+      suggestSchools(queryString, cb) {
 
+        //get list 
+          this.$http.get('/athletes/data').then(response => {
+            let athleteDataArray = response.body.data;
+            const uniqueSchools = athleteDataArray.map(function(athlete){
+                return {
+                  "value": athlete.company_name
+                }
+              }
+            );
+            this.schools = uniqueSchools;
+          }, response => {
+            // error callback
+            console.log(e);
+          });
+
+        // grab list. if theres nothing in the form, return whole list
+        let schools = this.schools;
         let results  = queryString ? schools.filter(this.createFilter(queryString)) : schools;
-
         cb(results);
       },
+      suggestStatuses(queryString, cb) {
+           //get list 
+          this.$http.get('/statuses').then(response => {
+            let statusDataArray = response.body.data;
+            const uniqueStatuses = statusDataArray.map(function(status){
+                return {
+                  "value": status.name
+                }
+              }
+            );
+            this.statuses = uniqueStatuses;
+            console.log(this.statuses)
+          }, response => {
+            // error callback
+            console.log(response);
+          });
+
+        // grab list. if theres nothing in the form, return whole list
+        let statuses = this.statuses;
+        let results  = queryString ? statuses.filter(this.createFilter(queryString)) : statuses;
+        cb(results);
+
+      },
       createFilter(queryString) {
-        return (school) => {
-          return (school.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        return (obj) => {
+          return (obj.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
         };
       },
       addAthlete: function(event) {
         this.dialogFormVisible = false;
+      
+        this.$http.post('/athletes/store', this.form).then(response => {
+          let date = Date.now();
+          const recruitData = {
+            title: 'Test Title',
+            description: 'test description',            
+            status: this.form.status_id,
+            user_assigned_id: this.form.user_id,
+            athlete_id: response.data.last_insert_id,
+            user_created_id: this.form.user_id,
+            contact_date: date
+          }
 
-        console.log(this.form);
+          console.log('stored athlete', response, recruitData);
 
-        let data =  {
-          name: 'Jason Nolf',
-          company_name: 'Blair',
-          state: 'NJ',
-          email: 'jason@blair.edu',
-          user_id: '1',
-          industry_id: '1'
-        }
+          this.$http.post('/recruits/store', recruitData).then(response => {
+            console.log('recruit stored', response)
+            this.$bus.$emit('recruitCreated', response)
+          }, this.errorCallback);
+          
+        }, this.errorCallback);
 
-        console.log(data)
-        
-        this.$http.post('/athletes/store', data).then(this.successCallback, this.errorCallback);
       },
-      successCallback: (r) => {
-          console.log('success', r)
-
-        },
       errorCallback(e) {
           console.log(e)
         },

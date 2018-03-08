@@ -31839,6 +31839,9 @@ __webpack_require__(194);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var bus = new Vue();
+Vue.prototype.$bus = bus;
+
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_element_ui___default.a);
 
 var app = new Vue({
@@ -113936,13 +113939,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
-
+  created: function created() {
+    this.$bus.$on('recruitCreated', this.getBlocks);
+  },
   computed: {
     localBlocks: function localBlocks() {
       return this.blocks;
     }
   },
-
   methods: {
     getBlocks: function getBlocks(status) {
       return this.localBlocks.filter(function (block) {
@@ -113950,7 +113954,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     updateBlock: function updateBlock(block, stage) {
-
       var resource = this.$resource('recruits/updatestatus{/id}');
       //  let id = block.dataset.blockId;
       resource.get({ id: 21 }, {}).then(this.successCallback, this.errorCallback);
@@ -113962,7 +113965,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log(e);
     }
   },
-
   mounted: function mounted() {
     var _this = this;
 
@@ -115125,6 +115127,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'create',
@@ -115133,48 +115145,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       form: {
         name: '',
         company_name: '',
-        email: ''
+        email: '',
+        state: 'NY',
+        status_id: '2',
+        user_id: '1',
+        industry_id: '1'
       },
       dialogFormVisible: false,
-      formLabelWidth: '120px',
-      schools: []
+      schools: [],
+      statuses: []
     };
   },
 
   methods: {
-    querySearch: function querySearch(queryString, cb) {
-      var schools = [{ "value": "Blair" }, { "value": "St. Francis" }, { "value": "Xavier" }];
+    suggestSchools: function suggestSchools(queryString, cb) {
+      var _this = this;
 
+      //get list 
+      this.$http.get('/athletes/data').then(function (response) {
+        var athleteDataArray = response.body.data;
+        var uniqueSchools = athleteDataArray.map(function (athlete) {
+          return {
+            "value": athlete.company_name
+          };
+        });
+        _this.schools = uniqueSchools;
+      }, function (response) {
+        // error callback
+        console.log(e);
+      });
+
+      // grab list. if theres nothing in the form, return whole list
+      var schools = this.schools;
       var results = queryString ? schools.filter(this.createFilter(queryString)) : schools;
+      cb(results);
+    },
+    suggestStatuses: function suggestStatuses(queryString, cb) {
+      var _this2 = this;
 
+      //get list 
+      this.$http.get('/statuses').then(function (response) {
+        var statusDataArray = response.body.data;
+        var uniqueStatuses = statusDataArray.map(function (status) {
+          return {
+            "value": status.name
+          };
+        });
+        _this2.statuses = uniqueStatuses;
+        console.log(_this2.statuses);
+      }, function (response) {
+        // error callback
+        console.log(response);
+      });
+
+      // grab list. if theres nothing in the form, return whole list
+      var statuses = this.statuses;
+      var results = queryString ? statuses.filter(this.createFilter(queryString)) : statuses;
       cb(results);
     },
     createFilter: function createFilter(queryString) {
-      return function (school) {
-        return school.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+      return function (obj) {
+        return obj.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
       };
     },
 
     addAthlete: function addAthlete(event) {
+      var _this3 = this;
+
       this.dialogFormVisible = false;
 
-      console.log(this.form);
+      this.$http.post('/athletes/store', this.form).then(function (response) {
+        var date = Date.now();
+        var recruitData = {
+          title: 'Test Title',
+          description: 'test description',
+          status: _this3.form.status_id,
+          user_assigned_id: _this3.form.user_id,
+          athlete_id: response.data.last_insert_id,
+          user_created_id: _this3.form.user_id,
+          contact_date: date
+        };
 
-      var data = {
-        name: 'Jason Nolf',
-        company_name: 'Blair',
-        state: 'NJ',
-        email: 'jason@blair.edu',
-        user_id: '1',
-        industry_id: '1'
-      };
+        console.log('stored athlete', response, recruitData);
 
-      console.log(data);
-
-      this.$http.post('/athletes/store', data).then(this.successCallback, this.errorCallback);
-    },
-    successCallback: function successCallback(r) {
-      console.log('success', r);
+        _this3.$http.post('/recruits/store', recruitData).then(function (response) {
+          console.log('recruit stored', response);
+          _this3.$bus.$emit('recruitCreated', response);
+        }, _this3.errorCallback);
+      }, this.errorCallback);
     },
     errorCallback: function errorCallback(e) {
       console.log(e);
@@ -115235,12 +115293,7 @@ var render = function() {
             [
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    label: "Athlete Name",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { label: "Athlete Name" } },
                 [
                   _c("el-input", {
                     attrs: { "auto-complete": "off" },
@@ -115258,18 +115311,31 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    label: "School or Club Name",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { label: "Athlete Email" } },
+                [
+                  _c("el-input", {
+                    attrs: { "auto-complete": "off" },
+                    model: {
+                      value: _vm.form.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "email", $$v)
+                      },
+                      expression: "form.email"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "School or Club Name" } },
                 [
                   _c("el-autocomplete", {
                     staticClass: "inline-input",
                     attrs: {
-                      "fetch-suggestions": _vm.querySearch,
-                      placeholder: "Please Input",
+                      "fetch-suggestions": _vm.suggestSchools,
+                      placeholder: "Team X",
                       "trigger-on-focus": true
                     },
                     on: { select: _vm.handleSelect },
@@ -115287,21 +115353,22 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    label: "Athlete Email",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { label: "Recruiting Status" } },
                 [
-                  _c("el-input", {
-                    attrs: { "auto-complete": "off" },
+                  _c("el-autocomplete", {
+                    staticClass: "inline-input",
+                    attrs: {
+                      "fetch-suggestions": _vm.suggestStatuses,
+                      placeholder: "Interested",
+                      "trigger-on-focus": true
+                    },
+                    on: { select: _vm.handleSelect },
                     model: {
-                      value: _vm.form.email,
+                      value: _vm.form.status_id,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "email", $$v)
+                        _vm.$set(_vm.form, "status_id", $$v)
                       },
-                      expression: "form.email"
+                      expression: "form.status_id"
                     }
                   })
                 ],

@@ -18,6 +18,9 @@ import 'element-ui/lib/theme-default/index.css';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const bus = new Vue()
+Vue.prototype.$bus = bus
+
 Vue.use(ElementUI);
 
 const app = new Vue({

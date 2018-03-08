@@ -49,19 +49,19 @@
        //   updateBlock: true
         };
       },
-
+      created: function () {
+        this.$bus.$on('recruitCreated', this.getBlocks)
+      },
       computed: {
         localBlocks() {
           return this.blocks;
         },
       },
-
       methods: {
         getBlocks(status) {
           return this.localBlocks.filter(block => block.status_id === status);
         },
          updateBlock(block, stage) {
-
           let resource = this.$resource('recruits/updatestatus{/id}')
         //  let id = block.dataset.blockId;
           resource.get({id: 21}, {}).then(this.successCallback, this.errorCallback);
@@ -74,7 +74,6 @@
           console.log(e)
         }
       },
-
       mounted() {
         dragula($('.drag-inner-list').toArray())
             .on('drag', (el) => {

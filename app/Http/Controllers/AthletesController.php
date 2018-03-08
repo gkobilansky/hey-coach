@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Config;
 use Dinero;
 use Datatables;
+use Response;
 use App\Models\Athlete;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -82,9 +83,19 @@ class AthletesController extends Controller
      */
     public function store(StoreAthleteRequest $request)
     {
-        
-        $this->athletes->create($request->all());
-        // return $request;
+        $data = new Athlete();
+        $data->name = $request['name'];
+        $data->company_name = $request['company_name'];
+        $data->email = $request['email'];
+        $data->state = $request['state'];
+        $data->user_id = $request['user_id'];
+        $data->industry_id = $request['industry_id'];
+  
+
+        if($data->save()) {
+            return Response::json(array('success' => true, 'last_insert_id' => $data->id), 200);
+        }
+
     }
 
     /**
