@@ -38,4 +38,4 @@ The packages used are the following...
 
 ### License
 
-Hey Coach and Flarepoint is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Hey Coach is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
