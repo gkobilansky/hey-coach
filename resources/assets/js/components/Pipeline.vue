@@ -62,16 +62,28 @@
           return this.localBlocks.filter(block => block.status_id === status);
         },
          updateBlock(block, stage) {
-          let resource = this.$resource('recruits/updatestatus{/id}')
+          //alert("block - " + JSON.stringify(block.dataset));
+          //alert("stage - " + JSON.stringify(stage.dataset));          
+          let resource = this.$resource('recruits/updatestatus/{id}/{status_id}');          
+          let blockId = block.dataset.blockId;
+          let statusId = stage.dataset.status;
+          resource.get({id: blockId, status_id: statusId}, {}).then(this.successCallback, this.errorCallback);
+
+
+          /*
+          let resource = this.$resource('recruits/updatestatus/{id}/{status_id}');
         //  let id = block.dataset.blockId;
-          resource.get({id: 21}, {}).then(this.successCallback, this.errorCallback);
+          resource.get({id: 21}, {status_id: 1}, {}).then(this.successCallback, this.errorCallback);
+          */
 
         },
         successCallback(r) {
           console.log('success', r)
+          //alert("succes updatestatus " + JSON.stringify(r));
         },
         errorCallback(e) {
           console.log(e)
+          //alert("error updatestatus - " + e);
         }
       },
       mounted() {
@@ -84,9 +96,9 @@
               for (index = 0; index < stage.children.length; index += 1) {
                 if (stage.children[index].classList.contains('is-moving')) break;
               }
-              this.updateBlock(block, stage)
+              this.updateBlock(block, stage);
               let id = block.dataset.blockId;
-              console.log(block, id, stage)
+              console.log(block, id, stage);
             })
             .on('dragend', (el) => {
               el.classList.remove('is-moving');
