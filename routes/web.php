@@ -75,8 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data', 'RecruitsController@anyData')->name('recruits.data');
         Route::post('/store', 'RecruitsController@store');
         Route::patch('/updateassign/{id}', 'RecruitsController@updateAssign');
-        //Route::get('/updatestatus/{id}', 'RecruitsController@updateStatus');
-        Route::get('/updatestatus/{id}/{status_id}', 'RecruitsController@updateStatus');
+        Route::patch('/updatestatus/', 'RecruitsController@updateStatus');
         Route::patch('/updatefollowup/{id}', 'RecruitsController@updateFollowup')->name('recruits.followup');
     });
         Route::resource('recruits', 'RecruitsController');

@@ -65,13 +65,13 @@ class RecruitRepository implements RecruitRepositoryContract
      * @param $status_id
      * @param $requestData
      */
-    public function updateStatus($id, $status_id, $requestData)
+    public function updateStatus($id, $status_id)
     {
         $recruit = Recruit::findOrFail($id);
 
 //        $input = $requestData->get('status');
-        $input = array_replace($requestData->all(), ['status_id' => $status_id]);
-        $recruit->fill($input)->save();
+        // $input = array_replace($requestData->all(), ['status_id' => $status_id]);
+        $recruit->fill(['status_id' => $status_id])->save();
         event(new \App\Events\RecruitAction($recruit, self::UPDATED_STATUS));
     }
 

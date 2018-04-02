@@ -7,7 +7,7 @@ interface RecruitRepositoryContract
     
     public function create($requestData);
 
-    public function updateStatus($id, $status_id, $requestData);
+    public function updateStatus($id, $status_id);
 
     public function updateFollowup($id, $requestData);
 

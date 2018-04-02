@@ -167,16 +167,18 @@ class RecruitsController extends Controller
     */
 
     /**
-     * Complete recruit
+     * Updaterecruit status
      * @param $id
      * @param $status_id
      * @param Request $request
      * @return mixed
      */
-    public function updateStatus($id, $status_id, Request $request)
+    public function updateStatus( Request $request)
     {
-        $this->recruits->updateStatus($id, $status_id, $request);
+        $id = $request->id;
+        $status_id = $request->status_id;
+        $this->recruits->updateStatus($id, $status_id);
         Session()->flash('flash_message', 'Recruiting status updated');
-        return redirect()->back();
+        return response()->json(true);
     }    
 }

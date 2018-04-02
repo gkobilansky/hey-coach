@@ -1,17 +1,17 @@
 {
-    "name": "bottelet/flarepoint",
-    "description": "Flarepoint is a free, open-source and self-hosted CRM platform based of Laravel 5",
+    "name": "hey-coach",
+    "description": "heycoach is an athlete recruiting tool",
     "keywords": [
-        "laravel",
+        "athlete recruiting",
+        "recruit management",
+        "customer relationship management",
         "CRM",
-        "customer management",
-        "Lead management",
-        "customer relationship management"
+        "ARM"
     ],
     "authors": [
         {
-            "name": "Casper Bottelet",
-            "email": "cbottelet@gmail.com"
+            "name": "Gene Kobilansky",
+            "email": "hi@heycoa.ch"
         }
     ],
     "license": "MIT",
