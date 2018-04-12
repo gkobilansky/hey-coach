@@ -50,7 +50,7 @@ export default {
           company_name: '',
           email: '',
           state: 'NY',
-          status_id: '2',
+          status_id: '',
           user_id: '1',
           industry_id: '1'
         },
@@ -63,57 +63,49 @@ export default {
       suggestSchools(queryString, cb) {
 
         //get list 
-          this.$http.get('/athletes/data').then(response => {
-            let athleteDataArray = response.body.data;
-            const uniqueSchools = athleteDataArray.map(function(athlete){
-                return {
-                  "value": athlete.company_name
-                }
-              }
-            );
-            this.schools = uniqueSchools;
+          axios.get('/athletes/data').then(response => {
+            let athleteDataArray = response.data.data;
+            let schoolsArray = athleteDataArray.map(athlete => athlete.company_name);
+            this.schools = [...new Set(schoolsArray)]; 
+            // this.schools = uniqueSchools.map(school => ({"name": school}))
           }, response => {
             // error callback
             console.log(e);
           });
 
         // grab list. if theres nothing in the form, return whole list
-        let schools = this.schools;
-        let results  = queryString ? schools.filter(this.createFilter(queryString)) : schools;
+        let results  = queryString ? this.filterItems(queryString, this.schools) : this.schools;
+        
+        // results need to be objects with value
+        results = results.map(result => ({"value" : result}))
         cb(results);
       },
       suggestStatuses(queryString, cb) {
            //get list 
-          this.$http.get('/statuses').then(response => {
-            let statusDataArray = response.body.data;
-            const uniqueStatuses = statusDataArray.map(function(status){
-                return {
-                  "value": status.name
-                }
-              }
-            );
-            this.statuses = uniqueStatuses;
-            console.log(this.statuses)
+          axios.get('/statuses').then(response => {
+            this.statuses = response.data.data.map(status => status.name);
           }, response => {
             // error callback
             console.log(response);
           });
 
         // grab list. if theres nothing in the form, return whole list
-        let statuses = this.statuses;
-        let results  = queryString ? statuses.filter(this.createFilter(queryString)) : statuses;
+        let results  = queryString ? this.filterItems(queryString, this.statuses) : this.statuses;
+        
+        // results need to be objects with value
+        results = results.map(result => ({"value" : result}))
         cb(results);
 
       },
-      createFilter(queryString) {
-        return (obj) => {
-          return (obj.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
+      filterItems(queryString, array) {
+        return array.filter((el) =>
+          el.toLowerCase().indexOf(queryString.toLowerCase()) > -1
+        );
       },
       addAthlete: function(event) {
         this.dialogFormVisible = false;
       
-        this.$http.post('/athletes/store', this.form).then(response => {
+        axios.post('/athletes/store', this.form).then(response => {
           let date = Date.now();
           const recruitData = {
             title: 'Test Title',
@@ -127,7 +119,7 @@ export default {
 
           console.log('stored athlete', response, recruitData);
 
-          this.$http.post('/recruits/store', recruitData).then(response => {
+          axios.post('/recruits/store', recruitData).then(response => {
             console.log('recruit stored', response)
             this.$bus.$emit('recruitCreated', response)
           }, this.errorCallback);

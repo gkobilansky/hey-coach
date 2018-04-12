@@ -119332,6 +119332,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 //
 //
 //
@@ -119384,7 +119386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         company_name: '',
         email: '',
         state: 'NY',
-        status_id: '2',
+        status_id: '',
         user_id: '1',
         industry_id: '1'
       },
@@ -119399,51 +119401,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       //get list 
-      this.$http.get('/athletes/data').then(function (response) {
-        var athleteDataArray = response.body.data;
-        var uniqueSchools = athleteDataArray.map(function (athlete) {
-          return {
-            "value": athlete.company_name
-          };
+      axios.get('/athletes/data').then(function (response) {
+        var athleteDataArray = response.data.data;
+        var schoolsArray = athleteDataArray.map(function (athlete) {
+          return athlete.company_name;
         });
-        _this.schools = uniqueSchools;
+        _this.schools = [].concat(_toConsumableArray(new Set(schoolsArray)));
+        // this.schools = uniqueSchools.map(school => ({"name": school}))
       }, function (response) {
         // error callback
         console.log(e);
       });
 
       // grab list. if theres nothing in the form, return whole list
-      var schools = this.schools;
-      var results = queryString ? schools.filter(this.createFilter(queryString)) : schools;
+      var results = queryString ? this.filterItems(queryString, this.schools) : this.schools;
+
+      // results need to be objects with value
+      results = results.map(function (result) {
+        return { "value": result };
+      });
       cb(results);
     },
     suggestStatuses: function suggestStatuses(queryString, cb) {
       var _this2 = this;
 
       //get list 
-      this.$http.get('/statuses').then(function (response) {
-        var statusDataArray = response.body.data;
-        var uniqueStatuses = statusDataArray.map(function (status) {
-          return {
-            "value": status.name
-          };
+      axios.get('/statuses').then(function (response) {
+        _this2.statuses = response.data.data.map(function (status) {
+          return status.name;
         });
-        _this2.statuses = uniqueStatuses;
-        console.log(_this2.statuses);
       }, function (response) {
         // error callback
         console.log(response);
       });
 
       // grab list. if theres nothing in the form, return whole list
-      var statuses = this.statuses;
-      var results = queryString ? statuses.filter(this.createFilter(queryString)) : statuses;
+      var results = queryString ? this.filterItems(queryString, this.statuses) : this.statuses;
+
+      // results need to be objects with value
+      results = results.map(function (result) {
+        return { "value": result };
+      });
       cb(results);
     },
-    createFilter: function createFilter(queryString) {
-      return function (obj) {
-        return obj.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-      };
+    filterItems: function filterItems(queryString, array) {
+      return array.filter(function (el) {
+        return el.toLowerCase().indexOf(queryString.toLowerCase()) > -1;
+      });
     },
 
     addAthlete: function addAthlete(event) {
@@ -119451,7 +119455,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.dialogFormVisible = false;
 
-      this.$http.post('/athletes/store', this.form).then(function (response) {
+      axios.post('/athletes/store', this.form).then(function (response) {
         var date = Date.now();
         var recruitData = {
           title: 'Test Title',
@@ -119465,7 +119469,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         console.log('stored athlete', response, recruitData);
 
-        _this3.$http.post('/recruits/store', recruitData).then(function (response) {
+        axios.post('/recruits/store', recruitData).then(function (response) {
           console.log('recruit stored', response);
           _this3.$bus.$emit('recruitCreated', response);
         }, _this3.errorCallback);
