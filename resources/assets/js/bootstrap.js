@@ -12,8 +12,10 @@ require("bootstrap-sass");
 import Vue from "vue";
 import axios from "axios";
 import VueRouter from "vue-router";
+import Form from "./utilities/Form";
 
 window.Vue = Vue;
+window.Form = Form;
 
 Vue.use(VueRouter);
 
