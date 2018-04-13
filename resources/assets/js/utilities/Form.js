@@ -21,7 +21,7 @@ class Form {
     let data = {};
 
     for (let key in this.originalData) {
-      if (originalData.hasOwnProperty(key)) {
+      if (this.originalData.hasOwnProperty(key)) {
         data[key] = this[key];
       }
     }
@@ -60,7 +60,7 @@ class Form {
    */
 
   submit(requestType, url) {
-    return new Proise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       axios[requestType](url, this.data())
         .then(response => {
           this.onSuccess(response.data);
