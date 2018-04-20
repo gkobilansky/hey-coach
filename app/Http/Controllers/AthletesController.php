@@ -73,8 +73,8 @@ class AthletesController extends Controller
     public function create()
     {
         return view('athletes.create')
-            ->withUsers($this->users->getAllUsersWithDepartments())
-            ->withIndustries($this->athletes->listAllIndustries());
+            ->withUsers($this->users->getAllUsersWithDepartments());
+            // ->withIndustries($this->athletes->listAllIndustries());
     }
 
     /**
@@ -89,7 +89,6 @@ class AthletesController extends Controller
         $data->email = $request['email'];
         $data->state = $request['state'];
         $data->user_id = $request['user_id'];
-        $data->industry_id = $request['industry_id'];
   
 
         if($data->save()) {
@@ -133,8 +132,8 @@ class AthletesController extends Controller
     {
         return view('athletes.edit')
             ->withAthlete($this->athletes->find($id))
-            ->withUsers($this->users->getAllUsersWithDepartments())
-            ->withIndustries($this->athletes->listAllIndustries());
+            ->withUsers($this->users->getAllUsersWithDepartments());
+            // ->withIndustries($this->athletes->listAllIndustries());
     }
 
     /**

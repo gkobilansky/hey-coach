@@ -25,13 +25,9 @@ class CreateAthletesTable extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('company_name');
-            $table->string('vat')->nullable();
-            $table->string('industry');
             $table->string('company_type')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('industry_id')->unsigned();
-            $table->foreign('industry_id')->references('id')->on('industries');
             $table->timestamps();
         });
     }

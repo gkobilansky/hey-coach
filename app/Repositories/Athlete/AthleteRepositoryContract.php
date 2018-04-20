@@ -11,8 +11,6 @@ interface AthleteRepositoryContract
 
     public function getAllAthletesCount();
 
-    public function listAllIndustries();
-
     public function create($requestData);
 
     public function update($id, $requestData);

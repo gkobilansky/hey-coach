@@ -93,7 +93,7 @@
         ['class' => 'form-control'])
     !!}
 </div>
-<div class="form-group">
+{{-- <div class="form-group">
     {!! Form::label('industry', 'Industry:', ['class' => 'control-label']) !!}
     {!!
         Form::select('industry_id',
@@ -102,7 +102,7 @@
         ['class' => 'form-control ui search selection top right pointing search-select',
         'id' => 'search-select'])
     !!}
-</div>
+</div> --}}
 
 
 <div class="form-group">

@@ -35,7 +35,6 @@ $factory->define(App\Models\Athlete::class, function (Faker\Generator $faker) {
         'zipcode' => $faker->postcode(),
         'primary_number' => $faker->phoneNumber,
         'secondary_number' => $faker->phoneNumber,
-        'industry_id' => $faker->numberBetween($min = 1, $max = 25),
         'user_id' => $faker->numberBetween($min = 1, $max = 3),
         'company_type' => 'ApS',
     ];

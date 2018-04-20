@@ -2,7 +2,6 @@
 namespace App\Repositories\Athlete;
 
 use App\Models\Athlete;
-use App\Models\Industry;
 use App\Models\Invoice;
 use App\Models\User;
 use DB;

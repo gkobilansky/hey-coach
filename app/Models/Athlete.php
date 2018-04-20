@@ -17,7 +17,6 @@ class Athlete extends Model
         'state',
         'primary_number',
         'secondary_number',
-        'industry_id',
         'company_type',
         'user_id'];
 
