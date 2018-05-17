@@ -73,9 +73,10 @@ Route::group(['middleware' => ['auth']], function () {
      */
     Route::group(['prefix' => 'recruits'], function () {
         Route::get('/data', 'RecruitsController@anyData')->name('recruits.data');
+        Route::get('/athleteData', 'RecruitsController@athleteData');        
         Route::post('/store', 'RecruitsController@store');
         Route::patch('/updateassign/{id}', 'RecruitsController@updateAssign');
-        Route::patch('/updatestatus/', 'RecruitsController@updateStatus');
+        Route::patch('/updatestatus', 'RecruitsController@updateStatus');
         Route::patch('/updatefollowup/{id}', 'RecruitsController@updateFollowup')->name('recruits.followup');
     });
         Route::resource('recruits', 'RecruitsController');

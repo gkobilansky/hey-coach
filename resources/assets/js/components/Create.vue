@@ -73,7 +73,7 @@ export default {
       statuses() {
         return this.$store.state.athleteData.recruitingStatuses
       },
-       schools() {
+      schools() {
         return this.$store.state.athleteData.schools
       }
     },
@@ -113,35 +113,37 @@ export default {
 
       addAthlete: function(event) {
         this.dialogFormVisible = false;
-        this.form
-        .post('/athletes/store')
-        .then(response => {
-          let date = Date.now();
-          const recruitData = {
+        let date = Date.now();
+        const recruitData = {
             title: 'Test Title',
             description: 'test description',            
             status: this.form.status_id,
             user_assigned_id: this.form.user_id,
-            athlete_id: response.last_insert_id,
+            athlete_id: null,
             user_created_id: this.form.user_id,
             contact_date: date
-          }
+        }
+        this.form
+        .post('/athletes/store')
+        .then(response => {
+          recruitData.athlete_id = response.last_insert_id  
+          console.log('recruit stored', response)
 
-          console.log('stored athlete', response, recruitData);
-
-          axios.post('/recruits/store', recruitData).then(response => {
-            console.log('recruit stored', response)
-            this.$bus.$emit('recruitCreated', response)
-          }, this.errorCallback);
-          
-        }, this.errorCallback);
-
+          axios
+          .post('/recruits/store', recruitData)
+          .then(response => {
+              console.log('recruit stored', response)
+            })
+            .catch(error => {
+            console.log(errpr); 
+            })
+        })
+        .catch(error => {
+          console.log(errpr);
+        });
       },
-      errorCallback(e) {
-          console.log(e)
-        },
       handleSelect(item) {
-        
+        console.log(item)
       }
     }
   };

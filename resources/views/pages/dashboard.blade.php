@@ -20,6 +20,6 @@
     </script>
 @endpush
         <create></create>
-        <pipeline :stages="{{$allStatuses}}" :blocks="{{$recruitRecords}}"></pipeline>
+        <pipeline :stages="{{$allStatuses}}"></pipeline>
     
 @endsection

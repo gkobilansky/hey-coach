@@ -51,14 +51,6 @@ class AthleteRepository implements AthleteRepositoryContract
     }
 
     /**
-     * @return mixed
-     */
-    public function listAllIndustries()
-    {
-        return Industry::pluck('name', 'id');
-    }
-
-    /**
      * @param $requestData
      */
     public function create($requestData)

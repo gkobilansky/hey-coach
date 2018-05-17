@@ -53,6 +53,17 @@ class RecruitsController extends Controller
         return view('recruits.index');
     }
 
+      /**
+     * Recruits plus Athletes
+     *
+     * @return mixed
+     */
+    public function athleteData()
+    {
+        $recruitRecords = $this->recruits->getAllRecruits();
+        return response()->json($recruitRecords);
+    }
+
     /**
      * Data for Data tables
      * @return mixed
@@ -167,7 +178,7 @@ class RecruitsController extends Controller
     */
 
     /**
-     * Updaterecruit status
+     * Update Recruit status
      * @param $id
      * @param $status_id
      * @param Request $request

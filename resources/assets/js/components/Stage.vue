@@ -41,14 +41,10 @@ export default {
 	  },
     updateBlock(block, stage) {
 		console.log(block, stage)
-      axios.patch('recruits/updatestatus',
-          {
-            id: block,
-            status_id: stage
-          },
-          {}
-        )
-        .then(this.successCallback, this.errorCallback);
+      this.$store.dispatch( 'athleteData/updateRecruitStatus', {
+        block,
+        stage
+    });
     },
     successCallback(r) {
       console.log("success", r);
