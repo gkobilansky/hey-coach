@@ -30,6 +30,9 @@ export default {
     },
     /*
       Adds a recruit
+      https://serversideup.net/build-api-requests-javascript/
+      https://github.com/serversideup/roastandbrew
+      https://serversideup.net/api-form-submissions-javascript-vuex-laravel/
     */
     addRecruit({ commit, state, dispatch }, data) {},
     createRecruit({ commit }) {

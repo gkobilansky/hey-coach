@@ -18,15 +18,9 @@ class UsersDummyTableSeeder extends Seeder
         });
 
         $createDep = new Department;
-        $createDep->id = '2';
+        $createDep->id = '1';
         $createDep->name = 'Athletics';
         $createDep->save();
-        $createDep = new Department;
-        $createDep->id = '3';
-        $createDep->name = 'Athletics';
-        $createDep->save();
-
-
 
         $newrole = new RoleUser;
         $newrole->role_id = '1';

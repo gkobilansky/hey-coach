@@ -101,7 +101,7 @@ class RecruitsController extends Controller
     public function create()
     {
         return view('recruits.create')
-            ->withUsers($this->users->getAllUsersWithDepartments())
+             ->withUsers($this->users->getAllUsersWithDepartments())
             ->withAthletes($this->athletes->listAllathletes())
             ->withStatuses($this->statuses->getStatusNames());
     }
