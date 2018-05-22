@@ -39,7 +39,6 @@
        	getStageBlocks(status_id) {
 			    return this.recruits.filter(block => block.status_id === status_id);
 		  },
-   
       }
     };
 </script>

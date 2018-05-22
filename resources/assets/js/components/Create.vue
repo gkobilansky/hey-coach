@@ -93,7 +93,7 @@ export default {
       suggestStatuses(queryString, cb) {
         // grab list. if theres nothing in the form, return whole list
         let results  = queryString ? this.filterStatus(queryString, this.statuses) : this.statuses;
-        console.log(results)
+    
         
         // results need to be objects with value
         results = results.map(result => ({"value" : result.name}))
@@ -112,35 +112,12 @@ export default {
       },
 
       addAthlete: function(event) {
+   
         this.dialogFormVisible = false;
-        let date = Date.now();
-        const recruitData = {
-            title: 'Test Title',
-            description: 'test description',            
-            status: this.form.status_id,
-            user_assigned_id: this.form.user_id,
-            athlete_id: null,
-            user_created_id: this.form.user_id,
-            contact_date: date
-        }
-        this.form
-        .post('/athletes/store')
-        .then(response => {
-          recruitData.athlete_id = response.last_insert_id  
-          console.log('recruit stored', response)
-
-          axios
-          .post('/recruits/store', recruitData)
-          .then(response => {
-              console.log('recruit stored', response)
-            })
-            .catch(error => {
-            console.log(errpr); 
-            })
-        })
-        .catch(error => {
-          console.log(errpr);
+        this.$store.dispatch( 'athleteData/createRecruit', {
+          data: this.form.data()
         });
+       
       },
       handleSelect(item) {
         console.log(item)

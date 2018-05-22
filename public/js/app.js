@@ -80842,35 +80842,44 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var commit = _ref4.commit;
 
       axios.get("/recruits/athleteData").then(function (response) {
-        console.log(response);
-        commit("setRecruitList", { list: response.data });
+        commit("setRecruitList", {
+          list: response.data
+        });
       }).catch(function (error) {
-        console.log(errpr);
+        console.log(error);
       });
     },
-
-    /*
-      Adds a recruit
-    */
-    addRecruit: function addRecruit(_ref5, data) {
+    createRecruit: function createRecruit(_ref5, data) {
       var commit = _ref5.commit,
           state = _ref5.state,
           dispatch = _ref5.dispatch;
-    },
-    createRecruit: function createRecruit(_ref6) {
-      var commit = _ref6.commit;
 
-      axios.post("/recruits/add").then(function (response) {
-        console.log(response);
-        commit("setRecruitList", { list: response.data });
+      var date = Date.now();
+      var recruitData = {
+        title: "Test Title",
+        description: "test description",
+        status: data.data.status_id,
+        user_assigned_id: data.data.user_id,
+        athlete_id: null,
+        user_created_id: data.data.user_id,
+        contact_date: date
+      };
+      axios.post("/athletes/store", data.data).then(function (response) {
+        recruitData.athlete_id = response.data.last_insert_id;
+        axios.post("/recruits/store", recruitData).then(function (response) {
+          dispatch("getRecruitList");
+          console.log("recruit stored", response);
+        }).catch(function (error) {
+          console.log(error);
+        });
       }).catch(function (error) {
-        console.log(errpr);
+        console.log(error);
       });
     },
-    updateRecruitStatus: function updateRecruitStatus(_ref7, data) {
-      var commit = _ref7.commit,
-          state = _ref7.state,
-          dispatch = _ref7.dispatch;
+    updateRecruitStatus: function updateRecruitStatus(_ref6, data) {
+      var commit = _ref6.commit,
+          state = _ref6.state,
+          dispatch = _ref6.dispatch;
 
       axios.patch("recruits/updatestatus", {
         id: data.block,
@@ -80878,20 +80887,22 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }, {}).then(function (response) {
         dispatch("getRecruitList");
       }).catch(function (error) {
-        console.log(errpr);
+        console.log(error);
       });
     },
-    getStatusList: function getStatusList(_ref8) {
-      var commit = _ref8.commit;
+    getStatusList: function getStatusList(_ref7) {
+      var commit = _ref7.commit;
 
       axios.get("/statuses").then(function (response) {
-        commit("setStatusList", { list: response.data.data });
+        commit("setStatusList", {
+          list: response.data.data
+        });
       }).catch(function (error) {
         console.log(errpr);
       });
     },
-    getSchoolsList: function getSchoolsList(_ref9) {
-      var commit = _ref9.commit;
+    getSchoolsList: function getSchoolsList(_ref8) {
+      var commit = _ref8.commit;
 
       //get list
       axios.get("/athletes/data").then(function (response) {
@@ -80899,9 +80910,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         var schoolsArray = athleteDataArray.map(function (athlete) {
           return athlete.company_name;
         });
-        commit("setSchoolList", { list: [].concat(_toConsumableArray(new Set(schoolsArray))) });
+        commit("setSchoolList", {
+          list: [].concat(_toConsumableArray(new Set(schoolsArray)))
+        });
       }).catch(function (error) {
-        console.log(errpr);
+        console.log(error);
       });
     }
   }
@@ -118410,10 +118423,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     stage: {},
     blocks: {}
   },
-  data: function data() {
-    return {
-      movableBlocks: this.blocks
-    };
+  computed: {
+    moveableBlocks: function moveableBlocks() {
+      return this.blocks;
+    }
   },
   methods: {
     onEnd: function onEnd(evnt) {
@@ -120612,16 +120625,9 @@ var render = function() {
         {
           staticClass: "list-group",
           attrs: { options: { group: "stages" }, "data-status": _vm.stage.id },
-          on: { end: _vm.onEnd },
-          model: {
-            value: _vm.movableBlocks,
-            callback: function($$v) {
-              _vm.movableBlocks = $$v
-            },
-            expression: "movableBlocks"
-          }
+          on: { end: _vm.onEnd }
         },
-        _vm._l(_vm.movableBlocks, function(block) {
+        _vm._l(_vm.moveableBlocks, function(block) {
           return _c("Block", { key: block.id, attrs: { block: block } })
         })
       )
@@ -120825,7 +120831,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     suggestStatuses: function suggestStatuses(queryString, cb) {
       // grab list. if theres nothing in the form, return whole list
       var results = queryString ? this.filterStatus(queryString, this.statuses) : this.statuses;
-      console.log(results);
 
       // results need to be objects with value
       results = results.map(function (result) {
@@ -120846,28 +120851,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     addAthlete: function addAthlete(event) {
-      this.dialogFormVisible = false;
-      var date = Date.now();
-      var recruitData = {
-        title: 'Test Title',
-        description: 'test description',
-        status: this.form.status_id,
-        user_assigned_id: this.form.user_id,
-        athlete_id: null,
-        user_created_id: this.form.user_id,
-        contact_date: date
-      };
-      this.form.post('/athletes/store').then(function (response) {
-        recruitData.athlete_id = response.last_insert_id;
-        console.log('recruit stored', response);
 
-        axios.post('/recruits/store', recruitData).then(function (response) {
-          console.log('recruit stored', response);
-        }).catch(function (error) {
-          console.log(errpr);
-        });
-      }).catch(function (error) {
-        console.log(errpr);
+      this.dialogFormVisible = false;
+      this.$store.dispatch('athleteData/createRecruit', {
+        data: this.form.data()
       });
     },
     handleSelect: function handleSelect(item) {

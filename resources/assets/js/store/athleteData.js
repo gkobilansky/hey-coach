@@ -21,29 +21,41 @@ export default {
       axios
         .get("/recruits/athleteData")
         .then(response => {
-          console.log(response);
-          commit("setRecruitList", { list: response.data });
+          commit("setRecruitList", {
+            list: response.data
+          });
         })
         .catch(error => {
-          console.log(errpr);
+          console.log(error);
         });
     },
-    /*
-      Adds a recruit
-      https://serversideup.net/build-api-requests-javascript/
-      https://github.com/serversideup/roastandbrew
-      https://serversideup.net/api-form-submissions-javascript-vuex-laravel/
-    */
-    addRecruit({ commit, state, dispatch }, data) {},
-    createRecruit({ commit }) {
+    createRecruit({ commit, state, dispatch }, data) {
+      let date = Date.now();
+      let recruitData = {
+        title: "Test Title",
+        description: "test description",
+        status: data.data.status_id,
+        user_assigned_id: data.data.user_id,
+        athlete_id: null,
+        user_created_id: data.data.user_id,
+        contact_date: date
+      };
       axios
-        .post("/recruits/add")
+        .post("/athletes/store", data.data)
         .then(response => {
-          console.log(response);
-          commit("setRecruitList", { list: response.data });
+          recruitData.athlete_id = response.data.last_insert_id;
+          axios
+            .post("/recruits/store", recruitData)
+            .then(response => {
+              dispatch("getRecruitList");
+              console.log("recruit stored", response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => {
-          console.log(errpr);
+          console.log(error);
         });
     },
     updateRecruitStatus({ commit, state, dispatch }, data) {
@@ -60,14 +72,16 @@ export default {
           dispatch("getRecruitList");
         })
         .catch(error => {
-          console.log(errpr);
+          console.log(error);
         });
     },
     getStatusList({ commit }) {
       axios
         .get("/statuses")
         .then(response => {
-          commit("setStatusList", { list: response.data.data });
+          commit("setStatusList", {
+            list: response.data.data
+          });
         })
         .catch(error => {
           console.log(errpr);
@@ -82,10 +96,12 @@ export default {
           let schoolsArray = athleteDataArray.map(
             athlete => athlete.company_name
           );
-          commit("setSchoolList", { list: [...new Set(schoolsArray)] });
+          commit("setSchoolList", {
+            list: [...new Set(schoolsArray)]
+          });
         })
         .catch(error => {
-          console.log(errpr);
+          console.log(error);
         });
     }
   }

@@ -5,8 +5,8 @@
 			<h3 class="stage-name">{{ stage.name }}</h3>
 		</span>
 
-		<draggable class="list-group" :options="{group:'stages'}" v-model="movableBlocks" :data-status="stage.id" @end="onEnd">
-			<Block v-for="block in movableBlocks"
+		<draggable class="list-group" :options="{group:'stages'}"  :data-status="stage.id" @end="onEnd">
+			<Block v-for="block in moveableBlocks"
 			 	 :key="block.id"
 				 :block="block" />
 		</draggable>
@@ -27,11 +27,11 @@ export default {
     stage: {},
     blocks: {}
   },
-	data: function () {
-        return {
-            movableBlocks: this.blocks
+  computed: {
+        moveableBlocks: function() {
+          return this.blocks
         }
- },
+  },
   methods: {
 	onEnd(evnt){
 		  console.log(evnt)
