@@ -134,6 +134,20 @@ class RecruitRepository implements RecruitRepositoryContract
         return $recruits;
     }
 
+     /**
+     * @return mixed
+     */
+    public function getAllRecruitsForCollege($college_id)
+    {
+        $recruits = DB::table('recruits')
+        ->join('athletes', 'recruits.athlete_id', '=', 'athletes.id')
+        ->select('recruits.*', 'athletes.name', 'athletes.company_name', 'athletes.state')
+        ->where('college_id', $college_id)
+        ->get();
+        
+        return $recruits;
+    }    
+
 
 
     /**

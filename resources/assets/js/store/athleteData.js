@@ -19,7 +19,7 @@ export default {
   actions: {
     getRecruitList({ commit }) {
       axios
-        .get("/recruits/athleteData")
+        .get("/recruits/recruitDataBySchool")
         .then(response => {
           commit("setRecruitList", {
             list: response.data

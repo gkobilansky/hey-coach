@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('work_number')->nullable();
             $table->string('personal_number')->nullable();
             $table->string('image_path')->nullable();
+            $table->integer('college_id')->unsigned();
+            $table->foreign('college_id')->references('id')->on('colleges');            
             $table->rememberToken();
             $table->timestamps();
         });

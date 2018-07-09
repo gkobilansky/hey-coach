@@ -16,6 +16,7 @@ use App\Repositories\User\UserRepositoryContract;
 use App\Http\Requests\Recruit\UpdateRecruitFollowUpRequest;
 use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
+use Illuminate\Support\Facades\Log;
 
 class RecruitsController extends Controller
 {
@@ -41,6 +42,7 @@ class RecruitsController extends Controller
         $this->middleware('recruit.create', ['only' => ['create']]);
         $this->middleware('recruit.assigned', ['only' => ['updateAssign']]);
         $this->middleware('recruit.update.status', ['only' => ['updateStatus']]);
+        $this->middleware('recruit.show', ['only' => ['show']]);
     }
 
     /**
@@ -62,6 +64,13 @@ class RecruitsController extends Controller
     {
         $recruitRecords = $this->recruits->getAllRecruits();
         return response()->json($recruitRecords);
+    }
+
+    public function recruitDataBySchool() {
+        $recruitRecords = $this->recruits->getAllRecruitsForCollege(Session::get('college_id'));
+        Log::debug("recruitDataBySchool " . json_encode($recruitRecords));
+        //$recruitRecords = $this->recruits->getAllRecruits();
+        return response()->json($recruitRecords);        
     }
 
     /**
@@ -94,14 +103,45 @@ class RecruitsController extends Controller
     }
 
     /**
+     * Data for Data tables of session's college_id
+     * @return mixed
+     */
+    public function anyDataByCollege()
+    {
+        $college_id = Session::get('college_id');        
+        $recruits = $college_id == null || $college_id == '' ? Recruit::all() : Recruit::where('college_id', $college_id)->get();
+        return Datatables::of($recruits)
+            ->editColumn('status_id', function ($recruits) {
+                return $recruits->status->name;
+            })
+            ->addColumn('titlelink', function ($recruits) {
+                return '<a href="recruits/' . $recruits->id . '" ">' . $recruits->title . '</a>';
+            })
+            ->editColumn('athlete_id', function ($recruits) {
+                return $recruits->athlete->name;
+            })
+            ->editColumn('user_created_id', function ($recruits) {
+                return $recruits->creator->name;
+            })
+            ->editColumn('contact_date', function ($recruits) {
+                return $recruits->contact_date ? with(new Carbon($recruits->contact_date))
+                    ->format('d/m/Y') : '';
+            })
+            ->editColumn('user_assigned_id', function ($recruits) {
+                return $recruits->user->name;
+            })->make(true);
+    }    
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $college_id = Session::get('college_id');
         return view('recruits.create')
-             ->withUsers($this->users->getAllUsersWithDepartments())
+            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($college_id))
             ->withAthletes($this->athletes->listAllathletes())
             ->withStatuses($this->statuses->getStatusNames());
     }
@@ -121,6 +161,7 @@ class RecruitsController extends Controller
         $data->status_id = 1;
         $data->user_assigned_id = $request['user_assigned_id'];
         $data->athlete_id = $request['athlete_id'];
+        $data->college_id = Session::get('college_id');
         $data->user_created_id = $request['user_created_id'];
         $data->contact_date = Carbon::now();
         $data->save();
@@ -156,9 +197,10 @@ class RecruitsController extends Controller
      */
     public function show($id)
     {
+        $college_id = Session::get('college_id');
         return view('recruits.show')
             ->withrecruit($this->recruits->find($id))
-            ->withUsers($this->users->getAllUsersWithDepartments())
+            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($college_id))
             ->withCompanyname($this->settings->getCompanyName());
     }
 
@@ -186,6 +228,7 @@ class RecruitsController extends Controller
      */
     public function updateStatus( Request $request)
     {
+        Log::debug("update status now - " . json_encode($request));
         $id = $request->id;
         $status_id = $request->status_id;
         $this->recruits->updateStatus($id, $status_id);

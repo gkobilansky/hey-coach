@@ -10,4 +10,19 @@ class Department extends Model
             'name',
             'description'
         ];
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'departments';
+
+    /**
+     * The users that belong to the role.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'department_users', 'department_id', 'user_id');
+    }        
 }

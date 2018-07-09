@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Gate;
 use Carbon;
 use Datatables;
+use Session;
 use App\Models\Task;
 use App\Http\Requests;
 use App\Models\Integration;
@@ -85,8 +86,9 @@ class TasksController extends Controller
      */
     public function create()
     {
+        $college_id = Session::get('college_id');
         return view('tasks.create')
-            ->withUsers($this->users->getAllUsersWithDepartments())
+            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($college_id))
             ->withathletes($this->athletes->listAllathletes());
     }
 
@@ -96,6 +98,8 @@ class TasksController extends Controller
      */
     public function store(StoreTaskRequest $request) // uses __contrust request
     {
+        $college_id = Session::get('college_id');
+        $request->merge(['college_id' => $college_id]);
         $getInsertedId = $this->tasks->create($request);
         return redirect()->route("tasks.show", $getInsertedId);
     }
@@ -109,9 +113,10 @@ class TasksController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $college_id = Session::get('college_id');
         return view('tasks.show')
             ->withTasks($this->tasks->find($id))
-            ->withUsers($this->users->getAllUsersWithDepartments())
+            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($college_id))
             ->withInvoiceLines($this->tasks->getInvoiceLines($id))
             ->withCompanyname($this->settings->getCompanyName());
     }
