@@ -197,8 +197,10 @@ class UsersController extends Controller
     public function store(StoreUserRequest $userRequest)
     {
         Log::debug("attempting to create user " . json_encode($userRequest));
+        $college_id = Session::get('college_id');
         $userRequest->merge(['college_id' => $college_id]);     
         $getInsertedId = $this->users->create($userRequest);
+        //$getInsertedId = $this->users->create(array_merge($userRequest->all(), ['college_id' => $college_id]));
         return redirect()->route('users.index');
     }
 

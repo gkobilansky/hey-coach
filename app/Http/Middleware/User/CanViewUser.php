@@ -20,10 +20,8 @@ class CanViewUser
     public function handle($request, Closure $next)
     {
         Log::debug("user view Middleware " . $request);
-        Log::debug("user view Middleware parameters " . json_encode($request->route()->parameters()));
         $user_id = $request->route('user');
         $user = User::where('id', $user_id)->first();
-        Log::debug("user view result Middleware " . json_encode($user));
 
         if($user == null) {
             //TODO - return page does not exist
