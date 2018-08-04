@@ -5,11 +5,6 @@ $secondary-color: #008ae6;
 $link-color:#337ab7;
 $top-bar-color:#2196F3;
 
-html, body {
-  //  height: 100%;
-    margin: 0;
-    padding: 0;
-}
 
 body, button, html, input, select, textarea {
     font-family: Lato, Arial,Helvetica,sans-serif;
@@ -28,30 +23,16 @@ h1
     min-height: 0rem;
     font-weight: 200;
 }
-h3{
-    &:first-child{
-    margin-top: 20px;
-    margin-bottom: 10px;
-    }
-}
-h4{
-    margin: 0;
-    font-weight: normal;
-}
 
 a{
-    // color: $link-color;
     text-decoration: none;
     &:hover {
         text-decoration: none;
     }
 }
-p{
-    margin: 0 0 10px;
-    line-height: 1.4285em;
-    &:last-child{
-    margin-bottom: 10px;
-    }
+
+.page-content-wrapper {
+    padding-top: 2rem;
 }
 
 svg {
