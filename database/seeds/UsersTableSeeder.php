@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'name' => 'Admin',
-                'email' => 'admin@admin.com',
+                'email' => 'admin@nyu.com',
                 'password' => bcrypt('admin123'),
                 'address' => '',
                 'work_number' => 0,
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
             array (
                 'id' => 2,
                 'name' => 'Admin2',
-                'email' => 'admin2@admin.com',
+                'email' => 'admin2@iowa.com',
                 'password' => bcrypt('admin1234'),
                 'address' => '',
                 'work_number' => 0,
