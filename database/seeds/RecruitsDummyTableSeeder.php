@@ -12,6 +12,8 @@ class RecruitsDummyTableSeeder extends Seeder
     public function run()
     {
         factory(App\Models\Recruit::class, 30)->create()->each(function ($c) {
+            $c->athletes()->save(factory(App\Model\Athlete::class)->make());
+            $c->users()->save(factory(App\Model\User::class)->make());
         });
     }
 }

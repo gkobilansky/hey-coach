@@ -9,6 +9,8 @@ use Datatables;
 use Carbon;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Log;
+
 
 /**
  * Class UserRepository
@@ -38,10 +40,26 @@ class UserRepository implements UserRepositoryContract
      * @return mixed
      */
     public function getAllUsersWithDepartments()
-    {
+    {   
         return User::all()
         ->pluck('nameAndDepartment', 'id');
+
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAllUsersForCollege($college_id) {
+        return User::where('college_id', $college_id)->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllUsersForCollegeWithDepartments($college_id)
+    {
+        return User::where('college_id', $college_id)->get()->pluck('nameAndDepartment', 'id');
+    }    
 
     /**
      * @param $requestData
@@ -51,7 +69,7 @@ class UserRepository implements UserRepositoryContract
     {
         $companyname = Setting::first()->company;
         $filename = null;
-        if ($requestData->hasFile('image_path')) {
+        if ($requestData != null && $requestData->hasFile('image_path')) {
             if (!is_dir(public_path(). '/images/'. $companyname)) {
                 mkdir(public_path(). '/images/'. $companyname, 0777, true);
             }
@@ -64,6 +82,7 @@ class UserRepository implements UserRepositoryContract
 
         $user = New User();
         $user->name = $requestData->name;
+        $user->college_id = $requestData->college_id;
         $user->email = $requestData->email;
         $user->address = $requestData->address;
         $user->work_number = $requestData->work_number;
@@ -72,7 +91,7 @@ class UserRepository implements UserRepositoryContract
         $user->image_path = $filename;
         $user->save();
         $user->roles()->attach($requestData->roles);
-        $user->department()->attach($requestData->departments);
+        $user->departments()->attach($requestData->departments);
         $user->save();
 
         Session::flash('flash_message', 'User successfully added!'); //Snippet in Master.blade.php

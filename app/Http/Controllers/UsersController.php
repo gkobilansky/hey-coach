@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Gate;
 use Carbon;
 use Datatables;
+use Session;
 use App\Models\User;
 use App\Models\Task;
 use App\Http\Requests;
@@ -18,6 +19,7 @@ use App\Repositories\Department\DepartmentRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 use App\Repositories\Task\TaskRepositoryContract;
 use App\Repositories\Recruit\RecruitRepositoryContract;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -42,6 +44,7 @@ class UsersController extends Controller
         $this->tasks = $tasks;
         $this->recruits = $recruits;
         $this->middleware('user.create', ['only' => ['create']]);
+        $this->middleware('user.show', ['only' => ['show']]);
     }
 
     /**
@@ -71,6 +74,23 @@ class UsersController extends Controller
             ->add_column('delete', function ($user) { 
                 return '<button type="button" class="btn btn-danger delete_athlete" data-athlete_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
             })->make(true);
+    }
+
+    public function anyDataByCollege() {
+        $canUpdateUser = auth()->user()->can('update-user');        
+        $college_id = Session::get('college_id');        
+        //$users = User::select(['id', 'name', 'email', 'work_number']);
+        $users = $college_id == null || $college_id == '' ? User::select(['id', 'name', 'email', 'work_number']) : User::select(['id', 'name', 'email', 'work_number'])->where('college_id', $college_id)->get(); 
+        return Datatables::of($users)
+            ->addColumn('namelink', function ($users) {
+                return '<a href="users/' . $users->id . '" ">' . $users->name . '</a>';
+            })
+            ->addColumn('edit', function ($user) {
+                return '<a href="' . route("users.edit", $user->id) . '" class="btn btn-success"> Edit</a>';
+            })
+            ->add_column('delete', function ($user) { 
+                return '<button type="button" class="btn btn-danger delete_athlete" data-athlete_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
+            })->make(true);                
     }
 
     /**
@@ -164,7 +184,7 @@ class UsersController extends Controller
      * @return mixed
      */
     public function create()
-    {
+    {        
         return view('users.create')
             ->withRoles($this->roles->listAllRoles())
             ->withDepartments($this->departments->listAllDepartments());
@@ -176,7 +196,11 @@ class UsersController extends Controller
      */
     public function store(StoreUserRequest $userRequest)
     {
+        Log::debug("attempting to create user " . json_encode($userRequest));
+        $college_id = Session::get('college_id');
+        $userRequest->merge(['college_id' => $college_id]);     
         $getInsertedId = $this->users->create($userRequest);
+        //$getInsertedId = $this->users->create(array_merge($userRequest->all(), ['college_id' => $college_id]));
         return redirect()->route('users.index');
     }
 

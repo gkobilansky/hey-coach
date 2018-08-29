@@ -24,6 +24,8 @@ class CreateRecruitsTable extends Migration
             $table->foreign('athlete_id')->references('id')->on('athletes');
             $table->integer('user_created_id')->unsigned();
             $table->foreign('user_created_id')->references('id')->on('users');
+            $table->integer('college_id')->unsigned();
+            $table->foreign('college_id')->references('id')->on('colleges');
             $table->datetime('contact_date');
             $table->timestamps();
         });

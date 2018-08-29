@@ -10,6 +10,9 @@ use App\Repositories\User\UserRepositoryContract;
 use App\Repositories\Status\StatusRepositoryContract;
 use App\Repositories\Athlete\AthleteRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class PagesController extends Controller
 {
@@ -48,10 +51,15 @@ class PagesController extends Controller
          * Other Statistics
          *
          */
+        Log::debug("PagesController:: user id " . Session::get('user_id') . ' - college id ' .  Session::get('college_id'));
+
+        $userId = Auth::id();
+        $this_user = $this->users->find($userId);
+        $college_id = $this_user->college_id;
         $allStatuses = $this->statuses->getAllStatuses();
         $statusNames = $this->statuses->getStatusNames();
         $companyname = $this->settings->getCompanyName();
-        $users = $this->users->getAllUsers();
+        $users = $this->users->getAllUsersForCollege($college_id);
         $totalAthletes = $this->athletes->getAllAthletesCount();
         $totalTimeSpent = $this->tasks->totalTimeSpent();
 
@@ -60,8 +68,8 @@ class PagesController extends Controller
       *
       */
 
-        $recruitRecords = $this->recruits->getAllRecruits();
-
+        //$recruitRecords = $this->recruits->getAllRecruits();
+        $recruitRecords = $this->recruits->getAllRecruitsForCollege($college_id);
      /**
       * Statistics for all-time tasks.
       *
@@ -96,7 +104,8 @@ class PagesController extends Controller
       *
       */
      
-        $allRecruits = $this->recruits->recruits();
+        //$allRecruits = $this->recruits->recruits();
+        $allRecruits = $this->recruits->getAllRecruitsForCollege($college_id);
         $allCompletedRecruits = $this->recruits->allCompletedRecruits();
         $totalPercentageRecruits = $this->recruits->percantageCompleted();
      /**
