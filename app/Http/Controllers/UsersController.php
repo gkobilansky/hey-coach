@@ -186,6 +186,7 @@ class UsersController extends Controller
     public function create()
     {        
         return view('users.create')
+            // ->withColleges($this->colleges->listAllColleges())
             ->withRoles($this->roles->listAllRoles())
             ->withDepartments($this->departments->listAllDepartments());
     }

@@ -1,5 +1,5 @@
 <div class="form-group">
-    {{ Form::label('image_path', __('Image'), ['class' => 'control-label']) }}
+    {{ Form::label('image_path', __('Avatar'), ['class' => 'control-label']) }}
     {!! Form::file('image_path',  null, ['class' => 'form-control']) !!}
 </div>
 
@@ -15,18 +15,8 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('address', __('Address'), ['class' => 'control-label']) !!}
-    {!! Form::text('address', null, ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group">
-    {!! Form::label('work_number', __('Work number'), ['class' => 'control-label']) !!}
+    {!! Form::label('work_number', __('Phone number'), ['class' => 'control-label']) !!}
     {!! Form::text('work_number',  null, ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group">
-    {!! Form::label('personal_number', __('Personal number'), ['class' => 'control-label']) !!}
-    {!! Form::text('personal_number',  null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
@@ -43,6 +33,13 @@
         Form::select('roles',
         $roles,
         isset($user->role->role_id) ? $user->role->role_id : null,
+        ['class' => 'form-control']) !!}
+
+    {!! Form::label('colleges', __('Assign college'), ['class' => 'control-label']) !!}
+    {!!
+        Form::select('colleges',
+        $colleges,
+        isset($user->college->college_id) ? $user->college->college_id : null,
         ['class' => 'form-control']) !!}
 
     {!! Form::label('departments', __('Assign department'), ['class' => 'control-label']) !!}

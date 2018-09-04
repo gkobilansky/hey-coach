@@ -9,8 +9,10 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+
 Route::auth();
 Route::get('/logout', 'Auth\LoginController@logout');
+
 Route::group(['middleware' => ['auth']], function () {
     
     /**
@@ -29,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/recruitdata/{id}', 'UsersController@recruitData')->name('users.recruitdata');
         Route::get('/athletedata/{id}', 'UsersController@athleteData')->name('users.athletedata');
         Route::get('/users', 'UsersController@users')->name('users.users');
+        Route::get('/create', 'UsersController@create')->name('users.create');        
         Route::post('/store', 'UsersController@store')->name('users.store');
     });
         Route::resource('users', 'UsersController');
