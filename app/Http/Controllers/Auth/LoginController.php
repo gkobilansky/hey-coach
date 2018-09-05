@@ -49,9 +49,13 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         Log::debug("authenticated - attempting to store user " . json_encode($user));
+        $college = $user->college;
+        Log::debug("getting college of user " . json_encode($college));
+        Log::debug("sub_domain_name through helper " . json_encode(get_subdomain($user)));
         //$request->session()->put('UserAgent', $user);
         //$request->session()->put('college_id', $user->college_id);
         //$request->session()->put('user_id', $user->id);
+        Session::put('sub_domain_name', $college->sub_domain_name);
         Session::put('UserAgent', $user);
         Session::put('college_id', $user->college_id);
         Session::put('user_id', $user->id);
