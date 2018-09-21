@@ -19,6 +19,7 @@ use App\Repositories\Department\DepartmentRepositoryContract;
 use App\Repositories\Setting\SettingRepositoryContract;
 use App\Repositories\Task\TaskRepositoryContract;
 use App\Repositories\Recruit\RecruitRepositoryContract;
+use App\Repositories\College\CollegeRepositoryContract;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -27,6 +28,7 @@ class UsersController extends Controller
     protected $roles;
     protected $departments;
     protected $settings;
+    protected $colleges;
 
     public function __construct(
         UserRepositoryContract $users,
@@ -34,7 +36,8 @@ class UsersController extends Controller
         DepartmentRepositoryContract $departments,
         SettingRepositoryContract $settings,
         TaskRepositoryContract $tasks,
-        RecruitRepositoryContract $recruits
+        RecruitRepositoryContract $recruits, 
+        CollegeRepositoryContract $colleges
     )
     {
         $this->users = $users;
@@ -43,6 +46,7 @@ class UsersController extends Controller
         $this->settings = $settings;
         $this->tasks = $tasks;
         $this->recruits = $recruits;
+        $this->colleges = $colleges;
         $this->middleware('user.create', ['only' => ['create']]);
         $this->middleware('user.show', ['only' => ['show']]);
     }
@@ -186,7 +190,7 @@ class UsersController extends Controller
     public function create()
     {        
         return view('users.create')
-            // ->withColleges($this->colleges->listAllColleges())
+            ->withColleges($this->colleges->getAllColleges())
             ->withRoles($this->roles->listAllRoles())
             ->withDepartments($this->departments->listAllDepartments());
     }
