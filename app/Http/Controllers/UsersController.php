@@ -190,7 +190,7 @@ class UsersController extends Controller
     public function create()
     {        
         return view('users.create')
-            ->withColleges($this->colleges->getAllColleges())
+            ->withColleges($this->colleges->listAllColleges())
             ->withRoles($this->roles->listAllRoles())
             ->withDepartments($this->departments->listAllDepartments());
     }
@@ -205,6 +205,9 @@ class UsersController extends Controller
         $college_id = Session::get('college_id');
         $userRequest->merge(['college_id' => $college_id]);     
         $getInsertedId = $this->users->create($userRequest);
+        if($getInsertedId == null) {
+            return redirect()->route('users.create');
+        }
         //$getInsertedId = $this->users->create(array_merge($userRequest->all(), ['college_id' => $college_id]));
         return redirect()->route('users.index');
     }

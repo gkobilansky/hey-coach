@@ -79,23 +79,35 @@ class UserRepository implements UserRepositoryContract
             $filename = str_random(8) . '_' . $file->getathleteOriginalName() ;
             $file->move($destinationPath, $filename);
         }
+//Error creating user SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'theBruce@nyu.edu' for key 'users_email_unique' (SQL: insert into `users` (`name`, `college_id`, `email`, `address`, `work_number`, `personal_number`, `password`, `image_path`, `updated_at`, `created_at`) values (Assistant Coach, 1, theBruce@nyu.edu, , 9149149144, , $2y$10$Qv674CXl6ZCBxRp2v76TXOki1/SvBpm5zKcP9Sny87YTXRB3C6zsi, , 2018-08-19 23:39:46, 2018-08-19 23:39:46))
 
-        $user = New User();
-        $user->name = $requestData->name;
-        $user->college_id = $requestData->college_id;
-        $user->email = $requestData->email;
-        $user->address = $requestData->address;
-        $user->work_number = $requestData->work_number;
-        $user->personal_number = $requestData->personal_number;
-        $user->password = bcrypt($requestData->password);
-        $user->image_path = $filename;
-        $user->save();
-        $user->roles()->attach($requestData->roles);
-        $user->departments()->attach($requestData->departments);
-        $user->save();
 
-        Session::flash('flash_message', 'User successfully added!'); //Snippet in Master.blade.php
-        return $user;
+        try {
+            $user = New User();
+            $user->name = $requestData->name;
+            $user->college_id = $requestData->college_id;
+            $user->email = $requestData->email;
+            $user->address = $requestData->address;
+            $user->work_number = $requestData->work_number;
+            $user->personal_number = $requestData->personal_number;
+            $user->password = bcrypt($requestData->password);
+            $user->image_path = $filename;
+            $user->save();
+            $user->roles()->attach($requestData->roles);
+            $user->departments()->attach($requestData->departments);
+            $user->save();
+            Session::flash('flash_message', 'User successfully added!'); //Snippet in Master.blade.php
+            return $user;
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            $errorCode = $ex->errorInfo[1];
+            if($errorCode == '1062'){
+                if(strpos($ex->getMessage(), 'users_email_unique')) {
+                    Session::flash('message_danger', 'Email ' . $requestData->email . ' is already taken, please select another');
+                }
+            }
+            return null;
+        }
+
     }
 
     /**
