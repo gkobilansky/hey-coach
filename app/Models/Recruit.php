@@ -26,6 +26,10 @@ class Recruit extends Model
         return $this->belongsTo(User::class, 'user_assigned_id');
     }
 
+    public function college() {
+        return $this->belongsTo(College::class, 'college_id', 'id');
+    }    
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_created_id');

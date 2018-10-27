@@ -27,7 +27,8 @@ class CanUserViewRecruit
             //TODO - return page does not exist
             return new Response(view('auth/unauthorized'));
         } 
-        if($recruit->college_id == Session::get('college_id')) {
+        $role = Session::get('role');
+        if($recruit->college_id == Session::get('college_id') || $role->name == 'super_administrator') {
             Log::debug("recruit view Middleware has access");
             return $next($request);
         } else {            

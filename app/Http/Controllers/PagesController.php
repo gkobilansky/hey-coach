@@ -59,6 +59,7 @@ class PagesController extends Controller
         $allStatuses = $this->statuses->getAllStatuses();
         $statusNames = $this->statuses->getStatusNames();
         $companyname = $this->settings->getCompanyName();
+        $role = Session::get('role');
         $users = $this->users->getAllUsersForCollege($college_id);
         $totalAthletes = $this->athletes->getAllAthletesCount();
         $totalTimeSpent = $this->tasks->totalTimeSpent();
@@ -127,6 +128,16 @@ class PagesController extends Controller
       */
         $completedRecruitsMonthly = $this->recruits->createdRecruitsMonthly();
         $createdRecruitsMonthly = $this->recruits->completedRecruitsMonthly();
+
+      /**
+      * if super admin, then get all as opposed to all in college for these things
+      */
+        if($role->name == 'super_administrator') {
+
+          $users = $this->users->getAllUsers();
+          $allRecruits = $this->recruits->getAllRecruits();
+          $recruitRecords = $this->recruits->getAllRecruits();
+        }      
        
         return view('pages.dashboard', compact(
             'completedTasksToday',

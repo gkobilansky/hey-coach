@@ -30,5 +30,11 @@ class RolesTableSeeder extends Seeder
         $employeeRole->name = 'assistant';
         $employeeRole->description = 'assistant';
         $employeeRole->save();
+
+        $employeeRole = new Role;
+        $employeeRole->display_name = 'Super Administrator';
+        $employeeRole->name = 'super_administrator';
+        $employeeRole->description = 'System Administrator';
+        $employeeRole->save();        
     }
 }

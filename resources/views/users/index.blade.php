@@ -101,7 +101,7 @@
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('users.databycollege') !!}',
+            ajax: '{!! route('users.data') !!}',
             columns: [
 
                 {data: 'namelink', name: 'name'},

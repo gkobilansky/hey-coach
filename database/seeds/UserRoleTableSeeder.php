@@ -13,7 +13,7 @@ class UserRoleTableSeeder extends Seeder
     public function run()
     {
         $newrole = new RoleUser;
-        $newrole->role_id = '1';
+        $newrole->role_id = '4';
         $newrole->user_id = '1';
         $newrole->timestamps = false;
         $newrole->save();

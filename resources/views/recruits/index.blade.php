@@ -25,7 +25,7 @@
         $('#recruits-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('recruits.databycollege') !!}',
+            ajax: '{!! route('recruits.data') !!}',
             columns: [
                 {data: 'status_id', name: 'status_id'},
                 {data: 'titlelink', name: 'title'},

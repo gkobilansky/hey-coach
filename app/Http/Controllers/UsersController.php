@@ -67,7 +67,13 @@ class UsersController extends Controller
     public function anyData()
     {
         $canUpdateUser = auth()->user()->can('update-user');
-        $users = User::select(['id', 'name', 'email', 'work_number']);
+        if(Session::get('role')->name != 'super_administrator') {
+            $college_id = Session::get('college_id');        
+            //$users = User::select(['id', 'name', 'email', 'work_number']);
+            $users = $college_id == null || $college_id == '' ? User::select(['id', 'name', 'email', 'work_number']) : User::select(['id', 'name', 'email', 'work_number'])->where('college_id', $college_id)->get(); 
+        } else {
+            $users = User::select(['id', 'name', 'email', 'work_number']);
+        }
         return Datatables::of($users)
             ->addColumn('namelink', function ($users) {
                 return '<a href="users/' . $users->id . '" ">' . $users->name . '</a>';
@@ -78,23 +84,6 @@ class UsersController extends Controller
             ->add_column('delete', function ($user) { 
                 return '<button type="button" class="btn btn-danger delete_athlete" data-athlete_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
             })->make(true);
-    }
-
-    public function anyDataByCollege() {
-        $canUpdateUser = auth()->user()->can('update-user');        
-        $college_id = Session::get('college_id');        
-        //$users = User::select(['id', 'name', 'email', 'work_number']);
-        $users = $college_id == null || $college_id == '' ? User::select(['id', 'name', 'email', 'work_number']) : User::select(['id', 'name', 'email', 'work_number'])->where('college_id', $college_id)->get(); 
-        return Datatables::of($users)
-            ->addColumn('namelink', function ($users) {
-                return '<a href="users/' . $users->id . '" ">' . $users->name . '</a>';
-            })
-            ->addColumn('edit', function ($user) {
-                return '<a href="' . route("users.edit", $user->id) . '" class="btn btn-success"> Edit</a>';
-            })
-            ->add_column('delete', function ($user) { 
-                return '<button type="button" class="btn btn-danger delete_athlete" data-athlete_id="' . $user->id . '" onClick="openModal(' . $user->id. ')" id="myBtn">Delete</button>';
-            })->make(true);                
     }
 
     /**

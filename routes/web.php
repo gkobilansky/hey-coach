@@ -26,7 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
      */
     Route::group(['prefix' => 'users'], function () {
         Route::get('/data', 'UsersController@anyData')->name('users.data');
-        Route::get('/databycollege', 'UsersController@anyDataByCollege')->name('users.databycollege');
         Route::get('/taskdata/{id}', 'UsersController@taskData')->name('users.taskdata');
         Route::get('/recruitdata/{id}', 'UsersController@recruitData')->name('users.recruitdata');
         Route::get('/athletedata/{id}', 'UsersController@athleteData')->name('users.athletedata');
@@ -78,7 +77,6 @@ Route::group(['middleware' => ['auth']], function () {
      */
     Route::group(['prefix' => 'recruits'], function () {
         Route::get('/data', 'RecruitsController@anyData')->name('recruits.data');
-        Route::get('/databycollege', 'RecruitsController@anyDataByCollege')->name('recruits.databycollege');
         Route::get('/athleteData', 'RecruitsController@athleteData');        
         Route::get('/recruitDataBySchool', 'RecruitsController@recruitDataBySchool');        
         Route::post('/store', 'RecruitsController@store');

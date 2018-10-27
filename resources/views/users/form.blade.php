@@ -27,6 +27,9 @@
     {!! Form::label('password_confirmation', __('Confirm password'), ['class' => 'control-label']) !!}
     {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
 </div>
+@php
+    if(Session::get('role')->name == 'super_administrator') {
+@endphp
 <div class="form-group form-inline">
     {!! Form::label('roles', __('Assign role'), ['class' => 'control-label']) !!}
     {!!
@@ -51,5 +54,8 @@
         ? $user->department->first()->id : null,
         ['class' => 'form-control']) !!}
 </div>
+@php
+    }
+@endphp
 
 {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary']) !!}

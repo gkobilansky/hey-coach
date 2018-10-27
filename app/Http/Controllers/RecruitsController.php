@@ -79,7 +79,12 @@ class RecruitsController extends Controller
      */
     public function anyData()
     {
-        $recruits = Recruit::all();
+        if(Session::get('role')->name != 'super_administrator') {
+            $college_id = Session::get('college_id');        
+            $recruits = $college_id == null || $college_id == '' ? Recruit::all() : Recruit::where('college_id', $college_id)->get();            
+        } else {
+            $recruits = Recruit::all();
+        }
         return Datatables::of($recruits)
             ->editColumn('status_id', function ($recruits) {
                 return $recruits->status->name;
@@ -101,36 +106,6 @@ class RecruitsController extends Controller
                 return $recruits->user->name;
             })->make(true);
     }
-
-    /**
-     * Data for Data tables of session's college_id
-     * @return mixed
-     */
-    public function anyDataByCollege()
-    {
-        $college_id = Session::get('college_id');        
-        $recruits = $college_id == null || $college_id == '' ? Recruit::all() : Recruit::where('college_id', $college_id)->get();
-        return Datatables::of($recruits)
-            ->editColumn('status_id', function ($recruits) {
-                return $recruits->status->name;
-            })
-            ->addColumn('titlelink', function ($recruits) {
-                return '<a href="recruits/' . $recruits->id . '" ">' . $recruits->title . '</a>';
-            })
-            ->editColumn('athlete_id', function ($recruits) {
-                return $recruits->athlete->name;
-            })
-            ->editColumn('user_created_id', function ($recruits) {
-                return $recruits->creator->name;
-            })
-            ->editColumn('contact_date', function ($recruits) {
-                return $recruits->contact_date ? with(new Carbon($recruits->contact_date))
-                    ->format('d/m/Y') : '';
-            })
-            ->editColumn('user_assigned_id', function ($recruits) {
-                return $recruits->user->name;
-            })->make(true);
-    }    
 
     /**
      * Show the form for creating a new resource.
@@ -197,10 +172,13 @@ class RecruitsController extends Controller
      */
     public function show($id)
     {
-        $college_id = Session::get('college_id');
+        $users_college_id = Session::get('college_id');
+        $recruit = $this->recruits->find($id);
+        $recruitCollegeId = $recruit->college->id;
+        Log::Debug("recruit college id - " . json_encode($recruitCollegeId));
         return view('recruits.show')
             ->withrecruit($this->recruits->find($id))
-            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($college_id))
+            ->withUsers($this->users->getAllUsersForCollegeWithDepartments($recruitCollegeId))
             ->withCompanyname($this->settings->getCompanyName());
     }
 
